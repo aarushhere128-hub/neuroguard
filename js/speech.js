@@ -1,13 +1,17 @@
 // =========================================
 // NeuroGuard | Speech Assessment
-// speech.js
 // =========================================
+
+// ===== CHANGE THIS WHEN YOU HAVE A MICROPHONE =====
+const DEMO_MODE = true;
+// false = Real Speech Recognition
+// true = Random Demo Results
+// ==================================================
 
 const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const startBtn = document.getElementById("startBtn");
-
 const status = document.getElementById("status");
 const recognizedText = document.getElementById("recognizedText");
 const speechScore = document.getElementById("speechScore");
@@ -15,142 +19,166 @@ const similarity = document.getElementById("similarity");
 const speechRisk = document.getElementById("speechRisk");
 
 const targetSentence =
-"The sky is blue and the sun is bright today.";
+    "The sky is blue and the sun is bright today.";
 
-if (!SpeechRecognition) {
+// =========================================
+// DEMO MODE
+// =========================================
 
-    status.textContent =
-        "❌ Speech Recognition is not supported in this browser.";
-
-    startBtn.disabled = true;
-
-}
-
-else {
-
-    const recognition = new SpeechRecognition();
-
-    recognition.lang = "en-US";
-
-    recognition.continuous = false;
-
-    recognition.interimResults = false;
-
-    recognition.maxAlternatives = 1;
+if (DEMO_MODE) {
 
     startBtn.addEventListener("click", () => {
 
-        status.textContent = "🎤 Listening...";
+        status.textContent = "🤖 Running Demo Assessment...";
 
-        recognizedText.textContent = "-";
+        setTimeout(() => {
 
-        recognition.start();
+            const percent = 70 + Math.random() * 30; // 70-100%
+
+            let score;
+            let risk;
+
+            if (percent >= 95) {
+                score = 10;
+                risk = "🟢 Normal";
+            }
+            else if (percent >= 80) {
+                score = 8;
+                risk = "🟡 Mild Difficulty";
+            }
+            else {
+                score = 6;
+                risk = "🟠 Possible Speech Impairment";
+            }
+
+            recognizedText.textContent = targetSentence;
+            similarity.textContent = percent.toFixed(1) + "%";
+            speechScore.textContent = score.toFixed(1) + " / 10";
+            speechRisk.textContent = risk;
+            status.textContent = "✅ Demo Assessment Complete";
+
+            // Save results
+
+            localStorage.setItem("speechTranscript", targetSentence);
+            localStorage.setItem("speechSimilarity", percent.toFixed(1));
+            localStorage.setItem("speechScore", score.toFixed(1));
+            localStorage.setItem("speechRisk", risk);
+            localStorage.setItem("speechCompleted", "true");
+
+            console.log("Demo speech result saved.");
+
+        }, 1500);
 
     });
 
-    recognition.onresult = function(event){
+}
 
-        const transcript =
-            event.results[0][0].transcript;
+// =========================================
+// REAL MODE
+// =========================================
 
-        recognizedText.textContent = transcript;
+else {
 
-        const percent =
-            calculateSimilarity(
-                transcript.toLowerCase(),
-                targetSentence.toLowerCase()
-            );
-
-        similarity.textContent =
-            percent.toFixed(1) + "%";
-
-        let score;
-        let risk;
-
-        if(percent >= 95){
-
-            score = 10;
-            risk = "🟢 Normal";
-
-        }
-
-        else if(percent >= 80){
-
-            score = 8;
-            risk = "🟡 Mild Difficulty";
-
-        }
-
-        else if(percent >= 60){
-
-            score = 6;
-            risk = "🟠 Possible Speech Impairment";
-
-        }
-
-        else{
-
-            score = 4;
-            risk = "🔴 Significant Speech Difficulty";
-
-        }
-
-        speechScore.textContent =
-            score.toFixed(1) + " / 10";
-
-        speechRisk.textContent = risk;
+    if (!SpeechRecognition) {
 
         status.textContent =
-            "✅ Assessment Complete";
+            "❌ Speech Recognition not supported.";
 
-        // Save to local storage
+        startBtn.disabled = true;
 
-        localStorage.setItem(
-            "speechTranscript",
-            transcript
-        );
+    }
 
-        localStorage.setItem(
-            "speechSimilarity",
-            percent.toFixed(1)
-        );
+    else {
 
-        localStorage.setItem(
-            "speechScore",
-            score.toFixed(1)
-        );
+        const recognition = new SpeechRecognition();
 
-        localStorage.setItem(
-            "speechRisk",
-            risk
-        );
+        recognition.lang = "en-US";
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
 
-        localStorage.setItem(
-            "speechCompleted",
-            "true"
-        );
+        startBtn.addEventListener("click", () => {
 
-        console.log("Speech assessment saved.");
+            status.textContent = "🎤 Listening...";
+            recognizedText.textContent = "-";
 
-    };
+            recognition.start();
 
-    recognition.onerror = function(event){
+        });
 
-        status.textContent =
-            "❌ Error: " + event.error;
+        recognition.onresult = function (event) {
 
-    };
+            const transcript =
+                event.results[0][0].transcript;
 
-    recognition.onend = function(){
+            recognizedText.textContent = transcript;
 
-        if(status.textContent === "🎤 Listening..."){
+            const percent =
+                calculateSimilarity(
+                    transcript.toLowerCase(),
+                    targetSentence.toLowerCase()
+                );
+
+            similarity.textContent =
+                percent.toFixed(1) + "%";
+
+            let score;
+            let risk;
+
+            if (percent >= 95) {
+                score = 10;
+                risk = "🟢 Normal";
+            }
+            else if (percent >= 80) {
+                score = 8;
+                risk = "🟡 Mild Difficulty";
+            }
+            else if (percent >= 60) {
+                score = 6;
+                risk = "🟠 Possible Speech Impairment";
+            }
+            else {
+                score = 4;
+                risk = "🔴 Significant Speech Difficulty";
+            }
+
+            speechScore.textContent =
+                score.toFixed(1) + " / 10";
+
+            speechRisk.textContent = risk;
 
             status.textContent =
-                "Recording stopped.";
+                "✅ Assessment Complete";
 
-        }
+            localStorage.setItem("speechTranscript", transcript);
+            localStorage.setItem("speechSimilarity", percent.toFixed(1));
+            localStorage.setItem("speechScore", score.toFixed(1));
+            localStorage.setItem("speechRisk", risk);
+            localStorage.setItem("speechCompleted", "true");
 
-    };
+            console.log("Speech assessment saved.");
+
+        };
+
+        recognition.onerror = function (event) {
+
+            status.textContent =
+                "❌ Error: " + event.error;
+
+        };
+
+        recognition.onend = function () {
+
+            if (status.textContent === "🎤 Listening...") {
+
+                status.textContent =
+                    "Recording stopped.";
+
+            }
+
+        };
+
+    }
 
 }
 
@@ -158,16 +186,16 @@ else {
 // Similarity Function
 // =========================================
 
-function calculateSimilarity(a,b){
+function calculateSimilarity(a, b) {
 
     const wordsA = a.split(" ");
     const wordsB = b.split(" ");
 
     let matches = 0;
 
-    wordsB.forEach(word=>{
+    wordsB.forEach(word => {
 
-        if(wordsA.includes(word))
+        if (wordsA.includes(word))
             matches++;
 
     });
