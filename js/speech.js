@@ -4,6 +4,7 @@
 
 // ===== CHANGE THIS WHEN YOU HAVE A MICROPHONE =====
 const DEMO_MODE = true;
+console.log("Demo mode:", DEMO_MODE);
 // false = Real Speech Recognition
 // true = Random Demo Results
 // ==================================================
