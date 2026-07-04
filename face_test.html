@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Face Assessment | NeuroGuard</title>
+
+    <link rel="stylesheet" href="css/face.css">
+
+    <!-- TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.7.4/dist/tf.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.4/dist/teachablemachine-image.min.js"></script>
+
+<script type="module" src="js/face.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <!-- Top Bar -->
+        <div class="top-bar">
+
+            <select id="languageSelect">
+
+                <option value="en">🇬🇧 English</option>
+                <option value="hi">🇮🇳 हिन्दी</option>
+                <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+
+            </select>
+
+            <button id="themeToggle">
+                🌙 Dark Mode
+            </button>
+
+        </div>
+
+        <h1 id="title">🧠 Face Assessment</h1>
+
+        <p class="subtitle" id="subtitle">
+            Upload a clear front-facing image while smiling naturally.
+        </p>
+
+        <div class="instructions">
+
+            <h3 id="instructionHeading">Instructions</h3>
+
+            <ul id="instructionList">
+
+                <li id="i1">😊 Smile naturally</li>
+                <li id="i2">💡 Ensure good lighting</li>
+                <li id="i3">👤 Only one face should be visible</li>
+                <li id="i4">📷 Keep your face straight</li>
+                <li id="i5">😷 Remove masks or sunglasses</li>
+
+            </ul>
+
+        </div>
+
+        <!-- Upload -->
+
+        <label
+            for="imageUpload"
+            class="upload-btn"
+            id="uploadLabel">
+
+            📤 Upload Image
+
+        </label>
+
+        <input
+            type="file"
+            id="imageUpload"
+            accept="image/*"
+            style="display:none;"
+        >
+
+        <!-- Preview -->
+
+        <div class="preview-container">
+
+            <img
+                id="preview"
+                alt="Image Preview"
+                style="display:none;"
+            >
+
+        </div>
+
+        <!-- Analyze -->
+
+        <button
+            id="analyzeBtn"
+            class="analyze-btn"
+            disabled>
+
+            🤖 Analyze Face
+
+        </button>
+
+        <!-- Loading -->
+
+        <p id="loadingModel">
+            🧠 Loading AI Model...
+        </p>
+
+        <!-- Status -->
+
+        <p id="status"></p>
+
+        <!-- Results -->
+
+        <div id="resultCard">
+
+            <h2 id="score">
+
+                Face Score : -
+
+            </h2>
+
+            <p id="confidence"></p>
+
+        </div>
+
+        <!-- Back -->
+
+        <a
+            href="fast-test.html"
+            class="back-btn"
+            id="backBtn">
+
+            ← Back to FAST Test
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- Face JS -->
+<script type="module" src="js/face.js"></script>
+
+<script>
+
+const translations = {
+
+    en:{
+
+        title:"🧠 Face Assessment",
+
+        subtitle:"Upload a clear front-facing image while smiling naturally.",
+
+        heading:"Instructions",
+
+        upload:"📤 Upload Image",
+
+        analyze:"🤖 Analyze Face",
+
+        back:"← Back to FAST Test",
+
+        loading:"🧠 Loading AI Model...",
+
+        instructions:[
+            "😊 Smile naturally",
+            "💡 Ensure good lighting",
+            "👤 Only one face should be visible",
+            "📷 Keep your face straight",
+            "😷 Remove masks or sunglasses"
+        ]
+
+    },
+
+    hi:{
+
+        title:"🧠 चेहरे की जाँच",
+
+        subtitle:"एक साफ़ सामने की तस्वीर अपलोड करें।",
+
+        heading:"निर्देश",
+
+        upload:"📤 चित्र अपलोड करें",
+
+        analyze:"🤖 चेहरा विश्लेषण करें",
+
+        back:"← FAST परीक्षण पर वापस जाएँ",
+
+        loading:"🧠 AI मॉडल लोड हो रहा है...",
+
+        instructions:[
+            "😊 सामान्य रूप से मुस्कुराएँ",
+            "💡 अच्छी रोशनी रखें",
+            "👤 केवल एक चेहरा दिखाई दे",
+            "📷 सीधे कैमरे की ओर देखें",
+            "😷 मास्क या चश्मा हटाएँ"
+        ]
+
+    },
+
+    pa:{
+
+        title:"🧠 ਚਿਹਰੇ ਦੀ ਜਾਂਚ",
+
+        subtitle:"ਕਿਰਪਾ ਕਰਕੇ ਸਾਹਮਣੇ ਤੋਂ ਸਾਫ਼ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ।",
+
+        heading:"ਹਦਾਇਤਾਂ",
+
+        upload:"📤 ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ",
+
+        analyze:"🤖 ਚਿਹਰੇ ਦੀ ਜਾਂਚ ਕਰੋ",
+
+        back:"← FAST ਟੈਸਟ ਵੱਲ ਵਾਪਸ ਜਾਓ",
+
+        loading:"🧠 AI ਮਾਡਲ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+
+        instructions:[
+            "😊 ਕੁਦਰਤੀ ਤਰੀਕੇ ਨਾਲ ਮੁਸਕਰਾਓ",
+            "💡 ਚੰਗੀ ਰੌਸ਼ਨੀ ਵਿੱਚ ਤਸਵੀਰ ਲਵੋ",
+            "👤 ਸਿਰਫ਼ ਇੱਕ ਚਿਹਰਾ ਦਿਖਾਈ ਦੇਵੇ",
+            "📷 ਕੈਮਰੇ ਵੱਲ ਸਿੱਧਾ ਵੇਖੋ",
+            "😷 ਮਾਸਕ ਜਾਂ ਐਨਕ ਹਟਾਓ"
+        ]
+
+    }
+
+};
+
+const language=document.getElementById("languageSelect");
+
+language.addEventListener("change",()=>{
+
+    const t=translations[language.value];
+
+    document.getElementById("title").innerHTML=t.title;
+    document.getElementById("subtitle").innerHTML=t.subtitle;
+    document.getElementById("instructionHeading").innerHTML=t.heading;
+    document.getElementById("uploadLabel").innerHTML=t.upload;
+    document.getElementById("analyzeBtn").innerHTML=t.analyze;
+    document.getElementById("backBtn").innerHTML=t.back;
+    document.getElementById("loadingModel").innerHTML=t.loading;
+
+    document.getElementById("i1").innerHTML=t.instructions[0];
+    document.getElementById("i2").innerHTML=t.instructions[1];
+    document.getElementById("i3").innerHTML=t.instructions[2];
+    document.getElementById("i4").innerHTML=t.instructions[3];
+    document.getElementById("i5").innerHTML=t.instructions[4];
+
+});
+
+const toggle=document.getElementById("themeToggle");
+
+if(localStorage.getItem("theme")=="dark"){
+
+    document.body.classList.add("dark");
+
+    toggle.innerHTML="☀️ Light Mode";
+
+}
+
+toggle.addEventListener("click",()=>{
+
+    document.body.classList.toggle("dark");
+
+    if(document.body.classList.contains("dark")){
+
+        toggle.innerHTML="☀️ Light Mode";
+
+        localStorage.setItem("theme","dark");
+
+    }
+    else{
+
+        toggle.innerHTML="🌙 Dark Mode";
+
+        localStorage.setItem("theme","light");
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

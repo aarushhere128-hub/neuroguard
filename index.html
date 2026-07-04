@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroGuard Web| AI-Assisted Stroke Awareness</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ================= LOADER ================= -->
+
+<div class="loading-screen">
+
+    <div class="loader-logo">
+        <img src='assets/logo.png' alt="NeuroGuard">
+    </div>
+
+    <div class="loader-text">
+        Initializing NeuroGuard Web...
+    </div>
+
+    <div class="loader-bar"></div>
+
+</div>
+
+<!-- ================= SKELETON ================= -->
+
+<div id="skeleton">
+
+    <div class="skeleton-navbar"></div>
+
+    <div class="skeleton-hero">
+
+        <div class="skeleton-text"></div>
+
+        <div class="skeleton-text short"></div>
+
+        <div class="skeleton-image"></div>
+
+    </div>
+
+</div>
+
+<!-- ================= WEBSITE ================= -->
+
+<div id="website">
+
+<!-- ================= NAVBAR ================= -->
+
+<header>
+
+<nav>
+
+<div class="logo">
+
+<img src='assets/logo.png' alt="logo">
+
+<span>NeuroGuard Web</span>
+
+</div>
+
+<ul>
+
+<li><a href="#home" id='navhome'>Home</a></li>
+
+<li><a href="#problem" id='navproblem'>Problem</a></li>
+
+<li><a href="#features" id='navfeature'>Features</a></li>
+
+<li><a href="#technology" id='navtech'>Technology</a></li>
+
+<li><a href="#comparison" id='navcompare'>Comparison</a></li>
+
+<li><a href="contact.html" id='navcontact'>Contact</a></li>
+
+</ul>
+
+<div class="nav-buttons">
+
+<select id="languageSelect" class="language-select">
+    <option value="en">🇬🇧 English</option>
+    <option value="hi">🇮🇳 हिन्दी</option>
+    <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+</select>
+
+<button id="themeToggle">
+
+🌙
+
+</button>
+
+<a href="fast-test.html">
+
+<button class="primary">
+
+Start FAST Test
+
+</button>
+
+</a>
+
+</div>
+
+</nav>
+
+</header>
+
+<!-- ================= HERO ================= -->
+
+<section id="home">
+
+<div class="hero-left">
+
+<div class="badge">
+
+AI-Assisted Stroke Awareness Platform
+
+</div>
+
+<h1 id='heroTitle'>
+
+Every Minute Matters.
+
+Detect Earlier.
+
+Act Faster.
+
+</h1>
+
+<p id='heroDescription'>
+
+NeuroGuard is an AI-assisted educational screening platform that guides users through FAST assessment, records symptom onset time, and provides structured emergency guidance during the critical pre-hospital window.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="fast-test.html">
+
+<button class="primary" id='demoButton'>
+
+Start Demo
+
+</button>
+
+</a>
+
+<a href="#problem">
+
+<button class="secondary" id='learnButton'>
+
+Learn More
+
+</button>
+
+</a>
+
+</div>
+
+<div class="hero-stats">
+    <div>
+        <h2>1 in 4</h2>
+        <p id="stat1">Lifetime Stroke Risk</p>
+    </div>
+    <div>
+        <h2>80%</h2>
+        <p id="stat2">Potentially Preventable</p>
+    </div>
+    <div>
+        <h2>4.5h</h2>
+        <p id="stat3">Critical Treatment Window</p>
+    </div>
+</div>
+
+</div>
+
+<div class="hero-right">
+
+<img src="assets/img1.png">
+
+</div>
+
+</section>
+
+<!-- ================= PROBLEM ================= -->
+
+<section id="problem">
+<h2 id="problemTitle">
+The Problem
+</h2>
+
+<p id="problemDesc">
+Stroke treatment is highly time-sensitive, yet most delays occur before reaching the hospital.
+</p>
+
+<div class="timeline">
+<div id="timeline1">Symptoms Begin</div>
+➜
+<div id="timeline2">Confusion</div>
+➜
+<div id="timeline3">Delay</div>
+➜
+<div id="timeline4">Hospital</div>
+</div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+
+<<section id="features">
+<h2 id="featuresTitle">
+Core Features
+</h2>
+
+<div class="feature-grid">
+
+<div class="card">
+<img src="assets/img2.png">
+<h3 id="feature1Title">Face Detection</h3>
+<p id="feature1Desc">
+AI-assisted facial landmark analysis detects possible facial asymmetry.
+</p>
+</div>
+
+<div class="card">
+<img src="assets/img3.png">
+<h3 id="feature2Title">Arm Assessment</h3>
+<p id="feature2Desc">
+Guided arm raise using pose estimation.
+</p>
+</div>
+
+<div class="card">
+<img src="assets/img5.png">
+<h3 id="feature3Title">Speech Analysis</h3>
+<p id="feature3Desc">
+Detects slurred or unclear speech patterns.
+</p>
+</div>
+
+<div class="card">
+<img src="assets/img4.png">
+<h3 id="feature4Title">Symptom Timer</h3>
+<p id="feature4Desc">
+Records exact symptom onset for clinicians.
+</p>
+</div>
+
+</div>
+</section>
+<!-- ================= WHY ================= -->
+
+<section>
+
+<h2 id="whyTitle">
+Why NeuroGuard?
+</h2>
+
+<div class="three-cards">
+
+<div>
+<h3 id="why1Title">Education</h3>
+<p id="why1Desc">
+Interactive FAST learning.
+</p>
+</div>
+
+<div>
+<h3 id="why2Title">Guided Assessment</h3>
+<p id="why2Desc">
+Reduces panic with structured testing.
+</p>
+</div>
+
+<div>
+<h3 id="why3Title">Emergency Guidance</h3>
+<p id="why3Desc">
+Immediate next steps and hospital guidance.
+</p>
+</div>
+
+</div>
+</section>
+
+<!-- ================= TECHNOLOGY ================= -->
+
+<section id="technology">
+
+<h2 id="techTitle">
+Technology Stack
+</h2>
+
+<div class="tech-grid">
+<div>Flutter</div>
+<div>Firebase</div>
+<div>MediaPipe</div>
+<div>OpenCV</div>
+<div>TensorFlow (Future)</div>
+</div>
+
+</section>
+
+<!-- ================= COMPARISON ================= -->
+
+<!-- ================= COMPARISON ================= -->
+<section id="comparison">
+    <div class="section-header">
+        <span class="badge" id="compareBadge">Comparison</span>
+        <h2 id="compareTitle">How NeuroGuard Compares</h2>
+        <p id="compareDesc">
+            NeuroGuard combines AI-assisted educational screening, multilingual support,
+            and emergency guidance in one accessible platform.
+        </p>
+    </div>
+
+    <div class="comparison-wrapper">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th id="compareFeature">Feature</th>
+                    <th>NeuroGuard</th>
+                    <th id="compareTraditional">Traditional Awareness</th>
+                    <th id="compareApps">General Health Apps</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td id="row1">AI-Assisted FAST Screening</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>⚠️</td>
+                </tr>
+
+                <tr>
+                    <td id="row2">Face Assessment</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                </tr>
+
+                <tr>
+                    <td id="row3">Arm Assessment</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                </tr>
+
+                <tr>
+                    <td id="row4">Speech Assessment</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>⚠️</td>
+                </tr>
+
+                <tr>
+                    <td id="row5">Symptom Timer</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                </tr>
+
+                <tr>
+                    <td id="row6">Emergency Guidance</td>
+                    <td>✅</td>
+                    <td>⚠️</td>
+                    <td>⚠️</td>
+                </tr>
+
+                <tr>
+                    <td id="row7">Multilingual Support</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>⚠️</td>
+                </tr>
+
+                <tr>
+                    <td id="row8">Interactive FAST Learning</td>
+                    <td>✅</td>
+                    <td>⚠️</td>
+                    <td>⚠️</td>
+                </tr>
+
+                <tr>
+                    <td id="row9">Web-Based Access</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>⚠️</td>
+                </tr>
+
+                <tr>
+                    <td id="row10">Purpose</td>
+                    <td id="purposeNG">Educational Stroke Screening</td>
+                    <td id="purposeTA">General Awareness</td>
+                    <td id="purposeHA">General Health Monitoring</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+<h2 id="ctaTitle">
+Ready to Experience NeuroGuard?
+</h2>
+
+<p id="ctaDesc">
+Explore our prototype and discover how technology can help people recognize stroke symptoms earlier.
+</p>
+<a href='fast-test.html'>
+<button class="primary" id="ctaButton">
+Launch Demo
+</button> </a>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div>
+<h3 id="footerTitle">
+NeuroGuard
+</h3>
+
+<p id="footerText">
+AI-Assisted Stroke Awareness & Emergency Response
+</p>
+</div>
+
+<div>
+<a href="privacy.html" id="footerPrivacy">Privacy</a>
+<a href="#problem" id="footerAbout">About</a>
+<a href="#technology" id="footerTechnology">Technology</a>
+<a href="contact.html" id="footerContact">Contact</a>
+</div>
+
+<p id="footerCopyright">
+© 2026 NeuroGuard
+Educational Prototype
+</p>
+
+</footer>
+
+</div>
+<script src="js/theme.js"></script>
+<script src="js/app.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/language.js"></script>
+
+</body>
+
+</html>
