@@ -1,0 +1,497 @@
+/* ===========================================
+   NeuroGuard - components.css
+   Reusable UI Components
+=========================================== */
+
+/* ========= CARDS ========= */
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.glass-card {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.dark .glass-card {
+    background: rgba(22,28,36,.72);
+}
+
+/* ========= BUTTONS ========= */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+
+    padding: 14px 22px;
+
+    border: none;
+    border-radius: var(--radius-md);
+
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: var(--transition);
+
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-primary);
+}
+
+.btn-secondary {
+    background: var(--surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--surface-hover);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+/* ========= FEATURE CARDS ========= */
+
+.feature-card {
+
+    display: flex;
+    gap: 18px;
+
+    padding: 22px;
+
+    border-radius: var(--radius-lg);
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    transition: var(--transition);
+}
+
+.feature-card:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-icon {
+
+    width: 70px;
+    height: 70px;
+
+    border-radius: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color: white;
+
+    font-size: 2rem;
+
+    flex-shrink: 0;
+}
+
+.feature-content h3 {
+
+    margin-bottom: 8px;
+
+    color: var(--text-primary);
+}
+
+.feature-content p {
+
+    color: var(--text-secondary);
+
+    line-height: 1.6;
+}
+
+/* ========= HEALTH METRICS ========= */
+
+.metric {
+
+    padding: 20px;
+
+    background: var(--surface);
+
+    border-radius: var(--radius-lg);
+
+    text-align: center;
+
+    border: 1px solid var(--border);
+
+    transition: var(--transition);
+}
+
+.metric:hover {
+
+    transform: scale(1.04);
+}
+
+.metric-value {
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    color: var(--primary);
+
+    margin-bottom: 5px;
+}
+
+.metric-label {
+
+    color: var(--text-secondary);
+
+    font-size: .9rem;
+}
+
+/* ========= FAST TEST ========= */
+
+.fast-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+
+    gap: 20px;
+}
+
+.fast-item {
+
+    padding: 22px;
+
+    background: var(--surface);
+
+    border-radius: var(--radius-lg);
+
+    border-top: 5px solid var(--primary);
+
+    transition: var(--transition);
+}
+
+.fast-item:hover {
+
+    transform: translateY(-5px);
+}
+
+.fast-letter {
+
+    width: 55px;
+    height: 55px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.4rem;
+    font-weight: bold;
+
+    color: white;
+
+    background: var(--primary);
+
+    margin-bottom: 16px;
+}
+
+/* ========= STATUS ========= */
+
+.status {
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 6px 14px;
+
+    border-radius: 999px;
+
+    font-size: .8rem;
+
+    font-weight: 600;
+}
+
+.status.success {
+
+    background: rgba(16,185,129,.12);
+
+    color: var(--success);
+}
+
+.status.warning {
+
+    background: rgba(245,158,11,.12);
+
+    color: var(--warning);
+}
+
+.status.danger {
+
+    background: rgba(239,68,68,.12);
+
+    color: var(--danger);
+}
+
+/* ========= REPORT SUMMARY ========= */
+
+.report {
+
+    background: var(--surface);
+
+    border-radius: var(--radius-xl);
+
+    padding: 30px;
+
+    border: 1px solid var(--border);
+}
+
+.report h2 {
+
+    margin-bottom: 25px;
+}
+
+.report-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+
+    gap: 18px;
+}
+
+.report-item {
+
+    background: var(--background);
+
+    padding: 18px;
+
+    border-radius: var(--radius-md);
+
+    border-left: 5px solid var(--primary);
+}
+
+.report-item h4 {
+
+    margin-bottom: 8px;
+}
+
+/* ========= EMERGENCY CARD ========= */
+
+.emergency-card {
+
+    background: linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
+
+    color: white;
+
+    border-radius: var(--radius-xl);
+
+    padding: 30px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.emergency-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+    radial-gradient(circle at top right,
+    rgba(255,255,255,.2),
+    transparent 55%);
+}
+
+/* ========= DASHBOARD ========= */
+
+.dashboard-grid {
+
+    display: grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap: 22px;
+}
+
+/* ========= INPUTS ========= */
+
+.input-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.input-group label {
+
+    font-weight: 600;
+
+    color: var(--text-primary);
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border-radius: var(--radius-md);
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    color: var(--text-primary);
+
+    transition: var(--transition);
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+
+    border-color: var(--primary);
+
+    outline: none;
+
+    box-shadow: 0 0 0 4px rgba(37,99,235,.15);
+}
+
+/* ========= BADGES ========= */
+
+.badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    font-size: .8rem;
+
+    font-weight: 600;
+}
+
+/* ========= NAVIGATION ========= */
+
+.nav-link {
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    color: var(--text-secondary);
+
+    transition: var(--transition);
+}
+
+.nav-link:hover,
+.nav-link.active {
+
+    color: var(--primary);
+
+    background: rgba(37,99,235,.08);
+}
+
+/* ========= DIVIDER ========= */
+
+.divider {
+
+    width: 100%;
+
+    height: 1px;
+
+    background: var(--border);
+
+    margin: 25px 0;
+}
+
+/* ========= RESPONSIVE ========= */
+
+@media (max-width:768px){
+
+    .feature-card{
+
+        flex-direction:column;
+    }
+
+    .dashboard-grid,
+    .report-grid,
+    .fast-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .btn{
+
+        width:100%;
+    }
+
+}

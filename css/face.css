@@ -1,0 +1,251 @@
+/* ===========================
+   Face Test Page
+=========================== */
+
+body{
+    margin:0;
+    font-family:Inter,sans-serif;
+    background:#f5f8fc;
+    color:#222;
+}
+.analyze-btn{
+    margin-top:20px;
+    padding:14px 30px;
+    border:none;
+    border-radius:12px;
+    background:#00a86b;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.top-bar select,
+.top-bar button{
+    padding:8px 14px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+}
+
+body.dark{
+    background:#111827;
+    color:white;
+}
+
+body.dark .card{
+    background:#1f2937;
+    color:white;
+}
+
+body.dark .instructions{
+    background:#2b3648;
+}
+
+body.dark input,
+body.dark select,
+body.dark button{
+    background:#374151;
+    color:white;
+}
+
+#loadingModel{
+    color:#2563eb;
+    font-weight:600;
+    margin-top:15px;
+}
+.analyze-btn:hover:not(:disabled){
+    background:#008c5a;
+}
+
+.analyze-btn:disabled{
+    background:#999;
+    cursor:not-allowed;
+}
+
+#status{
+    margin-top:20px;
+    font-weight:600;
+    color:#0066ff;
+    min-height:24px;
+}
+
+.back-btn{
+    display:inline-block;
+    margin-top:30px;
+    text-decoration:none;
+    color:white;
+    background:#222;
+    padding:12px 24px;
+    border-radius:12px;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:#000;
+}
+.container{
+    max-width:900px;
+    margin:50px auto;
+    padding:40px;
+}
+
+.card{
+
+    background:#fff;
+    border-radius:20px;
+    padding:35px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+    text-align:center;
+
+}
+
+h1{
+
+    color:#0066ff;
+    margin-bottom:10px;
+
+}
+
+.subtitle{
+
+    color:#666;
+    margin-bottom:35px;
+
+}
+
+.instructions{
+
+    background:#eef6ff;
+    border-left:5px solid #0066ff;
+    border-radius:12px;
+    padding:18px;
+    text-align:left;
+    margin-bottom:30px;
+
+}
+
+.instructions ul{
+
+    margin:10px 0 0;
+    padding-left:20px;
+
+}
+
+input[type=file]{
+
+    margin:25px 0;
+
+}
+
+.upload-btn{
+    display:inline-block;
+    padding:14px 30px;
+    background:#0066ff;
+    color:#fff;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+    margin:20px 0;
+}
+
+.upload-btn:hover{
+    background:#0051cc;
+}
+
+.preview-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:25px 0;
+    min-height:200px;
+}
+
+#preview{
+    display:none;
+    width:350px;
+    max-width:100%;
+    height:auto;
+    object-fit:contain;
+    border-radius:18px;
+    border:3px solid #0066ff;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+#score{
+
+    margin-top:30px;
+
+    font-size:28px;
+
+    color:#0066ff;
+
+}
+
+.back{
+
+    margin-top:35px;
+
+}
+
+.back button{
+
+    padding:12px 28px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#222;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.back button:hover{
+
+    background:#000;
+
+}
+
+/* Dark Mode */
+
+[data-theme="dark"] body{
+
+    background:#121212;
+    color:white;
+
+}
+
+[data-theme="dark"] .card{
+
+    background:#1f1f1f;
+
+}
+
+[data-theme="dark"] .instructions{
+
+    background:#27374d;
+    border-left:5px solid #4da3ff;
+
+}
+
+[data-theme="dark"] #score{
+
+    color:#5db5ff;
+
+}
