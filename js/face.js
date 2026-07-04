@@ -157,11 +157,7 @@ if(yaw>0.08){
         score.textContent = "Face Score : -";
         return;
     }
-localStorage.setItem("faceScore", faceScore.toFixed(1));
-localStorage.setItem("faceRisk", risk);
-localStorage.setItem("faceHealthy", (healthyProb * 100).toFixed(1));
-localStorage.setItem("faceDrooping", (droopingProb * 100).toFixed(1));
-localStorage.setItem("faceCompleted", "true");
+
     status.textContent = "✅ Analysis Complete";
 
 status.textContent = "🤖 Running TensorFlow model...";
@@ -226,6 +222,11 @@ ${(droopingProb*100).toFixed(1)}%
 </div>
 `;
 }
+localStorage.setItem("faceScore", faceScore.toFixed(1));
+localStorage.setItem("faceRisk", risk);
+localStorage.setItem("faceHealthy", (healthyProb * 100).toFixed(1));
+localStorage.setItem("faceDrooping", (droopingProb * 100).toFixed(1));
+localStorage.setItem("faceCompleted", "true");
 status.textContent = "✅ Analysis Complete";
 // ----------------------
 // Delay Function
