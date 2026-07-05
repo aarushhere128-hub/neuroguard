@@ -127,7 +127,7 @@ message;
 
 document.getElementById("recommendation").textContent =
 recommendation;
-
+sessionStorage.removeItem("assessmentStarted");
 // Debug
 
 console.log("Face:",faceScore);
