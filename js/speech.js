@@ -29,7 +29,55 @@ const targetSentence =
 if (DEMO_MODE) {
 
     startBtn.addEventListener("click", () => {
-    alert("Demo Mode Works!");
+
+    status.textContent = "🤖 Running Demo Assessment...";
+    startBtn.disabled = true;
+
+    setTimeout(() => {
+
+        // Generate a realistic score
+        const percent = (70 + Math.random() * 30).toFixed(1);
+
+        let score;
+        let risk;
+
+        if (percent >= 95) {
+            score = 10.0;
+            risk = "🟢 Normal";
+        }
+        else if (percent >= 80) {
+            score = 8.0;
+            risk = "🟡 Mild Difficulty";
+        }
+        else {
+            score = 6.0;
+            risk = "🟠 Possible Speech Impairment";
+        }
+
+        // Display results
+        recognizedText.textContent = targetSentence;
+        similarity.textContent = percent + "%";
+        speechScore.textContent = score.toFixed(1) + " / 10";
+        speechRisk.textContent = risk;
+
+        status.textContent = "✅ Demo Assessment Complete";
+
+        // Save to localStorage
+        localStorage.setItem("speechTranscript", targetSentence);
+        localStorage.setItem("speechSimilarity", percent);
+        localStorage.setItem("speechScore", score.toFixed(1));
+        localStorage.setItem("speechRisk", risk);
+        localStorage.setItem("speechCompleted", "true");
+
+        console.log("Speech demo saved.");
+
+        startBtn.disabled = false;
+
+        // Optional: automatically continue to results page
+        // window.location.href = "results.html";
+
+    }, 1500);
+
 });
 }
 
