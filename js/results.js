@@ -82,39 +82,32 @@ let risk;
 let message;
 let recommendation;
 
-if(overall >= 8){
+if (completed === 0) {
 
-    risk="🟢 Low Risk";
-
-    message=
-    "No significant abnormalities were detected during the FAST assessment.";
-
-    recommendation=
-    "Continue monitoring your health. If symptoms suddenly appear later, seek medical attention immediately.";
+    risk = "⚪ No Assessment";
+    message = "No FAST assessments have been completed yet.";
+    recommendation = "Please complete at least one assessment.";
 
 }
+else if (overall >= 8) {
 
-else if(overall >= 6){
-
-    risk="🟡 Moderate Risk";
-
-    message=
-    "Some FAST indicators require attention.";
-
-    recommendation=
-    "Consider consulting a healthcare professional. If symptoms are currently present, seek emergency care.";
+    risk = "🟢 Low Risk";
+    message = "No significant abnormalities were detected.";
+    recommendation = "Continue monitoring your health.";
 
 }
+else if (overall >= 6) {
 
-else{
+    risk = "🟡 Moderate Risk";
+    message = "Some FAST indicators require attention.";
+    recommendation = "Consult a healthcare professional.";
 
-    risk="🔴 High Risk";
+}
+else {
 
-    message=
-    "Multiple FAST indicators suggest possible stroke symptoms.";
-
-    recommendation=
-    "🚑 Seek emergency medical attention immediately. Every minute matters.";
+    risk = "🔴 High Risk";
+    message = "Multiple FAST indicators suggest possible stroke symptoms.";
+    recommendation = "🚑 Seek emergency medical attention immediately.";
 
 }
 
