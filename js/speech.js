@@ -3,7 +3,39 @@
 // =========================================
 
 // ===== CHANGE THIS WHEN YOU HAVE A MICROPHONE =====
-const DEMO_MODE = false;
+const demoToggle = document.getElementById("demoToggle");
+
+// Load previous preference
+demoToggle.checked =
+    localStorage.getItem("demoMode") === "true";
+
+demoToggle.addEventListener("change", () => {
+
+    localStorage.setItem(
+        "demoMode",
+        demoToggle.checked
+    );
+
+    location.reload();
+
+});
+
+const DEMO_MODE = demoToggle.checked;
+const demoLabel = document.getElementById("demoLabel");
+
+demoLabel.textContent =
+    DEMO_MODE ? "Demo Mode" : "Microphone Mode";
+
+demoToggle.addEventListener("change", () => {
+
+    localStorage.setItem(
+        "demoMode",
+        demoToggle.checked
+    );
+
+    location.reload();
+
+});
 console.log("Demo mode:", DEMO_MODE);
 // false = Real Speech Recognition
 // true = Random Demo Results
