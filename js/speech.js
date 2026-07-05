@@ -3,7 +3,7 @@
 // =========================================
 
 // ===== CHANGE THIS WHEN YOU HAVE A MICROPHONE =====
-const DEMO_MODE = true;
+const DEMO_MODE = false;
 console.log("Demo mode:", DEMO_MODE);
 // false = Real Speech Recognition
 // true = Random Demo Results
