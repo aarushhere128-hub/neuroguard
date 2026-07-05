@@ -2,23 +2,32 @@
 // NeuroGuard Results
 // =============================
 
+const faceCompleted =
+    localStorage.getItem("faceCompleted") === "true";
+
+const armCompleted =
+    localStorage.getItem("armCompleted") === "true";
+
+const speechCompleted =
+    localStorage.getItem("speechCompleted") === "true";
+
 const faceScore =
-Number(localStorage.getItem("faceScore")) || 0;
+    faceCompleted ? Number(localStorage.getItem("faceScore")) : 0;
 
 const armScore =
-Number(localStorage.getItem("armScore")) || 0;
+    armCompleted ? Number(localStorage.getItem("armScore")) : 0;
 
 const speechScore =
-Number(localStorage.getItem("speechScore")) || 0;
+    speechCompleted ? Number(localStorage.getItem("speechScore")) : 0;
 
 const faceRisk =
-localStorage.getItem("faceRisk") || "Not Completed";
+    faceCompleted ? localStorage.getItem("faceRisk") : "Not Completed";
 
 const armRisk =
-localStorage.getItem("armRisk") || "Not Completed";
+    armCompleted ? localStorage.getItem("armRisk") : "Not Completed";
 
 const speechRisk =
-localStorage.getItem("speechRisk") || "Not Completed";
+    speechCompleted ? localStorage.getItem("speechRisk") : "Not Completed";
 
 // Current time
 
@@ -43,11 +52,29 @@ speechRisk;
 
 // Calculate overall score
 
+let completed = 0;
+let total = 0;
+
+if (faceCompleted) {
+    total += faceScore;
+    completed++;
+}
+
+if (armCompleted) {
+    total += armScore;
+    completed++;
+}
+
+if (speechCompleted) {
+    total += speechScore;
+    completed++;
+}
+
 const overall =
-((faceScore + armScore + speechScore)/3).toFixed(1);
+    completed > 0 ? (total / completed).toFixed(1) : "--";
 
 document.getElementById("overallScore").textContent =
-overall + " / 10";
+    overall === "--" ? "-- / 10" : overall + " / 10";
 
 // Overall Risk
 
