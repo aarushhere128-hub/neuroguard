@@ -330,12 +330,35 @@ About
 <script src="js/language.js"></script>
 
 <script>
-// Load Face Test result
 window.addEventListener("DOMContentLoaded", () => {
 
-    const completed = localStorage.getItem("faceCompleted");
+    // =============================
+    // FACE TEST
+    // ============================
+    // =============================
+// Clear previous assessment once
+// =============================
+if (!sessionStorage.getItem("assessmentStarted")) {
 
-    if (completed === "true") {
+    sessionStorage.setItem("assessmentStarted", "true");
+
+    localStorage.removeItem("faceCompleted");
+    localStorage.removeItem("faceScore");
+    localStorage.removeItem("faceRisk");
+    localStorage.removeItem("faceHealthy");
+    localStorage.removeItem("faceDrooping");
+
+    localStorage.removeItem("armCompleted");
+    localStorage.removeItem("armScore");
+    localStorage.removeItem("armRisk");
+
+    localStorage.removeItem("speechCompleted");
+    localStorage.removeItem("speechScore");
+    localStorage.removeItem("speechRisk");
+    localStorage.removeItem("speechTranscript");
+    localStorage.removeItem("speechSimilarity");
+}
+    if (localStorage.getItem("faceCompleted") === "true") {
 
         const faceScore = parseFloat(localStorage.getItem("faceScore"));
         const risk = localStorage.getItem("faceRisk");
@@ -348,21 +371,82 @@ window.addEventListener("DOMContentLoaded", () => {
             ${risk}
         `;
 
-        if (faceScore >= 8) {
-            result.style.color = "#2ecc71";
-        } else if (faceScore >= 5) {
-            result.style.color = "#f39c12";
-        } else {
-            result.style.color = "#e74c3c";
-        }
+        result.style.color =
+            faceScore >= 8 ? "#2ecc71" :
+            faceScore >= 5 ? "#f39c12" :
+            "#e74c3c";
 
-        // Update progress bar
-        document.querySelector(".progress-fill").style.width = "50%";
-        document.getElementById("progressText").textContent = "Step 2 of 4";
-
-        // Change button
-        document.getElementById("faceButton").textContent = "✓ Face Test Complete";
+        document.getElementById("faceButton").textContent =
+            "✓ Face Test Complete";
     }
+
+    // =============================
+    // ARM TEST
+    // =============================
+    if (localStorage.getItem("armCompleted") === "true") {
+
+        const armScore = parseFloat(localStorage.getItem("armScore"));
+        const risk = localStorage.getItem("armRisk");
+
+        const result = document.getElementById("armResult");
+
+        result.innerHTML = `
+            <strong>${armScore.toFixed(1)}/10</strong>
+            <br>
+            ${risk}
+        `;
+
+        result.style.color =
+            armScore >= 8 ? "#2ecc71" :
+            armScore >= 5 ? "#f39c12" :
+            "#e74c3c";
+
+        document.getElementById("armButton").textContent =
+            "✓ Arm Test Complete";
+    }
+
+    // =============================
+    // SPEECH TEST
+    // =============================
+    if (localStorage.getItem("speechCompleted") === "true") {
+
+        const speechScore = parseFloat(localStorage.getItem("speechScore"));
+        const risk = localStorage.getItem("speechRisk");
+
+        const result = document.getElementById("speechResult");
+
+        result.innerHTML = `
+            <strong>${speechScore.toFixed(1)}/10</strong>
+            <br>
+            ${risk}
+        `;
+
+        result.style.color =
+            speechScore >= 8 ? "#2ecc71" :
+            speechScore >= 5 ? "#f39c12" :
+            "#e74c3c";
+
+        document.getElementById("speechButton").textContent =
+            "✓ Speech Test Complete";
+    }
+
+    // =============================
+    // PROGRESS BAR
+    // =============================
+
+    let completed = 0;
+
+    if (localStorage.getItem("faceCompleted") === "true") completed++;
+    if (localStorage.getItem("armCompleted") === "true") completed++;
+    if (localStorage.getItem("speechCompleted") === "true") completed++;
+
+    const percent = (completed / 3) * 100;
+
+    document.querySelector(".progress-fill").style.width =
+        percent + "%";
+
+    document.getElementById("progressText").textContent =
+        `Step ${completed + 1} of 4`;
 
 });
 </script>
