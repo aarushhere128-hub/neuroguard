@@ -175,7 +175,7 @@ Time
 Record when symptoms first appeared.
 </p>
 
-<input type="time">
+<input type="time" id="symptomTime">
 
 </div>
 
@@ -184,18 +184,6 @@ Record when symptoms first appeared.
 </section>
 
 <!-- ================= CAMERA ================= -->
-
-<section>
-
-<h2 id="cameraTitle">
-Live Camera Preview
-</h2>
-
-<div class="camera-placeholder" id="cameraText">
-📷 Camera Preview
-</div>
-
-</section>
 
 <!-- ================= RESULTS ================= -->
 
@@ -214,7 +202,7 @@ Assessment Summary
     <p id="faceResult">
         Not completed
     </p>
-    <a href="face_test.html">Start Face Test</a>
+    
 </div>
 
 <div>
@@ -447,6 +435,20 @@ if (!sessionStorage.getItem("assessmentStarted")) {
 
     document.getElementById("progressText").textContent =
         `Step ${completed + 1} of 4`;
+    // Load previously entered symptom time
+const symptomTimeInput = document.getElementById("symptomTime");
+
+symptomTimeInput.value =
+    localStorage.getItem("symptomTime") || "";
+
+symptomTimeInput.addEventListener("change", () => {
+
+    localStorage.setItem(
+        "symptomTime",
+        symptomTimeInput.value
+    );
+
+});
 
 });
 </script>
