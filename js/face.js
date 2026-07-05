@@ -215,13 +215,23 @@ ${risk}
 
 <div style="margin-top:15px;">
 Healthy :
-${(healthyProb*100).toFixed(1)}%
+${(healthyProb * 100).toFixed(1)}%
 <br>
 Drooping :
-${(droopingProb*100).toFixed(1)}%
+${(droopingProb * 100).toFixed(1)}%
 </div>
 `;
-}
+
+// Save results
+localStorage.setItem("faceScore", faceScore.toFixed(1));
+localStorage.setItem("faceRisk", risk);
+localStorage.setItem("faceHealthy", (healthyProb * 100).toFixed(1));
+localStorage.setItem("faceDrooping", (droopingProb * 100).toFixed(1));
+localStorage.setItem("faceCompleted", "true");
+
+status.textContent = "✅ Analysis Complete";
+
+} // <-- detect() ends here
 localStorage.setItem("faceScore", faceScore.toFixed(1));
 localStorage.setItem("faceRisk", risk);
 localStorage.setItem("faceHealthy", (healthyProb * 100).toFixed(1));
