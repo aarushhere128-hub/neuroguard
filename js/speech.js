@@ -51,8 +51,30 @@ const speechScore = document.getElementById("speechScore");
 const similarity = document.getElementById("similarity");
 const speechRisk = document.getElementById("speechRisk");
 
+// =========================================
+// Random Target Sentence
+// =========================================
+
+const sentences = [
+
+    "The sky is blue and the sun is bright today.",
+
+    "Today is a beautiful day to go outside.",
+
+    "Please say this sentence clearly and slowly.",
+
+    "NeuroGuard helps detect possible stroke symptoms.",
+
+    "Artificial intelligence can improve healthcare awareness."
+
+];
+
+// Pick one randomly
 const targetSentence =
-    "The sky is blue and the sun is bright today.";
+    sentences[Math.floor(Math.random() * sentences.length)];
+
+// Display it on the page
+document.getElementById("targetSentence").textContent = targetSentence;
 
 // =========================================
 // DEMO MODE
@@ -165,22 +187,22 @@ else {
             let score;
             let risk;
 
-            if (percent >= 95) {
-                score = 10;
-                risk = "🟢 Normal";
-            }
-            else if (percent >= 80) {
-                score = 8;
-                risk = "🟡 Mild Difficulty";
-            }
-            else if (percent >= 60) {
-                score = 6;
-                risk = "🟠 Possible Speech Impairment";
-            }
-            else {
-                score = 4;
-                risk = "🔴 Significant Speech Difficulty";
-            }
+            if (percent >= 90) {
+    score = 10;
+    risk = "🟢 Normal";
+}
+else if (percent >= 75) {
+    score = 8;
+    risk = "🟡 Mild Difficulty";
+}
+else if (percent >= 60) {
+    score = 6;
+    risk = "🟠 Possible Speech Impairment";
+}
+else {
+    score = 4;
+    risk = "🔴 Significant Speech Difficulty";
+}
 
             speechScore.textContent =
                 score.toFixed(1) + " / 10";
@@ -226,20 +248,34 @@ else {
 // Similarity Function
 // =========================================
 
-function calculateSimilarity(a, b) {
+function calculateSimilarity(spoken, target) {
 
-    const wordsA = a.split(" ");
-    const wordsB = b.split(" ");
+    const ignoreWords = ["a", "an", "the"];
+
+    spoken = spoken
+        .toLowerCase()
+        .replace(/[^\w\s]/g, "")
+        .trim();
+
+    target = target
+        .toLowerCase()
+        .replace(/[^\w\s]/g, "")
+        .trim();
+
+    const spokenWords = spoken.split(/\s+/);
+
+    const targetWords = target
+        .split(/\s+/)
+        .filter(word => !ignoreWords.includes(word));
 
     let matches = 0;
 
-    wordsB.forEach(word => {
+    targetWords.forEach(word => {
 
-        if (wordsA.includes(word))
+        if (spokenWords.includes(word))
             matches++;
 
     });
 
-    return (matches / wordsB.length) * 100;
-
+    return (matches / targetWords.length) * 100;
 }
