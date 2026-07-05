@@ -69,7 +69,15 @@ if (speechCompleted) {
     total += speechScore;
     completed++;
 }
+// Update completion icons
+document.getElementById("faceIcon").textContent =
+    faceCompleted ? "✅" : "❌";
 
+document.getElementById("armIcon").textContent =
+    armCompleted ? "✅" : "❌";
+
+document.getElementById("speechIcon").textContent =
+    speechCompleted ? "✅" : "❌";
 const overall =
     completed > 0 ? (total / completed).toFixed(1) : "--";
 
