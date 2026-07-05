@@ -438,17 +438,21 @@ if (!sessionStorage.getItem("assessmentStarted")) {
     // Load previously entered symptom time
 const symptomTimeInput = document.getElementById("symptomTime");
 
-symptomTimeInput.value =
-    localStorage.getItem("symptomTime") || "";
+if (symptomTimeInput) {
 
-symptomTimeInput.addEventListener("change", () => {
+    // Load saved time
+    symptomTimeInput.value = localStorage.getItem("symptomTime") || "";
 
-    localStorage.setItem(
-        "symptomTime",
-        symptomTimeInput.value
-    );
+    // Save every time the user types/selects
+    symptomTimeInput.oninput = function () {
+        localStorage.setItem("symptomTime", this.value);
+    };
 
-});
+    // Save again if they leave the field
+    symptomTimeInput.onchange = function () {
+        localStorage.setItem("symptomTime", this.value);
+    };
+};
 
 });
 </script>
