@@ -31,13 +31,8 @@ const speechRisk =
 
 // Current time
 
-const now = new Date();
-
 document.getElementById("timeResult").textContent =
-now.toLocaleTimeString([], {
-hour:"2-digit",
-minute:"2-digit"
-});
+    localStorage.getItem("symptomTime") || "Not Provided";
 
 // Show module risks
 
