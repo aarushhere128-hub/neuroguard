@@ -57,13 +57,9 @@ If stroke symptoms are suspected, seek emergency medical care immediately.
 
 <div class="card">
 
-<h2 id="riskLevel">
-Moderate Risk
-</h2>
+<h2 id="riskLevel"></h2>
 
-<p>
-Based on your responses, one or more FAST indicators may be present.
-</p>
+<p id="overallMessage"></p>
 
 </div>
 
@@ -77,30 +73,38 @@ FAST Summary
 
 <li>
 ✅ Face Assessment
-<span id="faceResult">Normal</span>
+<span id="faceResult"></span>
 </li>
 
 <li>
 ⚠ Arm Assessment
-<span id="armResult">Possible Weakness</span>
+<span id="armResult"></span>
 </li>
 
 <li>
 ⚠ Speech Assessment
-<span id="speechResult">Speech Difficulty</span>
+<span id="speechResult"></span>
 </li>
 
 <li>
 🕒 Symptom Time
-<span id="timeResult">
-09:42 AM
-</span>
+<span id="timeResult"></span>
 </li>
 
 </ul>
 
 </div>
+<div class="card">
 
+<h3>Overall NeuroGuard Score</h3>
+
+<h1 id="overallScore">-- / 10</h1>
+
+<p>
+Average of Face, Arm and Speech assessments.
+</p>
+
+</div>
 <div class="card">
 
 <h3>
@@ -210,6 +214,6 @@ Return Home
 <script src="js/components.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/app.js"></script>
-
+<script src="js/results.js"></script>
 </body>
 </html>
