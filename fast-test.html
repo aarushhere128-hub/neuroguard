@@ -453,7 +453,16 @@ if (symptomTimeInput) {
         localStorage.setItem("symptomTime", this.value);
     };
 };
+document.getElementById("reportButton").addEventListener("click", () => {
 
+    const symptomTime =
+        document.getElementById("symptomTime").value;
+
+    localStorage.setItem("symptomTime", symptomTime);
+
+    window.location.href = "results.html";
+
+});
 });
 </script>
 
