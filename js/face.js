@@ -224,7 +224,15 @@ ${(droopingProb * 100).toFixed(1)}%
 
 // Save results
 localStorage.setItem("faceScore", faceScore.toFixed(1));
-localStorage.setItem("faceRisk", risk);
+if (score >= 8) {
+    localStorage.setItem("faceRisk", "healthy");
+}
+else if (score >= 5) {
+    localStorage.setItem("faceRisk", "moderate");
+}
+else {
+    localStorage.setItem("faceRisk", "high");
+}
 localStorage.setItem("faceHealthy", (healthyProb * 100).toFixed(1));
 localStorage.setItem("faceDrooping", (droopingProb * 100).toFixed(1));
 localStorage.setItem("faceCompleted", "true");
