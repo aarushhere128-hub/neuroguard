@@ -354,21 +354,26 @@ const lang = localStorage.getItem("language") || "en";
 
 const riskTranslations = {
     en: {
-        healthy: "High Stroke Risk",
-        moderate: "Possible Drooping",
-        high: "Healthy"
+        "🟢 Low Risk": "Healthy",
+        "🟡 Mild Risk": "Possible Drooping",
+        "🟠 Moderate Risk": "Moderate Drooping",
+        "🔴 High Risk": "High Stroke Risk"
     },
     hi: {
-        healthy: "स्ट्रोक का उच्च जोखिम",
-        moderate: "संभावित चेहरे का झुकाव",
-        high: "सामान्य"
+        "🟢 Low Risk": "सामान्य",
+        "🟡 Mild Risk": "हल्का झुकाव",
+        "🟠 Moderate Risk": "मध्यम झुकाव",
+        "🔴 High Risk": "स्ट्रोक का उच्च जोखिम"
     },
     pa: {
-        healthy: "ਸਟ੍ਰੋਕ ਦਾ ਉੱਚ ਖਤਰ",
-        moderate: "ਚਿਹਰੇ ਦੇ ਝੁਕਣ ਦੀ ਸੰਭਾਵਨਾਾ",
-        high: "ਸਧਾਰਣ"
+        "🟢 Low Risk": "ਸਧਾਰਣ",
+        "🟡 Mild Risk": "ਹਲਕਾ ਝੁਕਾਅ",
+        "🟠 Moderate Risk": "ਦਰਮਿਆਨਾ ਝੁਕਾਅ",
+        "🔴 High Risk": "ਸਟ੍ਰੋਕ ਦਾ ਉੱਚ ਖਤਰਾ"
     }
 };
+
+const risk = riskTranslations[lang][riskKey];
 
 const risk = riskTranslations[lang][riskKey];
 
