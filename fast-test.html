@@ -345,104 +345,29 @@ if (!sessionStorage.getItem("assessmentStarted")) {
     localStorage.removeItem("speechTranscript");
     localStorage.removeItem("speechSimilarity");
 }
-    if (localStorage.getItem("faceCompleted") === "true") {
+   // =============================
+// FACE TEST
+// =============================
+if (localStorage.getItem("faceCompleted") === "true") {
+    document.getElementById("faceButton").textContent =
+        "✓ Face Test Complete";
+}
 
-        const faceScore = parseFloat(localStorage.getItem("faceScore"));
-        const riskKey = localStorage.getItem("faceRisk");
+// =============================
+// ARM TEST
+// =============================
+if (localStorage.getItem("armCompleted") === "true") {
+    document.getElementById("armButton").textContent =
+        "✓ Arm Test Complete";
+}
 
-const lang = localStorage.getItem("language") || "en";
-
-const riskTranslations = {
-    en: {
-        "🟢 Low Risk": "Healthy",
-        "🟡 Mild Risk": "Possible Drooping",
-        "🟠 Moderate Risk": "Moderate Drooping",
-        "🔴 High Risk": "High Stroke Risk"
-    },
-    hi: {
-        "🟢 Low Risk": "सामान्य",
-        "🟡 Mild Risk": "हल्का झुकाव",
-        "🟠 Moderate Risk": "मध्यम झुकाव",
-        "🔴 High Risk": "स्ट्रोक का उच्च जोखिम"
-    },
-    pa: {
-        "🟢 Low Risk": "ਸਧਾਰਣ",
-        "🟡 Mild Risk": "ਹਲਕਾ ਝੁਕਾਅ",
-        "🟠 Moderate Risk": "ਦਰਮਿਆਨਾ ਝੁਕਾਅ",
-        "🔴 High Risk": "ਸਟ੍ਰੋਕ ਦਾ ਉੱਚ ਖਤਰਾ"
-    }
-};
-
-
-
-const risk = riskTranslations[lang][riskKey];
-
-        const result = document.getElementById("faceResult");
-
-        result.innerHTML = `
-            <strong>${faceScore.toFixed(1)}/10</strong>
-            <br>
-            ${risk}
-        `;
-
-        result.style.color =
-            faceScore >= 8 ? "#2ecc71" :
-            faceScore >= 5 ? "#f39c12" :
-            "#e74c3c";
-
-        document.getElementById("faceButton").textContent =
-            "✓ Face Test Complete";
-    }
-
-    // =============================
-    // ARM TEST
-    // =============================
-    if (localStorage.getItem("armCompleted") === "true") {
-
-        const armScore = parseFloat(localStorage.getItem("armScore"));
-        const risk = localStorage.getItem("armRisk");
-
-        const result = document.getElementById("armResult");
-
-        result.innerHTML = `
-            <strong>${armScore.toFixed(1)}/10</strong>
-            <br>
-            ${risk}
-        `;
-
-        result.style.color =
-            armScore >= 8 ? "#2ecc71" :
-            armScore >= 5 ? "#f39c12" :
-            "#e74c3c";
-
-        document.getElementById("armButton").textContent =
-            "✓ Arm Test Complete";
-    }
-
-    // =============================
-    // SPEECH TEST
-    // =============================
-    if (localStorage.getItem("speechCompleted") === "true") {
-
-        const speechScore = parseFloat(localStorage.getItem("speechScore"));
-        const risk = localStorage.getItem("speechRisk");
-
-        const result = document.getElementById("speechResult");
-
-        result.innerHTML = `
-            <strong>${speechScore.toFixed(1)}/10</strong>
-            <br>
-            ${risk}
-        `;
-
-        result.style.color =
-            speechScore >= 8 ? "#2ecc71" :
-            speechScore >= 5 ? "#f39c12" :
-            "#e74c3c";
-
-        document.getElementById("speechButton").textContent =
-            "✓ Speech Test Complete";
-    }
+// =============================
+// SPEECH TEST
+// =============================
+if (localStorage.getItem("speechCompleted") === "true") {
+    document.getElementById("speechButton").textContent =
+        "✓ Speech Test Complete";
+}
 
     // =============================
     // PROGRESS BAR
