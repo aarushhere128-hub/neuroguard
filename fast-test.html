@@ -348,7 +348,29 @@ if (!sessionStorage.getItem("assessmentStarted")) {
     if (localStorage.getItem("faceCompleted") === "true") {
 
         const faceScore = parseFloat(localStorage.getItem("faceScore"));
-        const risk = localStorage.getItem("faceRisk");
+        const riskKey = localStorage.getItem("faceRisk");
+
+const lang = localStorage.getItem("language") || "en";
+
+const riskTranslations = {
+    en: {
+        healthy: "Healthy",
+        moderate: "Possible Drooping",
+        high: "High Stroke Risk"
+    },
+    hi: {
+        healthy: "सामान्य",
+        moderate: "संभावित चेहरे का झुकाव",
+        high: "स्ट्रोक का उच्च जोखिम"
+    },
+    pa: {
+        healthy: "ਸਧਾਰਣ",
+        moderate: "ਚਿਹਰੇ ਦੇ ਝੁਕਣ ਦੀ ਸੰਭਾਵਨਾ",
+        high: "ਸਟ੍ਰੋਕ ਦਾ ਉੱਚ ਖਤਰਾ"
+    }
+};
+
+const risk = riskTranslations[lang][riskKey];
 
         const result = document.getElementById("faceResult");
 
