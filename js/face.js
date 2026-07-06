@@ -227,6 +227,7 @@ localStorage.setItem("faceScore", faceScore.toFixed(1));
 console.log("Risk =", risk);
 console.log("Saving faceRisk...");
 localStorage.setItem("faceRisk", risk);
+console.log(localStorage.getItem("faceRisk"));
 localStorage.setItem("faceHealthy", (healthyProb * 100).toFixed(1));
 localStorage.setItem("faceDrooping", (droopingProb * 100).toFixed(1));
 localStorage.setItem("faceCompleted", "true");
