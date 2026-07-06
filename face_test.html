@@ -64,14 +64,30 @@
 
         <!-- Upload -->
 
-        <label
-            for="imageUpload"
-            class="upload-btn"
-            id="uploadLabel">
+       <div class="upload-options">
 
-            📤 Upload Image
+<label for="cameraInput" class="upload-btn">
+📷 Take Photo
+</label>
+<input
+    type="file"
+    id="cameraInput"
+    accept="image/*"
+    capture="environment"
+    style="display:none;"
+>
 
-        </label>
+<label for="imageUpload" class="upload-btn">
+📤 Upload Photo
+</label>
+<input
+    type="file"
+    id="imageUpload"
+    accept="image/*"
+    style="display:none;"
+>
+
+</div>
 
         <input
             type="file"
