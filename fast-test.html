@@ -18,6 +18,17 @@
 </head>
 
 <body>
+<script type="module">
+import { auth } from "./js/firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        alert("Please sign in before taking the FAST assessment.");
+        window.location.href = "login.html";
+    }
+});
+</script>
 
 <!-- ================= NAVBAR ================= -->
 
