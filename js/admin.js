@@ -49,6 +49,7 @@ else if (data.risk.includes("Low"))
     <td>${data.overallScore}</td>
     <td>${data.risk}</td>
     <td>${data.createdAt?.toDate().toLocaleString() || "-"}</td>
+    <td class="expand-arrow">▶</td>
 
 </tr>
 
