@@ -73,6 +73,8 @@ else if (data.risk.includes("Low"))
         tableBody.innerHTML += row;
         const summaryRows = document.querySelectorAll(".summary-row");
 
+let openedRow = null;
+
 summaryRows.forEach((summaryRow) => {
 
     summaryRow.onclick = () => {
@@ -80,12 +82,28 @@ summaryRows.forEach((summaryRow) => {
         const detailsRow = summaryRow.nextElementSibling;
         const arrow = summaryRow.querySelector(".expand-arrow");
 
+        // Close previously opened row
+        if (openedRow && openedRow !== detailsRow) {
+
+            openedRow.style.display = "none";
+
+            openedRow.previousElementSibling
+                .querySelector(".expand-arrow")
+                .textContent = "▶";
+        }
+
         if (detailsRow.style.display === "none") {
+
             detailsRow.style.display = "table-row";
-arrow.textContent = "▼";
+            arrow.textContent = "▼";
+            openedRow = detailsRow;
+
         } else {
+
             detailsRow.style.display = "none";
-arrow.textContent = "▶";
+            arrow.textContent = "▶";
+            openedRow = null;
+
         }
 
     };
