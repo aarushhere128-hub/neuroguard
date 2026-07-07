@@ -37,19 +37,37 @@ else if (data.risk.includes("Moderate"))
 else if (data.risk.includes("Low"))
     low++;
 
-        const row = `
-            <tr>
-                <td>${data.name}</td>
-                <td>${data.age}</td>
-                <td>${data.gender}</td>
-                <td>${data.faceScore}</td>
-                <td>${data.armScore}</td>
-                <td>${data.speechScore}</td>
-                <td>${data.overallScore}</td>
-                <td>${data.risk}</td>
-                <td>${data.createdAt?.toDate().toLocaleString() || "-"}</td>
-            </tr>
-        `;
+       const row = `
+<tr class="summary-row">
+
+    <td>${data.name}</td>
+    <td>${data.age}</td>
+    <td>${data.gender}</td>
+    <td>${data.faceScore}</td>
+    <td>${data.armScore}</td>
+    <td>${data.speechScore}</td>
+    <td>${data.overallScore}</td>
+    <td>${data.risk}</td>
+    <td>${data.createdAt?.toDate().toLocaleString() || "-"}</td>
+
+</tr>
+
+<tr class="details-row" style="display:none;">
+
+    <td colspan="9">
+
+        <h3>Patient Details</h3>
+
+        <p><strong>Email:</strong> ${data.email}</p>
+
+        <p><strong>Recommendation:</strong> ${data.recommendation}</p>
+
+        <p><strong>Symptom Time:</strong> ${data.symptomTime}</p>
+
+    </td>
+
+</tr>
+`;
 
         tableBody.innerHTML += row;
 
