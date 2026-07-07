@@ -8,7 +8,11 @@
     padding:0;
     box-sizing:border-box;
 }
-
+#authButtons{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
 html{
     scroll-behavior:smooth;
 }
