@@ -113,9 +113,44 @@ summaryRows.forEach((summaryRow) => {
     });
     document.getElementById("totalAssessments").textContent = total;
 document.getElementById("highRisk").textContent = high;
+    function filterAssessments(risk) {
+
+    const summaryRows = document.querySelectorAll(".summary-row");
+
+    summaryRows.forEach((summaryRow) => {
+
+        const detailsRow = summaryRow.nextElementSibling;
+
+        const rowRisk = summaryRow.dataset.risk;
+
+        const show =
+            risk === "all" || rowRisk === risk;
+
+        summaryRow.style.display = show ? "table-row" : "none";
+        detailsRow.style.display = "none";
+
+        summaryRow.querySelector(".expand-arrow").textContent = "▶";
+
+    });
+
+}
 document.getElementById("moderateRisk").textContent = moderate;
 document.getElementById("lowRisk").textContent = low;
+document.getElementById("totalCard").onclick = () => {
+    filterAssessments("all");
+};
 
+document.getElementById("lowCard").onclick = () => {
+    filterAssessments("🟢 Low Risk");
+};
+
+document.getElementById("moderateCard").onclick = () => {
+    filterAssessments("🟡 Moderate Risk");
+};
+
+document.getElementById("highCard").onclick = () => {
+    filterAssessments("🔴 High Risk");
+};
 }
 
 loadAssessments();
