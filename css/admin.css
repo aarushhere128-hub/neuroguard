@@ -111,3 +111,10 @@ tbody tr:hover{
     color:#0b6e4f;
     cursor:pointer;
 }
+.card.active{
+
+    border:3px solid #0b6e4f;
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(11,110,79,.25);
+
+}
