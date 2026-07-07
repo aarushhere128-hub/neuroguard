@@ -101,3 +101,11 @@ tbody tr:hover{
     color:#dc2626;
     font-weight:bold;
 }
+.expand-arrow{
+    width:40px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    color:#0b6e4f;
+    cursor:pointer;
+}
