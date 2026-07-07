@@ -149,6 +149,28 @@ onAuthStateChanged(auth, async (user) => {
     if (userDoc.exists()) {
         const userData = userDoc.data();
         console.log("User Data:", userData);
+        await addDoc(collection(db, "assessments"), {
+    uid: user.uid,
+
+    name: userData.name,
+    age: userData.age,
+    gender: userData.gender,
+    email: userData.email,
+
+    faceScore,
+    armScore,
+    speechScore,
+
+    overallScore: Number(overall),
+    risk,
+    recommendation,
+
+    symptomTime: localStorage.getItem("symptomTime") || "Not Provided",
+
+    createdAt: serverTimestamp()
+});
+
+console.log("✅ Assessment saved!");
     }
 });
 // Debug
