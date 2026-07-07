@@ -38,7 +38,7 @@ else if (data.risk.includes("Low"))
     low++;
 
        const row = `
-<tr class="summary-row">
+<tr class="summary-row" data-risk="${data.risk}">
 
     <td>${data.name}</td>
     <td>${data.age}</td>
@@ -53,7 +53,7 @@ else if (data.risk.includes("Low"))
 
 </tr>
 
-<tr class="details-row" style="display:none;">
+<tr class="details-row" data-risk="${data.risk}" style="display:none;">
 
     <td colspan="9">
 
