@@ -70,6 +70,23 @@ else if (data.risk.includes("Low"))
 `;
 
         tableBody.innerHTML += row;
+        const summaryRows = document.querySelectorAll(".summary-row");
+
+summaryRows.forEach((summaryRow) => {
+
+    summaryRow.onclick = () => {
+
+        const detailsRow = summaryRow.nextElementSibling;
+
+        if (detailsRow.style.display === "none") {
+            detailsRow.style.display = "table-row";
+        } else {
+            detailsRow.style.display = "none";
+        }
+
+    };
+
+});
 
     });
     document.getElementById("totalAssessments").textContent = total;
