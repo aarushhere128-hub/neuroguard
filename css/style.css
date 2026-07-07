@@ -752,3 +752,34 @@ html[data-theme="dark"] .comparison-table td{
     color:#fff;
     border-color:#444;
 }
+.profile-button{
+
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
+    background:#0b6e4f;
+
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:22px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.profile-button:hover{
+
+    transform:scale(1.08);
+
+    box-shadow:0 6px 15px rgba(11,110,79,.35);
+
+}
