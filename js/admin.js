@@ -113,10 +113,11 @@ summaryRows.forEach((summaryRow) => {
     });
     document.getElementById("totalAssessments").textContent = total;
 document.getElementById("highRisk").textContent = high;
-    function filterAssessments(risk) {
+    function filterAssessments(risk, activeCard) {
         document.querySelectorAll(".card").forEach(card=>{
     card.classList.remove("active");
 });
+        activeCard.classList.add("active");
 
     const summaryRows = document.querySelectorAll(".summary-row");
 
@@ -141,34 +142,34 @@ document.getElementById("moderateRisk").textContent = moderate;
 document.getElementById("lowRisk").textContent = low;
 document.getElementById("totalCard").onclick = () => {
 
-    document.getElementById("totalCard").classList.add("active");
 
-    filterAssessments("all");
+
+    filterAssessments("all", document.getElementById("totalCard"));
 
 };
  
 
 document.getElementById("lowCard").onclick = () => {
 
-    document.getElementById("lowCard").classList.add("active");
 
-    filterAssessments("🟢 Low Risk");
+
+    filterAssessments("🟢 Low Risk", document.getElementById("lowCard"));
 
 };
 
 document.getElementById("moderateCard").onclick = () => {
 
-    document.getElementById("moderateCard").classList.add("active");
 
-    filterAssessments("🟡 Moderate Risk");
+
+    filterAssessments("🟡 Moderate Risk", document.getElementById("moderateCard"));
 
 };
 
 document.getElementById("highCard").onclick = () => {
 
-    document.getElementById("highCard").classList.add("active");
 
-    filterAssessments("🔴 High Risk");
+
+    filterAssessments("🔴 High Risk", document.getElementById("highCard"));
 
 };
 }
