@@ -2,7 +2,9 @@
 // NeuroGuard Results
 // =============================
 import { auth, db } from "./firebase.js";
-
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 import {
     addDoc,
     collection,
@@ -134,15 +136,21 @@ sessionStorage.removeItem("assessmentStarted");
 const user = auth.currentUser;
 console.log("Current User:", user);
 
-if (user) {
+onAuthStateChanged(auth, async (user) => {
+    console.log("Current User:", user);
+
+    if (!user) {
+        console.log("No user is logged in.");
+        return;
+    }
+
     const userDoc = await getDoc(doc(db, "users", user.uid));
 
     if (userDoc.exists()) {
         const userData = userDoc.data();
-
         console.log("User Data:", userData);
     }
-}
+});
 // Debug
 
 console.log("Face:",faceScore);
