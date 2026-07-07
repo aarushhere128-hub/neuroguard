@@ -131,6 +131,17 @@ message;
 document.getElementById("recommendation").textContent =
 recommendation;
 sessionStorage.removeItem("assessmentStarted");
+const user = auth.currentUser;
+
+if (user) {
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+
+    if (userDoc.exists()) {
+        const userData = userDoc.data();
+
+        console.log("User Data:", userData);
+    }
+}
 // Debug
 
 console.log("Face:",faceScore);
