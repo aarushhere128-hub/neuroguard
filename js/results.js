@@ -1,7 +1,15 @@
 // =============================
 // NeuroGuard Results
 // =============================
+import { auth, db } from "./firebase.js";
 
+import {
+    addDoc,
+    collection,
+    serverTimestamp,
+    getDoc,
+    doc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 const faceCompleted =
     localStorage.getItem("faceCompleted") === "true";
 
