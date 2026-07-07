@@ -10,6 +10,7 @@ import {
 const tableBody = document.getElementById("tableBody");
 
 async function loadAssessments() {
+    let currentFilter = "all";
     let total = 0;
 let high = 0;
 let moderate = 0;
@@ -114,6 +115,7 @@ summaryRows.forEach((summaryRow) => {
     document.getElementById("totalAssessments").textContent = total;
 document.getElementById("highRisk").textContent = high;
     function filterAssessments(risk, activeCard) {
+        currentFilter = risk;
         document.querySelectorAll(".card").forEach(card=>{
     card.classList.remove("active");
 });
