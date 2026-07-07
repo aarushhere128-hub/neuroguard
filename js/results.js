@@ -149,6 +149,9 @@ onAuthStateChanged(auth, async (user) => {
     if (userDoc.exists()) {
         const userData = userDoc.data();
         console.log("User Data:", userData);
+        document.getElementById("patientName").textContent = userData.name;
+document.getElementById("patientAge").textContent = userData.age;
+document.getElementById("patientGender").textContent = userData.gender;
         await addDoc(collection(db, "assessments"), {
     uid: user.uid,
 
