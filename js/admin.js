@@ -10,7 +10,10 @@ import {
 const tableBody = document.getElementById("tableBody");
 
 async function loadAssessments() {
-
+    let total = 0;
+let high = 0;
+let moderate = 0;
+let low = 0;
     tableBody.innerHTML = "";
 
     const q = query(
@@ -23,6 +26,16 @@ async function loadAssessments() {
     snapshot.forEach((doc) => {
 
         const data = doc.data();
+        total++;
+
+if (data.risk.includes("High"))
+    high++;
+
+else if (data.risk.includes("Moderate"))
+    moderate++;
+
+else if (data.risk.includes("Low"))
+    low++;
 
         const row = `
             <tr>
@@ -41,6 +54,10 @@ async function loadAssessments() {
         tableBody.innerHTML += row;
 
     });
+    document.getElementById("totalAssessments").textContent = total;
+document.getElementById("highRisk").textContent = high;
+document.getElementById("moderateRisk").textContent = moderate;
+document.getElementById("lowRisk").textContent = low;
 
 }
 
