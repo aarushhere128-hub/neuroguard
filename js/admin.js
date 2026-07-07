@@ -78,11 +78,14 @@ summaryRows.forEach((summaryRow) => {
     summaryRow.onclick = () => {
 
         const detailsRow = summaryRow.nextElementSibling;
+        const arrow = summaryRow.querySelector(".expand-arrow");
 
         if (detailsRow.style.display === "none") {
             detailsRow.style.display = "table-row";
+arrow.textContent = "▼";
         } else {
             detailsRow.style.display = "none";
+arrow.textContent = "▶";
         }
 
     };
