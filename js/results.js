@@ -132,6 +132,7 @@ document.getElementById("recommendation").textContent =
 recommendation;
 sessionStorage.removeItem("assessmentStarted");
 const user = auth.currentUser;
+console.log("Current User:", user);
 
 if (user) {
     const userDoc = await getDoc(doc(db, "users", user.uid));
