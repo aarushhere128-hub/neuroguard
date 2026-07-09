@@ -5,6 +5,7 @@ const { FaceLandmarker, FilesetResolver } = vision;
 
 // Elements
 const upload = document.getElementById("imageUpload");
+const camera = document.getElementById("cameraInput");
 const preview = document.getElementById("preview");
 const score = document.getElementById("score");
 const analyzeBtn = document.getElementById("analyzeBtn");
@@ -85,7 +86,9 @@ upload.addEventListener("change", (e) => {
     uploadedImage.src = imageURL;
 
 });
-
+camera.addEventListener("change", (e) => {
+    alert("Camera selected!");
+});
 // ----------------------
 // Analyze Button
 // ----------------------
