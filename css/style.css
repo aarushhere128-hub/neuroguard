@@ -947,3 +947,48 @@ html[data-theme="dark"] .comparison-table td{
     background:#ffd2d2;
 
 }
+.patient-card{
+
+    margin:25px 0;
+
+    padding:18px;
+
+    background:#f8fafc;
+
+    border-radius:12px;
+
+}
+
+.patient-card h3{
+
+    margin-bottom:18px;
+
+    color:#0b6e4f;
+
+}
+
+.patient-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    border-bottom:1px solid #e5e7eb;
+
+}
+
+.patient-row:last-child{
+
+    border-bottom:none;
+
+}
+
+.patient-row span:last-child{
+
+    font-weight:600;
+
+}
