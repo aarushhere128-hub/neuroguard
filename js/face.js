@@ -87,7 +87,22 @@ upload.addEventListener("change", (e) => {
 
 });
 camera.addEventListener("change", (e) => {
-    alert("Camera selected!");
+
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const imageURL = URL.createObjectURL(file);
+
+    preview.src = imageURL;
+    preview.style.display = "block";
+
+    score.textContent = "Face Score : -";
+    status.textContent = "✅ Photo captured successfully.";
+    analyzeBtn.disabled = false;
+
+    uploadedImage = new Image();
+    uploadedImage.src = imageURL;
+
 });
 // ----------------------
 // Analyze Button
