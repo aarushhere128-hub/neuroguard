@@ -27,6 +27,14 @@ onAuthStateChanged(auth, async (user) => {
 
         document.getElementById("profileName").textContent = data.name;
         document.getElementById("profileEmail").textContent = data.email;
+        document.getElementById("profileAge").textContent = data.age;
+document.getElementById("profileGender").textContent = data.gender;
+
+document.getElementById("profileBloodGroup").textContent =
+    data.bloodGroup || "Not Set";
+
+document.getElementById("profileEmergency").textContent =
+    data.emergencyContact || "Not Set";
 
     }
 
