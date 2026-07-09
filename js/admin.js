@@ -175,5 +175,28 @@ document.getElementById("highCard").onclick = () => {
 
 };
 }
+async function loadUsers() {
 
+    const usersBody = document.getElementById("usersBody");
+    usersBody.innerHTML = "";
+
+    const snapshot = await getDocs(collection(db, "users"));
+
+    document.getElementById("totalUsers").textContent = snapshot.size;
+
+    snapshot.forEach((doc) => {
+
+        const user = doc.data();
+
+        usersBody.innerHTML += `
+            <tr>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>${user.age}</td>
+                <td>${user.gender}</td>
+            </tr>
+        `;
+    });
+}
 loadAssessments();
+loadUsers();
