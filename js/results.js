@@ -1,6 +1,7 @@
 // =============================
 // NeuroGuard Results
 // =============================
+import { calculateFinalRisk } from "./risk-engine.js";
 import { auth, db } from "./firebase.js";
 import {
     onAuthStateChanged
@@ -83,14 +84,42 @@ document.getElementById("armIcon").textContent =
 
 document.getElementById("speechIcon").textContent =
     speechCompleted ? "✅" : "❌";
-const overall =
-    completed > 0 ? (total / completed).toFixed(1) : "--";
+let overall =
+    completed > 0 ? Number((total / completed).toFixed(1)) : 0;
 
-document.getElementById("overallScore").textContent =
-    overall === "--" ? "-- / 10" : overall + " / 10";
+
 
 // Overall Risk
 
+
+sessionStorage.removeItem("assessmentStarted");
+const user = auth.currentUser;
+console.log("Current User:", user);
+
+onAuthStateChanged(auth, async (user) => {
+    console.log("Current User:", user);
+
+    if (!user) {
+        console.log("No user is logged in.");
+        return;
+    }
+
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    const healthDoc = await getDoc(
+    doc(db, "healthProfiles", user.uid)
+);
+
+const healthData = healthDoc.exists()
+    ? healthDoc.data()
+    : {};
+    if (completed > 0) {
+    overall = calculateFinalRisk(overall, healthData);
+    }
+    document.getElementById("overallScore").textContent =
+    completed === 0
+        ? "-- / 10"
+        : overall.toFixed(1) + " / 10";
+    
 let risk;
 let message;
 let recommendation;
@@ -132,20 +161,6 @@ message;
 
 document.getElementById("recommendation").textContent =
 recommendation;
-sessionStorage.removeItem("assessmentStarted");
-const user = auth.currentUser;
-console.log("Current User:", user);
-
-onAuthStateChanged(auth, async (user) => {
-    console.log("Current User:", user);
-
-    if (!user) {
-        console.log("No user is logged in.");
-        return;
-    }
-
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-
     if (userDoc.exists()) {
         const userData = userDoc.data();
         console.log("User Data:", userData);
@@ -164,7 +179,8 @@ document.getElementById("patientGender").textContent = userData.gender;
     armScore,
     speechScore,
 
-    overallScore: Number(overall),
+    aiScore: Number((total / completed).toFixed(1)),
+overallScore: overall,
     risk,
     recommendation,
 
