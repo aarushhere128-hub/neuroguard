@@ -33,6 +33,10 @@
         <h2 id="lowRisk">0</h2>
         <p>Low Risk</p>
     </div>
+    <div class="card" id="usersCard">
+    <h2 id="totalUsers">0</h2>
+    <p>Registered Users</p>
+    </div>
 
 </div>
 <div class="search-container">
@@ -65,7 +69,20 @@
             <!-- Rows will appear here -->
         </tbody>
     </table>
+<h2>Registered Users</h2>
 
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Gender</th>
+        </tr>
+    </thead>
+
+    <tbody id="usersBody"></tbody>
+</table>
     <script type="module" src="js/admin.js"></script>
 
 </body>
