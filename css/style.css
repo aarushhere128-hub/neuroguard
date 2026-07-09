@@ -853,3 +853,97 @@ html[data-theme="dark"] .comparison-table td{
     cursor:pointer;
 
 }
+.profile-header{
+
+    text-align:center;
+    margin-top:40px;
+    margin-bottom:30px;
+
+}
+
+.profile-avatar{
+
+    width:100px;
+    height:100px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#0b6e4f;
+
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:48px;
+
+    margin-bottom:15px;
+
+}
+
+.profile-header h2{
+
+    margin:10px 0 5px;
+
+}
+
+.profile-header p{
+
+    color:#666;
+
+}
+
+.profile-menu{
+
+    margin-top:30px;
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+
+}
+
+.profile-option{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#f4f4f4;
+
+    text-align:left;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.profile-option:hover{
+
+    background:#e8e8e8;
+
+}
+
+.logout{
+
+    background:#ffe5e5;
+
+    color:#c62828;
+
+}
+
+.logout:hover{
+
+    background:#ffd2d2;
+
+}
