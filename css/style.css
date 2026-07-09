@@ -787,3 +787,69 @@ html[data-theme="dark"] .comparison-table td{
     box-shadow:0 6px 15px rgba(11,110,79,.35);
 
 }
+/* ================= PROFILE OVERLAY ================= */
+
+.profile-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.35);
+
+    display:flex;
+    justify-content:flex-end;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s ease;
+
+    z-index:9999;
+
+}
+
+.profile-overlay.show{
+
+    opacity:1;
+    visibility:visible;
+
+}
+
+.profile-panel{
+
+    width:380px;
+    max-width:90%;
+
+    height:100%;
+
+    background:white;
+
+    padding:30px;
+
+    transform:translateX(100%);
+
+    transition:.3s ease;
+
+    box-shadow:-5px 0 25px rgba(0,0,0,.15);
+
+}
+
+.profile-overlay.show .profile-panel{
+
+    transform:translateX(0);
+
+}
+
+.close-profile{
+
+    float:right;
+
+    border:none;
+    background:none;
+
+    font-size:26px;
+
+    cursor:pointer;
+
+}
