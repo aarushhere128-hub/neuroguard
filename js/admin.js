@@ -177,15 +177,18 @@ document.getElementById("highCard").onclick = () => {
 }
 async function loadUsers() {
 
+    alert("loadUsers started");
+
     const usersBody = document.getElementById("usersBody");
     usersBody.innerHTML = "";
 
     const snapshot = await getDocs(collection(db, "users"));
 
+    alert("Users found: " + snapshot.size);
+
     document.getElementById("totalUsers").textContent = snapshot.size;
 
     snapshot.forEach((doc) => {
-
         const user = doc.data();
 
         usersBody.innerHTML += `
