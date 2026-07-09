@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Health Information | NeuroGuard</title>
+
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="health-page">
+
+<a href="index.html" class="back-button">← Back</a>
+
+<h1>Health Information</h1>
+
+<p class="subtitle">
+Help NeuroGuard provide a more personalized stroke risk assessment.
+</p>
+
+<!-- Stroke Risk Factors -->
+
+<div class="health-card">
+
+<h2>🧠 Stroke Risk Factors</h2>
+
+<div class="toggle-row">
+<span>Hypertension</span>
+<label class="switch">
+<input type="checkbox" id="hypertension">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>Diabetes</span>
+<label class="switch">
+<input type="checkbox" id="diabetes">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>Previous Stroke / TIA</span>
+<label class="switch">
+<input type="checkbox" id="previousStroke">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>Heart Disease</span>
+<label class="switch">
+<input type="checkbox" id="heartDisease">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>Atrial Fibrillation</span>
+<label class="switch">
+<input type="checkbox" id="atrialFibrillation">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>High Cholesterol</span>
+<label class="switch">
+<input type="checkbox" id="highCholesterol">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>Chronic Kidney Disease</span>
+<label class="switch">
+<input type="checkbox" id="kidneyDisease">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>Obesity</span>
+<label class="switch">
+<input type="checkbox" id="obesity">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>Current Smoker</span>
+<label class="switch">
+<input type="checkbox" id="smoker">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>Heavy Alcohol Consumption</span>
+<label class="switch">
+<input type="checkbox" id="alcohol">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="toggle-row">
+<span>Family History of Stroke</span>
+<label class="switch">
+<input type="checkbox" id="familyHistory">
+<span class="slider"></span>
+</label>
+</div>
+
+</div>
+
+<!-- Medical Information -->
+
+<div class="health-card">
+
+<h2>💊 Medical Information</h2>
+
+<label>Blood Group</label>
+
+<select id="bloodGroup">
+
+<option value="">Select</option>
+
+<option>A+</option>
+<option>A-</option>
+<option>B+</option>
+<option>B-</option>
+<option>AB+</option>
+<option>AB-</option>
+<option>O+</option>
+<option>O-</option>
+
+</select>
+
+<label>Current Medications</label>
+
+<textarea
+id="medications"
+rows="4"
+placeholder="List current medications..."></textarea>
+
+<label>Allergies</label>
+
+<textarea
+id="allergies"
+rows="4"
+placeholder="List allergies..."></textarea>
+
+</div>
+
+<!-- Emergency -->
+
+<div class="health-card">
+
+<h2>🚨 Emergency Information</h2>
+
+<label>Emergency Contact Name</label>
+
+<input
+type="text"
+id="emergencyName"
+placeholder="John Doe">
+
+<label>Relationship</label>
+
+<input
+type="text"
+id="relationship"
+placeholder="Father">
+
+<label>Emergency Contact Number</label>
+
+<input
+type="text"
+id="emergencyNumber"
+placeholder="+91 XXXXX XXXXX">
+
+</div>
+
+<button id="saveHealth" class="primary save-btn">
+
+💾 Save Changes
+
+</button>
+
+</div>
+
+</body>
+
+</html>
