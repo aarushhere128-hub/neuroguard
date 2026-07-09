@@ -15,6 +15,17 @@ onAuthStateChanged(auth, (user) => {
                 👤
             </div>
         `;
+        const profileButton = document.getElementById("profileButton");
+const profileOverlay = document.getElementById("profileOverlay");
+const closeProfile = document.getElementById("closeProfile");
+
+profileButton.addEventListener("click", () => {
+    profileOverlay.classList.add("show");
+});
+
+closeProfile.addEventListener("click", () => {
+    profileOverlay.classList.remove("show");
+});
 
     }
 
