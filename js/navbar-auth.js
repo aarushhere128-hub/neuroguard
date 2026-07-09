@@ -20,24 +20,30 @@ onAuthStateChanged(auth, async (user) => {
     `;
 
     const userDoc = await getDoc(doc(db, "users", user.uid));
+const healthDoc = await getDoc(doc(db, "healthProfiles", user.uid));
 
-    if (userDoc.exists()) {
+if (userDoc.exists()) {
 
-        const data = userDoc.data();
+    const data = userDoc.data();
 
-        document.getElementById("profileName").textContent = data.name;
-        document.getElementById("profileEmail").textContent = data.email;
-        document.getElementById("profileAge").textContent = data.age;
-document.getElementById("profileGender").textContent = data.gender;
+    document.getElementById("profileName").textContent = data.name;
+    document.getElementById("profileEmail").textContent = data.email;
+    document.getElementById("profileAge").textContent = data.age;
+    document.getElementById("profileGender").textContent = data.gender;
 
-document.getElementById("profileBloodGroup").textContent =
-    data.bloodGroup || "Not Set";
+}
 
-document.getElementById("profileEmergency").textContent =
-    data.emergencyContact || "Not Set";
+if (healthDoc.exists()) {
 
-    }
+    const health = healthDoc.data();
 
+    document.getElementById("profileBloodGroup").textContent =
+        health.bloodGroup || "Not Set";
+
+    document.getElementById("profileEmergency").textContent =
+        health.emergencyNumber || "Not Set";
+
+}
     const profileButton = document.getElementById("profileButton");
     const profileOverlay = document.getElementById("profileOverlay");
     const closeProfile = document.getElementById("closeProfile");
