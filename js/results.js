@@ -318,6 +318,12 @@ document.getElementById("downloadReport").addEventListener("click", () => {
         110,
         145
     );
+    pdf.text(
+    "Speech Score: " +
+    (localStorage.getItem("speechScore") || "-"),
+    20,
+    155
+);
 
    pdf.text(
     "Speech Risk: " +
