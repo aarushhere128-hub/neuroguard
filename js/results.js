@@ -348,26 +348,20 @@ document.getElementById("downloadReport").addEventListener("click", () => {
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(12);
 
-    pdf.text(
-        "Overall Score: " +
-        document.getElementById("overallScore").textContent,
-        20,
-        185
-    );
+    pdf.text("Overall Assessment", 20, 185);
 
-    const riskLevel = document
-    .getElementById("riskLevel")
-    .textContent
-    .replace("🔴 ", "")
-    .replace("🟡 ", "")
-    .replace("🟠 ", "")
-    .replace("🟢 ", "")
-    .replace("⚪ ", "");
+pdf.text(
+    "Overall Score: " +
+    document.getElementById("overallScore").textContent,
+    20,
+    195
+);
 
 pdf.text(
     "Risk Level: " + riskLevel,
+    
     20,
-    195
+    205
 );
 
     // ===========================
