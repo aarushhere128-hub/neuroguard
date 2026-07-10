@@ -292,7 +292,11 @@ document.getElementById("downloadReport").addEventListener("click", () => {
 
     pdf.text(
         "Face Risk: " +
-        (localStorage.getItem("faceRisk") || "-"),
+        ((localStorage.getItem("faceRisk") || "")
+.replace("🔴 ", "")
+.replace("🟠 ", "")
+.replace("🟡 ", "")
+.replace("🟢 ", "") || "-"),
         110,
         135
     );
@@ -306,14 +310,22 @@ document.getElementById("downloadReport").addEventListener("click", () => {
 
     pdf.text(
         "Arm Risk: " +
-        (localStorage.getItem("armRisk") || "-"),
+        ((localStorage.getItem("armRisk") || "")
+.replace("🔴 ", "")
+.replace("🟠 ", "")
+.replace("🟡 ", "")
+.replace("🟢 ", "") || "-"),
         110,
         145
     );
 
    pdf.text(
     "Speech Risk: " +
-    (localStorage.getItem("speechRisk") || "-"),
+    ((localStorage.getItem("speechRisk") || "")
+.replace("🔴 ", "")
+.replace("🟠 ", "")
+.replace("🟡 ", "")
+.replace("🟢 ", "") || "-"),
     110,
     155
 );
@@ -343,12 +355,20 @@ document.getElementById("downloadReport").addEventListener("click", () => {
         185
     );
 
-    pdf.text(
-        "Risk Level: " +
-        document.getElementById("riskLevel").textContent,
-        20,
-        195
-    );
+    const riskLevel = document
+    .getElementById("riskLevel")
+    .textContent
+    .replace("🔴 ", "")
+    .replace("🟡 ", "")
+    .replace("🟠 ", "")
+    .replace("🟢 ", "")
+    .replace("⚪ ", "");
+
+pdf.text(
+    "Risk Level: " + riskLevel,
+    20,
+    195
+);
 
     // ===========================
     // AI Interpretation
