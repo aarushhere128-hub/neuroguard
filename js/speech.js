@@ -90,7 +90,7 @@ if (DEMO_MODE) {
     setTimeout(() => {
 
         // Generate a realistic score
-        const percent = (70 + Math.random() * 30).toFixed(1);
+        const percent = (60 + Math.random() * 30).toFixed(1);
 
         let score;
         let risk;
@@ -101,11 +101,11 @@ if (DEMO_MODE) {
         }
         else if (percent >= 80) {
             score = 8.0;
-            risk = "🟡 Mild Difficulty";
+            risk = "🟡 Mild Speech Difficulty";
         }
         else {
             score = 6.0;
-            risk = "🟠 Possible Speech Impairment";
+            risk = "🔴 Possible Speech Impairment";
         }
 
         // Display results
