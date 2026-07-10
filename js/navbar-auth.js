@@ -1,7 +1,7 @@
 import { auth, db } from "./firebase.js";
-
 import {
-    onAuthStateChanged
+    onAuthStateChanged,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 import {
     doc,
@@ -57,5 +57,23 @@ if (healthDoc.exists()) {
     });
 
 }
+
+});
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+
+    try {
+
+        await signOut(auth);
+
+        localStorage.clear();
+        sessionStorage.clear();
+
+        window.location.href = "login.html";
+
+    } catch (error) {
+
+        alert("Logout failed: " + error.message);
+
+    }
 
 });
