@@ -198,7 +198,7 @@ console.log("Face:",faceScore);
 console.log("Arm:",armScore);
 console.log("Speech:",speechScore);
 console.log("Overall:",overall);
-document.getElementById("downloadReport").addEventListener("click", () => {
+document.getElementById("downloadReport").addEventListener("click", async () => {
 
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF();
