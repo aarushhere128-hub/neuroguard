@@ -39,6 +39,18 @@
     </div>
 
 </div>
+    <div class="admin-tabs">
+
+    <button id="assessmentTab" class="tab-btn active">
+        📋 Assessments
+    </button>
+
+    <button id="usersTab" class="tab-btn">
+        👥 Users
+    </button>
+
+    </div>
+    
 <div class="search-container">
 
     <input
@@ -47,6 +59,7 @@
         placeholder="🔍 Search by patient name or email...">
 
 </div>
+    <div id="assessmentSection">
 <h2>Patient Assessments</h2>
 
     <table border="1" cellpadding="10" cellspacing="0" id="assessmentTable">
@@ -57,8 +70,7 @@
                 <th>Gender</th>
                 <th>Face</th>
                 <th>Arm</th>
-                <th>Speech</th>
-                <th>Overall</th>
+                          <th>Overall</th>
                 <th>Risk</th>
                 <th>Date</th>
                 <th></th>
@@ -69,6 +81,8 @@
             <!-- Rows will appear here -->
         </tbody>
     </table>
+    </div>
+    <div id="usersSection">
 <h2>Registered Users</h2>
 
 <table border="1" cellpadding="10" cellspacing="0">
@@ -83,6 +97,7 @@
 
     <tbody id="usersBody"></tbody>
 </table>
+    </div>
     <script type="module" src="js/admin.js"></script>
 
 </body>
