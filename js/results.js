@@ -201,11 +201,23 @@ console.log("Overall:",overall);
 document.getElementById("downloadReport").addEventListener("click", () => {
 
     const { jsPDF } = window.jspdf;
-
     const pdf = new jsPDF();
 
-    pdf.text("NeuroGuard PDF Test", 20, 20);
+    pdf.setFontSize(20);
+    pdf.text("NeuroGuard Stroke Assessment Report", 20, 20);
 
-    pdf.save("NeuroGuard-Test.pdf");
+    pdf.setFontSize(12);
+    pdf.text("Generated on: " + new Date().toLocaleString(), 20, 30);
+    pdf.setFontSize(14);
+pdf.text("Patient Information", 20, 45);
+
+pdf.setFontSize(12);
+pdf.text("Name: " + document.getElementById("patientName").textContent, 20, 55);
+
+pdf.text("Age: " + document.getElementById("patientAge").textContent, 20, 65);
+
+pdf.text("Gender: " + document.getElementById("patientGender").textContent, 20, 75);
+
+    pdf.save("NeuroGuard-Report.pdf");
 
 });
