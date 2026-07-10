@@ -86,6 +86,7 @@ document.getElementById("speechIcon").textContent =
     speechCompleted ? "✅" : "❌";
 let overall =
     completed > 0 ? Number((total / completed).toFixed(1)) : 0;
+const baseScore = overall;
 
 
 
@@ -114,6 +115,11 @@ const healthData = healthDoc.exists()
     : {};
     if (completed > 0) {
     overall = calculateFinalRisk(overall, healthData);
+        document.getElementById("baseScore").textContent =
+    baseScore.toFixed(1) + " / 10";
+
+document.getElementById("personalizedScore").textContent =
+    overall.toFixed(1) + " / 10";
     }
     document.getElementById("overallScore").textContent =
     completed === 0
