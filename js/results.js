@@ -330,12 +330,7 @@ document.getElementById("downloadReport").addEventListener("click", () => {
     155
 );
 
-    pdf.text(
-        "Speech Risk: " +
-        (localStorage.getElementById ? "-" : (localStorage.getItem("speechRisk") || "-")),
-        110,
-        155
-    );
+   
 
     // ===========================
     // Overall Assessment
@@ -348,7 +343,7 @@ document.getElementById("downloadReport").addEventListener("click", () => {
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(12);
 
-    pdf.text("Overall Assessment", 20, 185);
+
 
 pdf.text(
     "Overall Score: " +
@@ -357,9 +352,17 @@ pdf.text(
     195
 );
 
+const riskLevel = document
+    .getElementById("riskLevel")
+    .textContent
+    .replace("🔴 ", "")
+    .replace("🟡 ", "")
+    .replace("🟠 ", "")
+    .replace("🟢 ", "")
+    .replace("⚪ ", "");
+
 pdf.text(
     "Risk Level: " + riskLevel,
-    
     20,
     205
 );
