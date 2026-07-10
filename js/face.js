@@ -216,7 +216,7 @@ else if (droopingProb >= 0.40) {
     color = "#d4a100";
 }
 else {
-    risk = "🟢 Low Risk";
+    risk = "🟢 Normal";
     color = "green";
 }
 
