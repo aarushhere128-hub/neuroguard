@@ -270,13 +270,13 @@ if (user) {
     "Blood Group: " +
     (healthData.bloodGroup || "Not Set"),
     20,
-    65
+    85
 );
 pdf.text(
     "Emergency Contact: " +
     (healthData.emergencyContact || "Not Set"),
     20,
-    75
+    95
 );
 
     pdf.text(
