@@ -202,6 +202,21 @@ document.getElementById("downloadReport").addEventListener("click", () => {
 
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF();
+    const user = auth.currentUser;
+
+let healthData = {};
+
+if (user) {
+
+    const healthDoc = await getDoc(
+        doc(db, "healthProfiles", user.uid)
+    );
+
+    if (healthDoc.exists()) {
+        healthData = healthDoc.data();
+    }
+
+}
 
     // ===========================
     // Title
@@ -252,18 +267,17 @@ document.getElementById("downloadReport").addEventListener("click", () => {
     );
 
     pdf.text(
-        "Blood Group: " +
-        (localStorage.getItem("bloodGroup") || "Not Set"),
-        20,
-        85
-    );
-
-    pdf.text(
-        "Emergency Contact: " +
-        (localStorage.getItem("emergencyContact") || "Not Set"),
-        20,
-        95
-    );
+    "Blood Group: " +
+    (healthData.bloodGroup || "Not Set"),
+    20,
+    65
+);
+pdf.text(
+    "Emergency Contact: " +
+    (healthData.emergencyContact || "Not Set"),
+    20,
+    75
+);
 
     pdf.text(
         "Symptom Started: " +
