@@ -198,3 +198,14 @@ console.log("Face:",faceScore);
 console.log("Arm:",armScore);
 console.log("Speech:",speechScore);
 console.log("Overall:",overall);
+document.getElementById("downloadReport").addEventListener("click", () => {
+
+    const { jsPDF } = window.jspdf;
+
+    const pdf = new jsPDF();
+
+    pdf.text("NeuroGuard PDF Test", 20, 20);
+
+    pdf.save("NeuroGuard-Test.pdf");
+
+});
