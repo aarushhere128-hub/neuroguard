@@ -1,7 +1,10 @@
 import { auth, db } from "./firebase.js";
 import {
     onAuthStateChanged,
-    signOut
+    signOut,
+    updatePassword,
+    EmailAuthProvider,
+    reauthenticateWithCredential
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 import {
     doc,
@@ -57,7 +60,43 @@ if (healthDoc.exists()) {
     });
 
 }
+const changePasswordBtn = document.getElementById("changePasswordBtn");
 
+changePasswordBtn.addEventListener("click", async () => {
+
+    const currentPassword = prompt("Enter your current password:");
+
+    if (!currentPassword) return;
+
+    const newPassword = prompt("Enter your new password (minimum 6 characters):");
+
+    if (!newPassword) return;
+
+    if (newPassword.length < 6) {
+        alert("Password must be at least 6 characters.");
+        return;
+    }
+
+    try {
+
+        const credential = EmailAuthProvider.credential(
+            user.email,
+            currentPassword
+        );
+
+        await reauthenticateWithCredential(user, credential);
+
+        await updatePassword(user, newPassword);
+
+        alert("✅ Password changed successfully!");
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
+
+});
 });
 document.getElementById("logoutBtn").addEventListener("click", async () => {
 
