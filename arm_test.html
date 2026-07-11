@@ -53,8 +53,8 @@
 </button>
 
 <a href="fast-test.html">
-<button class="secondary">
-Back
+<button class="secondary" id="backBtn">
+    Back
 </button>
 </a>
 
@@ -70,7 +70,7 @@ Back
 
 <div class="hero-left">
 
-<div class="badge">
+<div class="badge" id="armBadge">
 💪 FAST Arm Assessment
 </div>
 
@@ -100,21 +100,16 @@ NeuroGuard will estimate whether both arms appear level.
 
 <div class="card">
 
-<h3>📋 Instructions</h3>
+<h3 id="instructionsTitle">📋 Instructions</h3>
 
 <ol class="instruction-list">
 
-<li>Face the camera.</li>
-
-<li>Stand straight.</li>
-
-<li>Raise both arms horizontally.</li>
-
-<li>Keep elbows straight.</li>
-
-<li>Ensure both hands are visible.</li>
-
-<li>Upload the image below.</li>
+<li id="instruction1">Face the camera.</li>
+<li id="instruction2">Stand straight.</li>
+<li id="instruction3">Raise both arms horizontally.</li>
+<li id="instruction4">Keep elbows straight.</li>
+<li id="instruction5">Ensure both hands are visible.</li>
+<li id="instruction6">Upload the image below.</li>
 
 </ol>
 
@@ -174,7 +169,7 @@ Analyze Arms
 
 <div class="result-card">
 
-<h2>
+<h2 id="resultTitle">
 Assessment Result
 </h2>
 
@@ -186,10 +181,8 @@ Waiting for image...
 
 <hr>
 
-<h3>
-
+<h3 id="armScoreTitle">
 Arm Score
-
 </h3>
 
 <p id="score">
@@ -200,12 +193,9 @@ Arm Score
 
 <hr>
 
-<h3>
-
+<h3 id="riskTitle">
 Risk Level
-
 </h3>
-
 <p id="risk">
 
 Pending
@@ -214,10 +204,8 @@ Pending
 
 <hr>
 
-<h3>
-
+<h3 id="leftWristTitle">
 Left Wrist Height
-
 </h3>
 
 <p id="leftWrist">
@@ -228,10 +216,8 @@ Left Wrist Height
 
 <hr>
 
-<h3>
-
+<h3 id="rightWristTitle">
 Right Wrist Height
-
 </h3>
 
 <p id="rightWrist">
@@ -242,12 +228,9 @@ Right Wrist Height
 
 <hr>
 
-<h3>
-
+<h3 id="differenceTitle">
 Difference
-
 </h3>
-
 <p id="difference">
 
 -
@@ -264,23 +247,17 @@ Difference
 
 <div class="card">
 
-<h2>
-
+<h2 id="educationTitle">
 What does this test check?
-
 </h2>
 
-<p>
-
+<p id="educationDescription">
 During the FAST stroke assessment,
 difficulty raising one arm or one arm drifting downward
 may indicate possible muscle weakness.
-
 This AI assessment is designed only for educational
 screening and is NOT a medical diagnosis.
-
 If you suspect a stroke, seek emergency medical care immediately.
-
 </p>
 
 </div>
@@ -292,41 +269,34 @@ If you suspect a stroke, seek emergency medical care immediately.
 <footer>
 
 <div>
-
-<h3>
-
+<h3 id="footerLogo">
 NeuroGuard
-
 </h3>
 
-<p>
-
+<p id="footerTagline">
 AI Assisted Stroke Awareness Platform
-
 </p>
 
 </div>
 
 <div>
 
-<a href="index.html">
+<a href="index.html" id="footerHome">
 Home
 </a>
 
-<a href="#">
+<a href="privacy.html" id="footerPrivacy">
 Privacy
 </a>
 
-<a href="#">
+<a href="#" id="footerAbout">
 About
 </a>
 
 </div>
 
-<p>
-
+<p id="footerCopyright">
 © 2026 NeuroGuard
-
 </p>
 
 </footer>
