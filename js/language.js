@@ -41,7 +41,7 @@ footerTagline: "AI Assisted Stroke Awareness Platform",
 footerHome: "Home",
 footerPrivacy: "Privacy",
 footerAbout: "About",
-footerCopyright: "© 2026 NeuroGuard"
+footerCopyright: "© 2026 NeuroGuard",
 
         // Hero
         badgeText: "AI-Assisted Stroke Awareness Platform",
