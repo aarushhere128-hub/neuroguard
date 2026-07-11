@@ -11,6 +11,37 @@ const translations = {
         navtech: "Technology",
         navcompare: "Comparison",
         navcontact: "Contact",
+        backBtn: "Back",
+armBadge: "💪 FAST Arm Assessment",
+
+instructionsTitle: "📋 Instructions",
+instruction1: "Face the camera.",
+instruction2: "Stand straight.",
+instruction3: "Raise both arms horizontally.",
+instruction4: "Keep elbows straight.",
+instruction5: "Ensure both hands are visible.",
+instruction6: "Upload the image below.",
+
+analyzeBtn: "Analyze Arms",
+
+resultTitle: "Assessment Result",
+status: "Waiting for image...",
+
+armScoreTitle: "Arm Score",
+riskTitle: "Risk Level",
+leftWristTitle: "Left Wrist Height",
+rightWristTitle: "Right Wrist Height",
+differenceTitle: "Difference",
+
+educationTitle: "What does this test check?",
+educationDescription: "During the FAST stroke assessment, difficulty raising one arm or one arm drifting downward may indicate possible muscle weakness. This AI assessment is designed only for educational screening and is NOT a medical diagnosis. If you suspect a stroke, seek emergency medical care immediately.",
+
+footerLogo: "NeuroGuard",
+footerTagline: "AI Assisted Stroke Awareness Platform",
+footerHome: "Home",
+footerPrivacy: "Privacy",
+footerAbout: "About",
+footerCopyright: "© 2026 NeuroGuard"
 
         // Hero
         badgeText: "AI-Assisted Stroke Awareness Platform",
@@ -186,6 +217,37 @@ footerCopyright: "© 2026 NeuroGuard • AI-Assisted Stroke Awareness Platform",
         navtech: "तकनीक",
         navcompare: "तुलना",
         navcontact: "संपर्क",
+        backBtn: "वापस",
+armBadge: "💪 FAST भुजा परीक्षण",
+
+instructionsTitle: "📋 निर्देश",
+instruction1: "कैमरे की ओर देखें।",
+instruction2: "सीधे खड़े हों।",
+instruction3: "दोनों भुजाओं को कंधों की ऊँचाई तक उठाएँ।",
+instruction4: "कोहनियों को सीधा रखें।",
+instruction5: "सुनिश्चित करें कि दोनों हाथ दिखाई दे रहे हों।",
+instruction6: "नीचे अपनी तस्वीर अपलोड करें।",
+
+analyzeBtn: "भुजाओं का विश्लेषण करें",
+
+resultTitle: "परीक्षण परिणाम",
+status: "चित्र की प्रतीक्षा की जा रही है...",
+
+armScoreTitle: "भुजा स्कोर",
+riskTitle: "जोखिम स्तर",
+leftWristTitle: "बाईं कलाई की ऊँचाई",
+rightWristTitle: "दाईं कलाई की ऊँचाई",
+differenceTitle: "अंतर",
+
+educationTitle: "यह परीक्षण क्या जाँचता है?",
+educationDescription: "FAST स्ट्रोक परीक्षण के दौरान यदि एक भुजा उठाने में कठिनाई हो या एक भुजा नीचे की ओर झुक जाए, तो यह मांसपेशियों की कमजोरी का संकेत हो सकता है। यह AI परीक्षण केवल शैक्षिक स्क्रीनिंग के लिए है और यह चिकित्सीय निदान नहीं है। यदि आपको स्ट्रोक का संदेह हो, तो तुरंत आपातकालीन चिकित्सा सहायता प्राप्त करें।",
+
+footerLogo: "NeuroGuard",
+footerTagline: "एआई आधारित स्ट्रोक जागरूकता मंच",
+footerHome: "होम",
+footerPrivacy: "गोपनीयता",
+footerAbout: "हमारे बारे में",
+footerCopyright: "© 2026 NeuroGuard"
 // Contact Page
 logoText: "🛡️ NeuroGuard",
 
@@ -402,6 +464,37 @@ fastTitle: "⏱ FAST ਯਾਦ ਰੱਖੋ",
 fastDesc: "ਚਿਹਰਾ ਝੁਕਣਾ<br>ਬਾਂਹ ਦੀ ਕਮਜ਼ੋਰੀ<br>ਬੋਲਣ ਵਿੱਚ ਮੁਸ਼ਕਲ<br>ਤੁਰੰਤ ਐਮਰਜੈਂਸੀ ਸੇਵਾ ਨੂੰ ਕਾਲ ਕਰੋ",
 
 messageTitle: "ਸਾਨੂੰ ਸੁਨੇਹਾ ਭੇਜੋ",
+        backBtn: "ਵਾਪਸ",
+armBadge: "💪 FAST ਬਾਂਹ ਜਾਂਚ",
+
+instructionsTitle: "📋 ਹਦਾਇਤਾਂ",
+instruction1: "ਕੈਮਰੇ ਵੱਲ ਮੂੰਹ ਕਰਕੇ ਖੜੇ ਹੋਵੋ।",
+instruction2: "ਸਿੱਧੇ ਖੜੇ ਰਹੋ।",
+instruction3: "ਦੋਵੇਂ ਬਾਂਹਾਂ ਮੋਢਿਆਂ ਦੀ ਉਚਾਈ ਤੱਕ ਚੁੱਕੋ।",
+instruction4: "ਕੋਹਣੀਆਂ ਸਿੱਧੀਆਂ ਰੱਖੋ।",
+instruction5: "ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਦੋਵੇਂ ਹੱਥ ਸਪੱਸ਼ਟ ਦਿਖ ਰਹੇ ਹਨ।",
+instruction6: "ਹੇਠਾਂ ਆਪਣੀ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ।",
+
+analyzeBtn: "ਬਾਂਹਾਂ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰੋ",
+
+resultTitle: "ਜਾਂਚ ਦਾ ਨਤੀਜਾ",
+status: "ਤਸਵੀਰ ਦੀ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
+
+armScoreTitle: "ਬਾਂਹ ਸਕੋਰ",
+riskTitle: "ਖਤਰੇ ਦਾ ਪੱਧਰ",
+leftWristTitle: "ਖੱਬੀ ਕਲਾਈ ਦੀ ਉਚਾਈ",
+rightWristTitle: "ਸੱਜੀ ਕਲਾਈ ਦੀ ਉਚਾਈ",
+differenceTitle: "ਫਰਕ",
+
+educationTitle: "ਇਹ ਜਾਂਚ ਕੀ ਕਰਦੀ ਹੈ?",
+educationDescription: "FAST ਸਟ੍ਰੋਕ ਜਾਂਚ ਦੌਰਾਨ ਜੇ ਇੱਕ ਬਾਂਹ ਚੁੱਕਣ ਵਿੱਚ ਮੁਸ਼ਕਲ ਆਵੇ ਜਾਂ ਇੱਕ ਬਾਂਹ ਹੇਠਾਂ ਝੁਕਣ ਲੱਗੇ, ਤਾਂ ਇਹ ਮਾਸਪੇਸ਼ੀ ਦੀ ਕਮਜ਼ੋਰੀ ਦਾ ਸੰਕੇਤ ਹੋ ਸਕਦਾ ਹੈ। ਇਹ AI ਜਾਂਚ ਸਿਰਫ਼ ਸਿੱਖਿਆਤਮਕ ਸਕ੍ਰੀਨਿੰਗ ਲਈ ਹੈ ਅਤੇ ਇਹ ਕੋਈ ਮੈਡੀਕਲ ਨਿਦਾਨ ਨਹੀਂ ਹੈ। ਜੇ ਤੁਹਾਨੂੰ ਸਟ੍ਰੋਕ ਦਾ ਸ਼ੱਕ ਹੋਵੇ ਤਾਂ ਤੁਰੰਤ ਐਮਰਜੈਂਸੀ ਮੈਡੀਕਲ ਸਹਾਇਤਾ ਲਵੋ।",
+
+footerLogo: "NeuroGuard",
+footerTagline: "ਏਆਈ ਆਧਾਰਿਤ ਸਟ੍ਰੋਕ ਜਾਗਰੂਕਤਾ ਪਲੇਟਫਾਰਮ",
+footerHome: "ਮੁੱਖ ਪੰਨਾ",
+footerPrivacy: "ਪਰਾਈਵੇਸੀ",
+footerAbout: "ਸਾਡੇ ਬਾਰੇ",
+footerCopyright: "© 2026 NeuroGuard"
 
 nameInput: "ਤੁਹਾਡਾ ਨਾਮ",
 emailInput: "ਈਮੇਲ ਪਤਾ",
