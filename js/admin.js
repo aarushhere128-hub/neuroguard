@@ -4,7 +4,8 @@ import {
     collection,
     getDocs,
     query,
-    orderBy
+    orderBy,
+    onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const tableBody = document.getElementById("tableBody");
@@ -22,7 +23,14 @@ let low = 0;
         orderBy("createdAt", "desc")
     );
 
-    const snapshot = await getDocs(q);
+    onSnapshot(q, (snapshot) => {
+
+    tableBody.innerHTML = "";
+
+    total = 0;
+    high = 0;
+    moderate = 0;
+    low = 0;
 
     snapshot.forEach((doc) => {
 
@@ -174,6 +182,7 @@ document.getElementById("highCard").onclick = () => {
     filterAssessments("🔴 High Risk", document.getElementById("highCard"));
 
 };
+        });
 }
 async function loadUsers() {
 
