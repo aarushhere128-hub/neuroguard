@@ -201,3 +201,28 @@ async function loadUsers() {
 }
 loadAssessments();
 loadUsers();
+const assessmentTab = document.getElementById("assessmentTab");
+const usersTab = document.getElementById("usersTab");
+
+const assessmentSection = document.getElementById("assessmentSection");
+const usersSection = document.getElementById("usersSection");
+
+assessmentTab.addEventListener("click", () => {
+
+    assessmentSection.style.display = "block";
+    usersSection.style.display = "none";
+
+    assessmentTab.classList.add("active");
+    usersTab.classList.remove("active");
+
+});
+
+usersTab.addEventListener("click", () => {
+
+    assessmentSection.style.display = "none";
+    usersSection.style.display = "block";
+
+    usersTab.classList.add("active");
+    assessmentTab.classList.remove("active");
+
+});
