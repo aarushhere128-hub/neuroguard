@@ -168,6 +168,7 @@ const translations = {
         heading:"Instructions",
 
         uploadBtn:"📤 Upload Image",
+        cameraBtn: "📷 Take Photo",
 
         analyzeBtn:"🤖 Analyze Face",
 
@@ -192,6 +193,7 @@ const translations = {
         subtitle:"एक साफ़ सामने की तस्वीर अपलोड करें।",
 
         heading:"निर्देश",
+        cameraBtn: "📷 फोटो लें",
 
         uploadBtn:"📤 चित्र अपलोड करें",
 
@@ -220,8 +222,10 @@ const translations = {
         heading:"ਹਦਾਇਤਾਂ",
 
         uploadBtn:"📤 ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ",
+        
 
         analyzeBtn:"🤖 ਚਿਹਰੇ ਦੀ ਜਾਂਚ ਕਰੋ",
+        cameraBtn: "📷 ਫੋਟੋ ਖਿੱਚੋ",
 
         backBtn:"← FAST ਟੈਸਟ ਵੱਲ ਵਾਪਸ ਜਾਓ",
 
@@ -247,17 +251,17 @@ language.addEventListener("change",()=>{
 
     document.getElementById("title").innerHTML=t.title;
     document.getElementById("subtitle").innerHTML=t.subtitle;
-    document.getElementById("instructionHeading").innerHTML=t.heading;
-    document.getElementById("uploadBtn").innerHTML=t.upload;
-    document.getElementById("analyzeBtn").innerHTML=t.analyze;
-    document.getElementById("backBtn").innerHTML=t.back;
-    document.getElementById("loadingModel").innerHTML=t.loading;
+    document.getElementById("instructionHeading").innerHTML=t.instructionHeading;
+    document.getElementById("uploadBtn").innerHTML=t.uploadBtn;
+    document.getElementById("analyzeBtn").innerHTML=t.analyzeBtn;
+    document.getElementById("backBtn").innerHTML=t.backBtn;
+    document.getElementById("loadingModel").innerHTML=t.loadingModel;
 
-    document.getElementById("i1").innerHTML=t.instructions[0];
-    document.getElementById("i2").innerHTML=t.instructions[1];
-    document.getElementById("i3").innerHTML=t.instructions[2];
-    document.getElementById("i4").innerHTML=t.instructions[3];
-    document.getElementById("i5").innerHTML=t.instructions[4];
+    document.getElementById("i1").innerHTML=t.instructionList[0];
+    document.getElementById("i2").innerHTML=t.instructionList[1];
+    document.getElementById("i3").innerHTML=t.instructionList[2];
+    document.getElementById("i4").innerHTML=t.instructionList[3];
+    document.getElementById("i5").innerHTML=t.instructionList[4];
 
 });
 
