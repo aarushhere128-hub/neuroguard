@@ -184,14 +184,15 @@ document.getElementById("highCard").onclick = () => {
 };
         });
 }
-async function loadUsers() {
+function loadUsers() {
 
 
     const usersBody = document.getElementById("usersBody");
     usersBody.innerHTML = "";
 
-    const snapshot = await getDocs(collection(db, "users"));
+    onSnapshot(collection(db, "users"), (snapshot) => {
 
+    usersBody.innerHTML = "";
 
     document.getElementById("totalUsers").textContent = snapshot.size;
 
@@ -207,6 +208,7 @@ async function loadUsers() {
             </tr>
         `;
     });
+         });
 }
 loadAssessments();
 loadUsers();
