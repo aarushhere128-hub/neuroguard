@@ -5,8 +5,36 @@ import {
     getDocs,
     query,
     orderBy,
-    onSnapshot
+    onSnapshot,
+    doc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+
+    if (!userDoc.exists() || userDoc.data().role !== "admin") {
+
+        alert("Access Denied. Admins only.");
+
+        window.location.href = "index.html";
+
+        return;
+    }
+
+    // User is an admin
+    loadAssessments();
+    loadUsers();
+
+});
 
 const tableBody = document.getElementById("tableBody");
 
@@ -210,8 +238,7 @@ function loadUsers() {
     });
          });
 }
-loadAssessments();
-loadUsers();
+
 const assessmentTab = document.getElementById("assessmentTab");
 const usersTab = document.getElementById("usersTab");
 
