@@ -66,9 +66,11 @@
 
        <div class="upload-options">
 
-<label for="cameraInput" class="upload-btn">
+<label for="cameraInput" class="upload-btn" id="cameraBtn">
 📷 Take Photo
 </label>
+
+
 <input
     type="file"
     id="cameraInput"
@@ -77,7 +79,7 @@
     style="display:none;"
 >
 
-<label for="imageUpload" class="upload-btn">
+<label for="imageUpload" class="upload-btn" id="uploadBtn">
 📤 Upload Photo
 </label>
 <input
@@ -88,14 +90,6 @@
 >
 
 </div>
-
-        <input
-            type="file"
-            id="imageUpload"
-            accept="image/*"
-            style="display:none;"
-        >
-
         <!-- Preview -->
 
         <div class="preview-container">
@@ -173,15 +167,15 @@ const translations = {
 
         heading:"Instructions",
 
-        upload:"📤 Upload Image",
+        uploadBtn:"📤 Upload Image",
 
-        analyze:"🤖 Analyze Face",
+        analyzeBtn:"🤖 Analyze Face",
 
-        back:"← Back to FAST Test",
+        backBtn:"← Back to FAST Test",
 
-        loading:"🧠 Loading AI Model...",
+        loadingModel:"🧠 Loading AI Model...",
 
-        instructions:[
+        instructionList:[
             "😊 Smile naturally",
             "💡 Ensure good lighting",
             "👤 Only one face should be visible",
@@ -199,15 +193,15 @@ const translations = {
 
         heading:"निर्देश",
 
-        upload:"📤 चित्र अपलोड करें",
+        uploadBtn:"📤 चित्र अपलोड करें",
 
-        analyze:"🤖 चेहरा विश्लेषण करें",
+        analyzeBtn:"🤖 चेहरा विश्लेषण करें",
 
-        back:"← FAST परीक्षण पर वापस जाएँ",
+        backBtn:"← FAST परीक्षण पर वापस जाएँ",
 
-        loading:"🧠 AI मॉडल लोड हो रहा है...",
+        loadingModel:"🧠 AI मॉडल लोड हो रहा है...",
 
-        instructions:[
+        instructionList:[
             "😊 सामान्य रूप से मुस्कुराएँ",
             "💡 अच्छी रोशनी रखें",
             "👤 केवल एक चेहरा दिखाई दे",
@@ -225,15 +219,15 @@ const translations = {
 
         heading:"ਹਦਾਇਤਾਂ",
 
-        upload:"📤 ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ",
+        uploadBtn:"📤 ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ",
 
-        analyze:"🤖 ਚਿਹਰੇ ਦੀ ਜਾਂਚ ਕਰੋ",
+        analyzeBtn:"🤖 ਚਿਹਰੇ ਦੀ ਜਾਂਚ ਕਰੋ",
 
-        back:"← FAST ਟੈਸਟ ਵੱਲ ਵਾਪਸ ਜਾਓ",
+        backBtn:"← FAST ਟੈਸਟ ਵੱਲ ਵਾਪਸ ਜਾਓ",
 
-        loading:"🧠 AI ਮਾਡਲ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+        loadingModel:"🧠 AI ਮਾਡਲ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
 
-        instructions:[
+        instructionList:[
             "😊 ਕੁਦਰਤੀ ਤਰੀਕੇ ਨਾਲ ਮੁਸਕਰਾਓ",
             "💡 ਚੰਗੀ ਰੌਸ਼ਨੀ ਵਿੱਚ ਤਸਵੀਰ ਲਵੋ",
             "👤 ਸਿਰਫ਼ ਇੱਕ ਚਿਹਰਾ ਦਿਖਾਈ ਦੇਵੇ",
