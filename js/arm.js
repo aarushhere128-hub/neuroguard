@@ -14,6 +14,53 @@ const rightText = document.getElementById("rightWrist");
 const differenceText = document.getElementById("difference");
 
 const analyzeBtn = document.getElementById("analyzeBtn");
+const lang = localStorage.getItem("language") || "en";
+
+const armMessages = {
+    en: {
+        loading: "Loading AI model...",
+        loaded: "✅ Model Loaded",
+        upload: "Please upload an image.",
+        analyzing: "Analyzing posture...",
+        noPerson: "❌ No person detected.",
+        complete: "✅ Analysis Complete",
+
+        normal: "🟢 Normal",
+        mild: "🟡 Mild Difference",
+        weak: "🟠 Possible Arm Weakness",
+        severe: "🔴 Significant Arm Drift"
+    },
+
+    hi: {
+        loading: "एआई मॉडल लोड हो रहा है...",
+        loaded: "✅ मॉडल लोड हो गया",
+        upload: "कृपया एक चित्र अपलोड करें।",
+        analyzing: "मुद्रा का विश्लेषण किया जा रहा है...",
+        noPerson: "❌ कोई व्यक्ति नहीं मिला।",
+        complete: "✅ विश्लेषण पूरा हुआ",
+
+        normal: "🟢 सामान्य",
+        mild: "🟡 हल्का अंतर",
+        weak: "🟠 हाथ में संभावित कमजोरी",
+        severe: "🔴 हाथ में गंभीर कमजोरी"
+    },
+
+    pa: {
+        loading: "ਏਆਈ ਮਾਡਲ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+        loaded: "✅ ਮਾਡਲ ਲੋਡ ਹੋ ਗਿਆ",
+        upload: "ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ।",
+        analyzing: "ਪੋਸਚਰ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
+        noPerson: "❌ ਕੋਈ ਵਿਅਕਤੀ ਨਹੀਂ ਮਿਲਿਆ।",
+        complete: "✅ ਵਿਸ਼ਲੇਸ਼ਣ ਪੂਰਾ ਹੋਇਆ",
+
+        normal: "🟢 ਸਧਾਰਣ",
+        mild: "🟡 ਹਲਕਾ ਫਰਕ",
+        weak: "🟠 ਬਾਂਹ ਵਿੱਚ ਸੰਭਾਵਿਤ ਕਮਜ਼ੋਰੀ",
+        severe: "🔴 ਬਾਂਹ ਵਿੱਚ ਗੰਭੀਰ ਕਮਜ਼ੋਰੀ"
+    }
+};
+
+const t = armMessages[lang];
 
 let poseLandmarker;
 
@@ -21,7 +68,7 @@ init();
 
 async function init() {
 
-    status.textContent = "Loading AI model...";
+    status.textContent = t.loading;
 
     const filesetResolver =
         await FilesetResolver.forVisionTasks(
@@ -46,7 +93,7 @@ async function init() {
 
             });
 
-    status.textContent = "✅ Model Loaded";
+    status.textContent = t.loaded;
 
 }
 
@@ -68,20 +115,20 @@ async function detect() {
 
     if (!preview.src) {
 
-        status.textContent = "Please upload an image.";
+        status.textContent = t.upload;
 
         return;
 
     }
 
-    status.textContent = "Analyzing posture...";
+    status.textContent = t.analyzing;
 
     const result =
         await poseLandmarker.detect(preview);
 
     if (!result.landmarks.length) {
 
-        status.textContent = "❌ No person detected.";
+        status.textContent = t.noPerson;
 
         return;
 
@@ -106,42 +153,27 @@ async function detect() {
     let armRisk;
 
     if (diff < 0.05) {
-
-        armScore = 10;
-
-        armRisk = "🟢 Normal";
-
-    }
-
-    else if (diff < 0.10) {
-
-        armScore = 8;
-
-        armRisk = "🟡 Mild Difference";
-
-    }
-
-    else if (diff < 0.18) {
-
-        armScore = 6;
-
-        armRisk = "🟠 Possible Arm Weakness";
-
-    }
-
-    else {
-
-        armScore = 3;
-
-        armRisk = "🔴 Significant Arm Drift";
-
-    }
+    armScore = 10;
+    armRisk = t.normal;
+}
+else if (diff < 0.10) {
+    armScore = 8;
+    armRisk = t.mild;
+}
+else if (diff < 0.18) {
+    armScore = 6;
+    armRisk = t.weak;
+}
+else {
+    armScore = 3;
+    armRisk = t.severe;
+}
 
     score.textContent = armScore.toFixed(1) + " / 10";
 
     risk.textContent = armRisk;
 
-    status.textContent = "✅ Analysis Complete";
+    status.textContent = t.complete;
 
     // Save for report page
 
