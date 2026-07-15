@@ -60,7 +60,10 @@ const armMessages = {
     }
 };
 
-const t = armMessages[lang];
+function getText() {
+    const lang = localStorage.getItem("language") || "en";
+    return armMessages[lang];
+}
 
 let poseLandmarker;
 
@@ -68,7 +71,7 @@ init();
 
 async function init() {
 
-    status.textContent = t.loading;
+    status.textContent = getText().loading;
 
     const filesetResolver =
         await FilesetResolver.forVisionTasks(
@@ -93,7 +96,7 @@ async function init() {
 
             });
 
-    status.textContent = t.loaded;
+    status.textContent = getText().loaded;
 
 }
 
@@ -115,20 +118,20 @@ async function detect() {
 
     if (!preview.src) {
 
-        status.textContent = t.upload;
+        status.textContent = getText().upload;
 
         return;
 
     }
 
-    status.textContent = t.analyzing;
+    status.textContent = getText().analyzing;
 
     const result =
         await poseLandmarker.detect(preview);
 
     if (!result.landmarks.length) {
 
-        status.textContent = t.noPerson;
+        status.textContent = getText().noPerson;
 
         return;
 
@@ -150,30 +153,34 @@ async function detect() {
 
     let armScore;
 
-    let armRisk;
+   let riskKey;
 
-    if (diff < 0.05) {
+if (diff < 0.05) {
     armScore = 10;
-    armRisk = t.normal;
+    riskKey = "normal";
 }
 else if (diff < 0.10) {
     armScore = 8;
-    armRisk = t.mild;
+    riskKey = "mild";
 }
 else if (diff < 0.18) {
     armScore = 6;
-    armRisk = t.weak;
+    riskKey = "weak";
 }
 else {
     armScore = 3;
-    armRisk = t.severe;
+    riskKey = "severe";
 }
+
+risk.textContent = getText()[riskKey];
+
+localStorage.setItem("armRiskKey", riskKey);
 
     score.textContent = armScore.toFixed(1) + " / 10";
 
     risk.textContent = armRisk;
 
-    status.textContent = t.complete;
+    status.textContent = getText().complete;
 
     // Save for report page
 
