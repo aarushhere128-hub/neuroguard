@@ -16,7 +16,7 @@ const differenceText = document.getElementById("difference");
 const analyzeBtn = document.getElementById("analyzeBtn");
 const lang = localStorage.getItem("language") || "en";
 
-const armMessages = {
+window.armMessages = {
     en: {
         loading: "Loading AI model...",
         loaded: "✅ Model Loaded",
