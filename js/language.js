@@ -668,6 +668,10 @@ function setLanguage(lang) {
     }
 
     localStorage.setItem("language", lang);
+    const riskKey = localStorage.getItem("armRiskKey");
+if (riskKey) {
+    document.getElementById("risk").textContent =
+    window.armMessages[lang][riskKey];
 }
 
 // ==============================
