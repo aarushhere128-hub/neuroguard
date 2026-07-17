@@ -178,14 +178,14 @@ localStorage.setItem("armRiskKey", riskKey);
 
     score.textContent = armScore.toFixed(1) + " / 10";
 
-    risk.textContent = armRisk;
+    risk.textContent = risk;
 
     status.textContent = getText().complete;
 
     // Save for report page
 
     localStorage.setItem("armScore", armScore.toFixed(1));
-    localStorage.setItem("armRisk", armRisk);
+    localStorage.setItem("risk", risk);
     localStorage.setItem("armDifference", diff.toFixed(3));
     localStorage.setItem("leftWrist", leftWrist.y.toFixed(3));
     localStorage.setItem("rightWrist", rightWrist.y.toFixed(3));
