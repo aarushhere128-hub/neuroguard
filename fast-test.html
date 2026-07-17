@@ -45,7 +45,7 @@ onAuthStateChanged(auth, (user) => {
 <span id="logoText">NeuroGuard</span>
 </div>
 
-<ul>
+<ul id='navMenu'>
 <li><a href="index.html" id="navhome">Home</a></li>
 <li><a href="#assessment" id="navassessment">Assessment</a></li>
 <li><a href="#emergency" id="navemergency">Emergency</a></li>
@@ -70,7 +70,9 @@ Back
 </a>
 
 </div>
-
+<button class="hamburger" id="hamburger" aria-label="Open menu">
+    ☰
+</button>
 </nav>
 </header>
 
@@ -331,7 +333,7 @@ About
 <script src="js/components.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/language.js"></script>
-
+<script src="js/mobile-menu.js"></script>
 <script>
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -441,5 +443,6 @@ if ("serviceWorker" in navigator) {
     });
 }
 </script>
+    
 </body>
 </html>
