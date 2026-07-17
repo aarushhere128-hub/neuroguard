@@ -1,7 +1,6 @@
 const BASE = "/neuroguard/";
 const CACHE_NAME = "neuroguard-v1.0.0";
 
-const BASE = "/NeuroGuard/";
 
 const FILES_TO_CACHE = [
     BASE,
