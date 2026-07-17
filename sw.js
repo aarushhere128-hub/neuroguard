@@ -16,7 +16,7 @@ const FILES_TO_CACHE = [
     BASE + "face_test.html",
     BASE + "speech_test.html",
     BASE + "arm_test.html",
-    BASE + "admin.html",
+
 
     BASE + "css/style.css",
     BASE + "css/admin.css",
