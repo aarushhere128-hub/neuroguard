@@ -14,7 +14,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.4/dist/teachablemachine-image.min.js"></script>
 
 <script type="module" src="js/face.js"></script>
+<link rel="manifest" href="manifest.json">
 
+<meta name="theme-color" content="#2563EB">
+
+<link rel="apple-touch-icon" href="assets/icon-192.png">
 </head>
 
 <body>
@@ -298,6 +302,14 @@ toggle.addEventListener("click",()=>{
 });
 
 </script>
-
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js")
+            .then(() => console.log("Service Worker registered"))
+            .catch(err => console.error(err));
+    });
+}
+</script>
 </body>
 </html>
