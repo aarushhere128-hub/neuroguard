@@ -1117,7 +1117,27 @@ html[data-theme="dark"] .comparison-table td{
     height:0;
 
 }
+/* ===========================
+Hamburger
+=========================== */
 
+.hamburger{
+
+    display:none;
+
+    background:none;
+
+    border:none;
+
+    font-size:32px;
+
+    color:var(--text);
+
+    cursor:pointer;
+
+    z-index:1001;
+
+}
 .slider{
 
     position:absolute;
@@ -1179,5 +1199,75 @@ html[data-theme="dark"] .comparison-table td{
     padding:15px;
 
     font-size:17px;
+
+}
+@media (max-width:768px){
+
+    nav{
+
+        position:relative;
+
+        padding:0 20px;
+
+    }
+
+    .hamburger{
+
+        display:block;
+
+    }
+
+    nav ul{
+
+        position:absolute;
+
+        top:80px;
+        left:0;
+
+        width:100%;
+
+        background:var(--surface);
+
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:0;
+
+        display:none;
+
+        box-shadow:0 15px 40px rgba(0,0,0,.12);
+
+    }
+
+    nav ul.show{
+
+        display:flex;
+
+    }
+
+    nav ul li{
+
+        width:100%;
+
+    }
+
+    nav ul a{
+
+        display:block;
+
+        width:100%;
+
+        padding:18px;
+
+        text-align:center;
+
+    }
+
+    .nav-buttons{
+
+        display:none;
+
+    }
 
 }
