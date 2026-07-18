@@ -692,4 +692,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
-}
