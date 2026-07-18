@@ -14,6 +14,15 @@ const rightText = document.getElementById("rightWrist");
 const differenceText = document.getElementById("difference");
 
 const analyzeBtn = document.getElementById("analyzeBtn");
+console.log({
+    status,
+    score,
+    risk,
+    leftText,
+    rightText,
+    differenceText,
+    analyzeBtn
+});
 const lang = localStorage.getItem("language") || "en";
 
 window.armMessages = {
