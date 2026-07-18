@@ -103,11 +103,15 @@ async function init() {
 upload.addEventListener("change", e => {
 
     const file = e.target.files[0];
-
     if (!file) return;
 
-    preview.src = URL.createObjectURL(file);
+    analyzeBtn.disabled = true;
 
+    preview.onload = () => {
+        analyzeBtn.disabled = false;
+    };
+
+    preview.src = URL.createObjectURL(file);
     preview.style.display = "block";
 
 });
@@ -115,6 +119,10 @@ upload.addEventListener("change", e => {
 analyzeBtn.addEventListener("click", detect);
 
 async function detect() {
+    if (!poseLandmarker) {
+    status.textContent = "AI model is still loading...";
+    return;
+}
 
     if (!preview.src) {
 
@@ -136,12 +144,21 @@ async function detect() {
         return;
 
     }
+    
 
     const landmarks = result.landmarks[0];
 
     const leftWrist = landmarks[15];
 
     const rightWrist = landmarks[16];
+    if (
+    leftWrist.visibility < 0.5 ||
+    rightWrist.visibility < 0.5
+) {
+    status.textContent =
+        "⚠ Please make sure both arms are fully visible.";
+    return;
+}
 
     leftText.textContent = leftWrist.y.toFixed(3);
 
@@ -172,20 +189,16 @@ else {
     riskKey = "severe";
 }
 
-risk.textContent = getText()[riskKey];
+const riskText = getText()[riskKey];
 
+score.textContent = armScore.toFixed(1) + " / 10";
+risk.textContent = riskText;
+
+status.textContent = getText().complete;
+
+localStorage.setItem("armScore", armScore.toFixed(1));
+localStorage.setItem("armRisk", riskText);
 localStorage.setItem("armRiskKey", riskKey);
-
-    score.textContent = armScore.toFixed(1) + " / 10";
-
-    risk.textContent = risk;
-
-    status.textContent = getText().complete;
-
-    // Save for report page
-
-    localStorage.setItem("armScore", armScore.toFixed(1));
-    localStorage.setItem("risk", risk);
     localStorage.setItem("armDifference", diff.toFixed(3));
     localStorage.setItem("leftWrist", leftWrist.y.toFixed(3));
     localStorage.setItem("rightWrist", rightWrist.y.toFixed(3));
