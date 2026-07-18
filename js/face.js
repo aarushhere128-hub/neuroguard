@@ -5,11 +5,18 @@ const { FaceLandmarker, FilesetResolver } = vision;
 
 // Elements
 const upload = document.getElementById("imageUpload");
-const camera = document.getElementById("cameraInput");
+
 const preview = document.getElementById("preview");
 const score = document.getElementById("score");
 const analyzeBtn = document.getElementById("analyzeBtn");
 const status = document.getElementById("status");
+const cameraBtn = document.getElementById("cameraBtn");
+const cameraContainer = document.getElementById("cameraContainer");
+const video = document.getElementById("cameraPreview");
+const canvas = document.getElementById("captureCanvas");
+const captureBtn = document.getElementById("captureBtn");
+
+let stream;
 console.log(upload);
 console.log(preview);
 console.log(analyzeBtn);
@@ -86,22 +93,64 @@ upload.addEventListener("change", (e) => {
     uploadedImage.src = imageURL;
 
 });
-camera.addEventListener("change", (e) => {
+cameraBtn.addEventListener("click", async () => {
 
-    const file = e.target.files[0];
-    if (!file) return;
+    try {
 
-    const imageURL = URL.createObjectURL(file);
+        stream = await navigator.mediaDevices.getUserMedia({
 
-    preview.src = imageURL;
+            video: {
+
+                facingMode: "environment"
+
+            }
+
+        });
+
+        video.srcObject = stream;
+
+        cameraContainer.style.display = "block";
+
+    }
+
+    catch(err){
+
+        alert("Unable to access camera.");
+
+        console.error(err);
+
+    }
+
+});
+captureBtn.addEventListener("click", () => {
+
+    canvas.width = video.videoWidth;
+
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(video,0,0);
+
+    preview.src = canvas.toDataURL("image/png");
+
     preview.style.display = "block";
 
-    score.textContent = "Face Score : -";
-    status.textContent = "✅ Photo captured successfully.";
-    analyzeBtn.disabled = false;
-
     uploadedImage = new Image();
-    uploadedImage.src = imageURL;
+
+    uploadedImage.onload = () => {
+
+        analyzeBtn.disabled = false;
+
+        status.textContent = "✅ Photo captured successfully.";
+
+    };
+
+    uploadedImage.src = preview.src;
+
+    stream.getTracks().forEach(track => track.stop());
+
+    cameraContainer.style.display = "none";
 
 });
 // ----------------------
