@@ -679,6 +679,7 @@ if (
     document.getElementById("risk").textContent =
         window.armMessages[lang][riskKey];
 }
+}
 // ==============================
 // Initialize
 // ==============================
