@@ -207,7 +207,7 @@ status.textContent = getText().complete;
 
 localStorage.setItem("armScore", armScore.toFixed(1));
 localStorage.setItem("armRisk", riskText);
-localStorage.setItem("armRiskKey", riskKey);
+sessionStorage.setItem("armRiskKey", riskKey);
     localStorage.setItem("armDifference", diff.toFixed(3));
     localStorage.setItem("leftWrist", leftWrist.y.toFixed(3));
     localStorage.setItem("rightWrist", rightWrist.y.toFixed(3));
