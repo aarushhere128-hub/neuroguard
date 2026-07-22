@@ -669,15 +669,14 @@ function setLanguage(lang) {
 
     localStorage.setItem("language", lang);
  const riskKey = localStorage.getItem("armRiskKey");
+const riskElement = document.getElementById("risk");
 
 if (
+    riskElement &&
     riskKey &&
-    window.armMessages &&
-    window.armMessages[lang] &&
-    document.getElementById("risk")
+    window.armMessages?.[lang]?.[riskKey]
 ) {
-    document.getElementById("risk").textContent =
-        window.armMessages[lang][riskKey];
+    riskElement.textContent = window.armMessages[lang][riskKey];
 }
 }
 // ==============================
