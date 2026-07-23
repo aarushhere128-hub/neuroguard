@@ -14,6 +14,12 @@ const rightText = document.getElementById("rightWrist");
 const differenceText = document.getElementById("difference");
 
 const analyzeBtn = document.getElementById("analyzeBtn");
+const cameraBtn = document.getElementById("cameraBtn");
+const cameraContainer = document.getElementById("cameraContainer");
+const video = document.getElementById("cameraPreview");
+const captureBtn = document.getElementById("captureBtn");
+
+let stream;
 console.log({
     status,
     score,
@@ -124,7 +130,78 @@ upload.addEventListener("change", e => {
     preview.style.display = "block";
 
 });
+cameraBtn.addEventListener("click", async () => {
 
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("Camera cannot be accessed on this device.");
+        return;
+    }
+
+    try {
+
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: "environment"
+            }
+        });
+
+        video.srcObject = stream;
+
+        await video.play();
+
+        cameraContainer.style.display = "block";
+
+    }
+    catch (err) {
+
+        console.error(err);
+
+        if (err.name === "NotAllowedError") {
+            alert("Camera permission denied.");
+        }
+        else if (err.name === "NotFoundError") {
+            alert("No camera found.");
+        }
+        else {
+            alert("Camera cannot be accessed.");
+        }
+
+    }
+
+});
+captureBtn.addEventListener("click", () => {
+
+    const canvas = document.getElementById("canvas");
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0);
+
+    preview.onload = () => {
+        analyzeBtn.disabled = false;
+    };
+
+    preview.src = canvas.toDataURL("image/png");
+    preview.style.display = "block";
+
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+    }
+
+    video.srcObject = null;
+    cameraContainer.style.display = "none";
+
+});
+window.addEventListener("beforeunload", () => {
+
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+    }
+
+});
 analyzeBtn.addEventListener("click", detect);
 
 async function detect() {
@@ -207,7 +284,7 @@ status.textContent = getText().complete;
 
 localStorage.setItem("armScore", armScore.toFixed(1));
 localStorage.setItem("armRisk", riskText);
-sessionStorage.setItem("armRiskKey", riskKey);
+localStorage.setItem("armRiskKey", riskKey);
     localStorage.setItem("armDifference", diff.toFixed(3));
     localStorage.setItem("leftWrist", leftWrist.y.toFixed(3));
     localStorage.setItem("rightWrist", rightWrist.y.toFixed(3));
