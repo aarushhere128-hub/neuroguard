@@ -88,25 +88,22 @@ self.addEventListener("fetch", event => {
     if (event.request.method !== "GET") return;
 
     event.respondWith(
-        caches.match(event.request).then(cached => {
-            return (
-                cached ||
-                fetch(event.request)
-                    .then(response => {
-                        if (!response || response.status !== 200) {
-                            return response;
-                        }
+        fetch(event.request)
+            .then(response => {
 
-                        const responseClone = response.clone();
+                // Only cache files from YOUR website
+                if (new URL(event.request.url).origin === self.location.origin) {
 
-                        caches.open(CACHE_NAME).then(cache => {
-                            cache.put(event.request, responseClone);
-                        });
+                    const clone = response.clone();
 
-                        return response;
-                    })
-                    .catch(() => cached)
-            );
-        })
+                    caches.open(CACHE_NAME).then(cache => {
+                        cache.put(event.request, clone);
+                    });
+
+                }
+
+                return response;
+            })
+            .catch(() => caches.match(event.request))
     );
 });
