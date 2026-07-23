@@ -129,10 +129,39 @@ NeuroGuard will estimate whether both arms appear level.
 
 <div class="upload-container">
 
-<input
-type="file"
-id="imageUpload"
-accept="image/*">
+<div class="upload-options">
+
+    <button class="primary" id="cameraBtn">
+        📷 Take Photo
+    </button>
+
+    <label for="imageUpload" class="primary">
+        📤 Upload Photo
+    </label>
+
+    <input
+        type="file"
+        id="imageUpload"
+        accept="image/*"
+        style="display:none;">
+
+</div>
+
+<div id="cameraContainer" style="display:none;">
+
+    <video
+        id="cameraPreview"
+        autoplay
+        playsinline
+        muted
+        width="100%">
+    </video>
+
+    <button id="captureBtn" class="primary">
+        📸 Capture
+    </button>
+
+</div>
 
 <br><br>
 
