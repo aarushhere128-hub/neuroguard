@@ -95,6 +95,12 @@ upload.addEventListener("change", (e) => {
 });
 cameraBtn.addEventListener("click", async () => {
 
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("Camera cannot be accessed on this device.");
+        return;
+    }
+
+
     try {
 
         stream = await navigator.mediaDevices.getUserMedia({
@@ -109,18 +115,26 @@ cameraBtn.addEventListener("click", async () => {
 
         video.srcObject = stream;
 
-        cameraContainer.style.display = "block";
+await video.play();
 
+cameraContainer.style.display = "block";
     }
 
-    catch(err){
+    catch (err) {
 
-        alert("Unable to access camera.");
+    console.error(err);
 
-        console.error(err);
-
+    if (err.name === "NotAllowedError") {
+        alert("Camera permission was denied.");
+    }
+    else if (err.name === "NotFoundError") {
+        alert("No camera was found on this device.");
+    }
+    else {
+        alert("Camera cannot be accessed.");
     }
 
+}
 });
 captureBtn.addEventListener("click", () => {
 
@@ -143,14 +157,18 @@ captureBtn.addEventListener("click", () => {
         analyzeBtn.disabled = false;
 
         status.textContent = "✅ Photo captured successfully.";
+        
 
     };
-
     uploadedImage.src = preview.src;
 
+   if (stream) {
     stream.getTracks().forEach(track => track.stop());
+    stream = null;
+}
 
-    cameraContainer.style.display = "none";
+video.srcObject = null;
+cameraContainer.style.display = "none";
 
 });
 // ----------------------
@@ -309,3 +327,8 @@ status.textContent = "✅ Analysis Complete";
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+window.addEventListener("beforeunload", () => {
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+    }
+});
