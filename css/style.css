@@ -1207,68 +1207,49 @@ Hamburger
     font-size:17px;
 
 }
-@media (max-width:768px){
+@media(max-width:768px){
 
-    nav{
+    #navMenu{
 
-        position:relative;
+        position:fixed;
 
-        padding:0 20px;
+        top:80px;
+        left:0;
 
-    }
+        width:100vw;
 
-    .hamburger{
+        background:var(--bg);
 
-        display:block;
+        flex-direction:column;
 
-    }
-
-   nav ul{
-
-    position:fixed;
-
-    top:0;
-    right:-100%;
-
-    width:280px;
-    height:100vh;
-
-    background:var(--bg);
-
-    flex-direction:column;
-
-    padding-top:90px;
-
-    transition:.35s;
-
-}
-
-nav ul.show{
-
-    right:0;
-
-}
-    nav ul li{
-
-        width:100%;
-
-    }
-
-    nav ul a{
-
-        display:block;
-
-        width:100%;
-
-        padding:18px;
-
-        text-align:center;
-
-    }
-
-    .nav-buttons{
+        align-items:center;
 
         display:none;
+
+        z-index:999;
+
+        box-shadow:0 15px 40px rgba(0,0,0,.12);
+    }
+
+
+    #navMenu.show{
+
+        display:flex;
+
+    }
+
+
+    #navMenu li{
+
+        width:100%;
+        text-align:center;
+    }
+
+
+    #navMenu a{
+
+        display:block;
+        padding:18px;
 
     }
 
