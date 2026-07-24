@@ -264,13 +264,19 @@ nav{
 }
 
 nav ul{
+    position:fixed;
 
-    display:flex;
+    top:80px;
+    left:0;
+    right:0;
 
-    list-style:none;
+    width:100vw;
 
-    gap:35px;
+    background:var(--bg);
 
+    display:none;
+
+    z-index:999;
 }
 
 nav a{
@@ -1217,35 +1223,31 @@ Hamburger
 
     }
 
-    nav ul{
+   nav ul{
 
-        position:absolute;
+    position:fixed;
 
-        top:80px;
-        left:0;
+    top:0;
+    right:-100%;
 
-        width:100%;
+    width:280px;
+    height:100vh;
 
-        background:var(--surface);
+    background:var(--bg);
 
-        flex-direction:column;
+    flex-direction:column;
 
-        align-items:center;
+    padding-top:90px;
 
-        gap:0;
+    transition:.35s;
 
-        display:none;
+}
 
-        box-shadow:0 15px 40px rgba(0,0,0,.12);
+nav ul.show{
 
-    }
+    right:0;
 
-    nav ul.show{
-
-        display:flex;
-
-    }
-
+}
     nav ul li{
 
         width:100%;
