@@ -98,4 +98,4 @@ mediaQuery.addEventListener("change", (e) => {
 ========================================================== */
 
 console.log("🌙 Theme Controller Loaded");
-initTheme();
+
