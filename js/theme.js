@@ -2,38 +2,37 @@
    NeuroGuard - theme.js
    Dark / Light Theme Controller
 ========================================================== */
-
+const themeBtn = document.getElementById("themeToggle");
+const themeBtnMobile = document.getElementById("themeToggleMobile");
 function initTheme() {
-    const themeToggle = document.getElementById("themeToggle");
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem("neuroguard-theme");
+    const savedTheme = localStorage.getItem("neuroguard-theme") || "light";
 
-    if (savedTheme) {
-        document.documentElement.setAttribute("data-theme", savedTheme);
-        updateThemeIcon(savedTheme);
-    } else {
-        document.documentElement.setAttribute("data-theme", "light");
-        updateThemeIcon("light");
-    }
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    updateThemeIcon(savedTheme);
 
-    if (!themeToggle) return;
+    [themeBtn, themeBtnMobile].forEach(button => {
 
-    themeToggle.addEventListener("click", () => {
-        const currentTheme =
-            document.documentElement.getAttribute("data-theme") || "light";
+        if (!button) return;
 
-        const newTheme =
-            currentTheme === "light" ? "dark" : "light";
+        button.addEventListener("click", () => {
 
-        document.documentElement.setAttribute("data-theme", newTheme);
+            const current =
+                document.documentElement.getAttribute("data-theme") || "light";
 
-        localStorage.setItem("neuroguard-theme", newTheme);
+            const next =
+                current === "light" ? "dark" : "light";
 
-        updateThemeIcon(newTheme);
+            document.documentElement.setAttribute("data-theme", next);
 
-        console.log(`🎨 Theme changed to ${newTheme}`);
+            localStorage.setItem("neuroguard-theme", next);
+
+            updateThemeIcon(next);
+
+        });
+
     });
+
 }
 
 /* ==========================================================
@@ -41,10 +40,16 @@ function initTheme() {
 ========================================================== */
 
 function updateThemeIcon(theme) {
-    const button = document.getElementById("themeToggle");
-    if (!button) return;
 
-    button.textContent = theme === "dark" ? "☀️" : "🌙";
+    [themeBtn, themeBtnMobile].forEach(button => {
+
+        if (!button) return;
+
+        button.textContent =
+            theme === "dark" ? "☀️" : "🌙";
+
+    });
+
 }
 
 /* ==========================================================
@@ -84,3 +89,4 @@ mediaQuery.addEventListener("change", (e) => {
 ========================================================== */
 
 console.log("🌙 Theme Controller Loaded");
+document.addEventListener("DOMContentLoaded", initTheme);
