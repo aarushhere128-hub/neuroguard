@@ -1364,3 +1364,27 @@ nav{
     gap:12px;
     margin-left:auto;
 }
+@media (max-width:768px){
+
+    #navMenu{
+        position:fixed;
+        top:80px;
+        left:0;
+        width:100vw;
+
+        display:none;
+
+        flex:none;
+        flex-grow:0;
+        flex-shrink:1;
+        flex-basis:auto;
+
+        justify-content:flex-start;
+        align-items:center;
+        flex-direction:column;
+    }
+
+    #navMenu.show{
+        display:flex;
+    }
+}
