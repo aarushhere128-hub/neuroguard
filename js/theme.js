@@ -6,6 +6,9 @@ const themeBtn = document.getElementById("themeToggle");
 const themeBtnMobile = document.getElementById("themeToggleMobile");
 function initTheme() {
 
+    const themeBtn = document.getElementById("themeToggle");
+    const themeBtnMobile = document.getElementById("themeToggleMobile");
+
     const savedTheme = localStorage.getItem("neuroguard-theme") || "light";
 
     document.documentElement.setAttribute("data-theme", savedTheme);
@@ -34,19 +37,20 @@ function initTheme() {
     });
 
 }
-
 /* ==========================================================
    Update Theme Button Icon
 ========================================================== */
 
 function updateThemeIcon(theme) {
 
+    const themeBtn = document.getElementById("themeToggle");
+    const themeBtnMobile = document.getElementById("themeToggleMobile");
+
     [themeBtn, themeBtnMobile].forEach(button => {
 
         if (!button) return;
 
-        button.textContent =
-            theme === "dark" ? "☀️" : "🌙";
+        button.textContent = theme === "dark" ? "☀️" : "🌙";
 
     });
 
