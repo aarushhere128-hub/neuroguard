@@ -81,7 +81,13 @@ function getText() {
 }
 
 let poseLandmarker;
-
+localStorage.removeItem("armRisk");
+localStorage.removeItem("armRiskKey");
+localStorage.removeItem("armScore");
+localStorage.removeItem("armDifference");
+localStorage.removeItem("leftWrist");
+localStorage.removeItem("rightWrist");
+localStorage.removeItem("armCompleted");
 init();
 
 async function init() {
