@@ -1232,3 +1232,72 @@ Hamburger
         width:100%;
     }
 }
+/* =====================================================
+   FINAL MOBILE NAVBAR OVERRIDES
+   (Added during final bug fixing)
+===================================================== */
+
+@media (max-width:768px){
+
+    .hamburger{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:1.8rem;
+        background:none;
+        border:none;
+        cursor:pointer;
+    }
+
+    .nav-buttons .language-select,
+    .nav-buttons #themeToggle{
+        display:none;
+    }
+
+    #navMenu{
+        position:fixed;
+        top:80px;
+        left:0;
+        width:100%;
+        display:none;
+        flex-direction:column;
+        background:var(--bg);
+        box-shadow:0 15px 40px rgba(0,0,0,.12);
+        z-index:999;
+    }
+
+    #navMenu.show{
+        display:flex;
+    }
+
+    #navMenu li{
+        width:100%;
+        text-align:center;
+    }
+
+    #navMenu a{
+        display:block;
+        padding:18px;
+        width:100%;
+    }
+
+    .mobile-only{
+        display:block;
+    }
+}
+
+@media (min-width:769px){
+
+    .hamburger{
+        display:none;
+    }
+
+    .mobile-only{
+        display:none;
+    }
+
+    .nav-buttons .language-select,
+    .nav-buttons #themeToggle{
+        display:inline-flex;
+    }
+}
