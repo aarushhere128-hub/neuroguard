@@ -89,10 +89,25 @@
 <li><a href="#comparison" id='navcompare'>Comparison</a></li>
 
 <li><a href="contact.html" id='navcontact'>Contact</a></li>
+ <!-- Mobile only -->
+        <li class="mobile-only">
+            <select id="languageSelectMobile">
+                <option value="en">🇬🇧 English</option>
+                <option value="hi">🇮🇳 हिन्दी</option>
+                <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+            </select>
+        </li>
+
+        <li class="mobile-only">
+            <button id="themeToggleMobile">
+                🌙 Theme
+            </button>
+        </li>
+
 
 </ul>
 
-<div class="nav-buttons">
+<div class="nav-actions">
 
 <select id="languageSelect" class="language-select">
     <option value="en">🇬🇧 English</option>
@@ -121,11 +136,11 @@
     </a>
 
 </div>
-
-</div>
 <button class="hamburger" id="hamburger" aria-label="Open menu">
     ☰
 </button>
+</div>
+
 </nav>
 
 </header>
