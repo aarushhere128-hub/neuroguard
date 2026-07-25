@@ -1328,10 +1328,14 @@ Hamburger
     gap:10px !important;
 }
 
-.language-select,
+.language-select{
+    display:block;
+}
+
 #themeToggle{
     display:flex;
     align-items:center;
+    justify-content:center;
 }
 nav{
     display:flex;
@@ -1343,11 +1347,15 @@ nav{
     flex:0 0 auto;
 }
 
+@media (min-width:769px){
+
 #navMenu{
+    display:flex !important;
     flex:1;
-    display:flex;
     justify-content:center;
     gap:2rem;
+}
+
 }
 
 .nav-actions{
