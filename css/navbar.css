@@ -1,0 +1,242 @@
+/* ==========================================
+   NAVBAR
+   NeuroGuard Web
+========================================== */
+
+/* ---------- Header ---------- */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+
+    background:rgba(255,255,255,.75);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(0,0,0,.05);
+}
+
+/* ---------- Navbar ---------- */
+
+nav{
+    max-width:1400px;
+    height:80px;
+
+    margin:0 auto;
+    padding:0 24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+/* ---------- Logo ---------- */
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    flex-shrink:0;
+}
+
+.logo img{
+    width:42px;
+    height:42px;
+}
+
+.logo span{
+    font-size:1.2rem;
+    font-weight:700;
+}
+
+/* ---------- Navigation ---------- */
+
+#navMenu{
+    list-style:none;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:2rem;
+
+    flex:1;
+}
+
+#navMenu a{
+    text-decoration:none;
+    color:var(--text);
+    font-weight:500;
+    transition:.25s;
+}
+
+#navMenu a:hover{
+    color:var(--primary);
+}
+
+/* ---------- Right Side ---------- */
+
+.nav-actions{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    flex-shrink:0;
+}
+
+#authButtons{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+/* ---------- Theme ---------- */
+
+#themeToggle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+/* ---------- Hamburger ---------- */
+
+.hamburger{
+    display:none;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    background:none;
+
+    font-size:1.8rem;
+    cursor:pointer;
+}
+
+/* ---------- Mobile-only items ---------- */
+
+.mobile-only{
+    display:none;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width:768px){
+
+    nav{
+        padding:0 16px;
+    }
+
+    .logo span{
+        font-size:1rem;
+    }
+
+    .logo img{
+        width:34px;
+        height:34px;
+    }
+
+    /* Desktop controls hidden */
+
+    .language-select,
+    #themeToggle{
+        display:none;
+    }
+
+    /* Auth stays visible */
+
+    #authButtons button{
+        padding:8px 12px;
+        font-size:.85rem;
+    }
+
+    /* Hamburger */
+
+    .hamburger{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    /* Mobile menu */
+
+    #navMenu{
+        position:fixed;
+
+        top:80px;
+        left:0;
+
+        width:100%;
+
+        display:none;
+        flex-direction:column;
+        justify-content:flex-start;
+        align-items:center;
+
+        gap:0;
+
+        background:var(--bg);
+
+        box-shadow:0 12px 30px rgba(0,0,0,.12);
+
+        z-index:999;
+    }
+
+    #navMenu.show{
+        display:flex;
+    }
+
+    #navMenu li{
+        width:100%;
+    }
+
+    #navMenu a{
+        display:block;
+        width:100%;
+
+        padding:18px;
+
+        text-align:center;
+    }
+
+    .mobile-only{
+        display:block;
+        width:100%;
+        padding:12px;
+        text-align:center;
+    }
+
+    .mobile-only select,
+    .mobile-only button{
+        width:90%;
+        max-width:280px;
+    }
+
+}
+
+/* ==========================================
+   DESKTOP
+========================================== */
+
+@media (min-width:769px){
+
+    #navMenu{
+        display:flex !important;
+    }
+
+    .mobile-only{
+        display:none;
+    }
+
+}
