@@ -19,21 +19,25 @@ function initTheme() {
 
         if (!button) return;
 
-        button.addEventListener("click", () => {
+button.addEventListener("click", () => {
 
-            const current =
-                document.documentElement.getAttribute("data-theme") || "light";
+    console.log("Theme button clicked");
 
-            const next =
-                current === "light" ? "dark" : "light";
+    const current =
+        document.documentElement.getAttribute("data-theme") || "light";
 
-            document.documentElement.setAttribute("data-theme", next);
+    const next =
+        current === "light" ? "dark" : "light";
 
-            localStorage.setItem("neuroguard-theme", next);
+    console.log(current, "->", next);
 
-            updateThemeIcon(next);
+    document.documentElement.setAttribute("data-theme", next);
 
-        });
+    localStorage.setItem("neuroguard-theme", next);
+
+    updateThemeIcon(next);
+
+});
 
     });
 
