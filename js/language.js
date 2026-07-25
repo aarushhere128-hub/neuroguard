@@ -1,6 +1,8 @@
 // ==============================
 // NeuroGuard Language Switcher
 // ==============================
+const languageSelect = document.getElementById("languageSelect");
+const languageSelectMobile = document.getElementById("languageSelectMobile");
 const translations = {
     en: {
 
@@ -684,16 +686,29 @@ if (
 // ==============================
 document.addEventListener("DOMContentLoaded", () => {
 
-    const selector = document.getElementById("languageSelect");
-    if (!selector) return;
-
     const savedLanguage = localStorage.getItem("language") || "en";
 
-    selector.value = savedLanguage;
+    if (languageSelect)
+        languageSelect.value = savedLanguage;
+
+    if (languageSelectMobile)
+        languageSelectMobile.value = savedLanguage;
+
     setLanguage(savedLanguage);
 
-    selector.addEventListener("change", function () {
-        setLanguage(this.value);
+    [languageSelect, languageSelectMobile].forEach(select => {
+        if (!select) return;
+
+        select.addEventListener("change", e => {
+
+            setLanguage(e.target.value);
+
+            if (languageSelect)
+                languageSelect.value = e.target.value;
+
+            if (languageSelectMobile)
+                languageSelectMobile.value = e.target.value;
+        });
     });
 
 });
