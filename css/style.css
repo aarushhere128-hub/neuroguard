@@ -8,11 +8,7 @@
     padding:0;
     box-sizing:border-box;
 }
-#authButtons{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
+
 html{
     scroll-behavior:smooth;
 }
@@ -201,6 +197,7 @@ Skeleton
 
 @keyframes skeleton{
 
+   
 0%{background-position:100% 0;}
 
 100%{background-position:-100% 0;}
@@ -1027,27 +1024,6 @@ html[data-theme="dark"] .comparison-table td{
     width:0;
 
     height:0;
-
-}
-/* ===========================
-Hamburger
-=========================== */
-
-.hamburger{
-
-    display:none;
-
-    background:none;
-
-    border:none;
-
-    font-size:32px;
-
-    color:var(--text);
-
-    cursor:pointer;
-
-    z-index:1001;
 
 }
 .slider{
