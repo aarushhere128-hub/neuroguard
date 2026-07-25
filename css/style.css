@@ -1333,3 +1333,26 @@ Hamburger
     display:flex;
     align-items:center;
 }
+nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    flex:0 0 auto;
+}
+
+#navMenu{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    gap:2rem;
+}
+
+.nav-actions{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-left:auto;
+}
