@@ -5,6 +5,7 @@
 const themeBtn = document.getElementById("themeToggle");
 const themeBtnMobile = document.getElementById("themeToggleMobile");
 function initTheme() {
+   console.log("initTheme ran");
 
     const themeBtn = document.getElementById("themeToggle");
     const themeBtnMobile = document.getElementById("themeToggleMobile");
@@ -93,4 +94,4 @@ mediaQuery.addEventListener("change", (e) => {
 ========================================================== */
 
 console.log("🌙 Theme Controller Loaded");
-document.addEventListener("DOMContentLoaded", initTheme);
+initTheme();
