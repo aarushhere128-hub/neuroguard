@@ -1249,8 +1249,8 @@ Hamburger
         cursor:pointer;
     }
 
-    .nav-buttons .language-select,
-    .nav-buttons #themeToggle{
+    .nav-actions .language-select,
+    .nav-actions #themeToggle{
         display:none;
     }
 
@@ -1296,8 +1296,8 @@ Hamburger
         display:none;
     }
 
-    .nav-buttons .language-select,
-    .nav-buttons #themeToggle{
+    .nav-actions .language-select,
+    .nav-actions #themeToggle{
         display:inline-flex;
     }
 }
