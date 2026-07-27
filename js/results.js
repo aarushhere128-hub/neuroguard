@@ -261,7 +261,7 @@ if (speechCompleted && speechScore < 7)
     }
 
 }
-document.getElementById("risk").textContent =
+document.getElementById("assessmentTitle").textContent =
 risk;
 
 document.getElementById("overallMessage").textContent =
