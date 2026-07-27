@@ -56,7 +56,7 @@ footerCopyright: "© 2026 NeuroGuard",
 
         // Hero Stats
        stat1: "People affected by neurological disorders",
-stat2: "Earlier recognition can improve outcomes",
+stat2: "Can make a difference in neurological emergencies",
 stat3: "Multiple neurological conditions",
 
         // Problem
