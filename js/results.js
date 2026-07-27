@@ -261,7 +261,7 @@ if (speechCompleted && speechScore < 7)
     }
 
 }
-document.getElementById("riskLevel").textContent =
+document.getElementById("risk").textContent =
 risk;
 
 document.getElementById("overallMessage").textContent =
@@ -531,8 +531,8 @@ pdf.text(
     195
 );
 
-const riskLevel = document
-    .getElementById("riskLevel")
+const risk = document
+    .getElementById("risk")
     .textContent
     .replace("🔴 ", "")
     .replace("🟡 ", "")
@@ -541,7 +541,7 @@ const riskLevel = document
     .replace("⚪ ", "");
 
 pdf.text(
-    "Risk Level: " + riskLevel,
+    "Risk Level: " + risk,
     20,
     205
 );
