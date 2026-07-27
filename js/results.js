@@ -532,7 +532,7 @@ pdf.text(
 );
 
 const risk = document
-    .getElementById("risk")
+  .getElementById("assessmentTitle")
     .textContent
     .replace("🔴 ", "")
     .replace("🟡 ", "")
