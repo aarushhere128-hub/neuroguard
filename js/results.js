@@ -540,11 +540,6 @@ const risk = document
     .replace("🟢 ", "")
     .replace("⚪ ", "");
 
-pdf.text(
-    "Risk Level: " + risk,
-    20,
-    205
-);
 
     // ===========================
     // AI Interpretation
