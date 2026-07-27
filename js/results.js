@@ -165,35 +165,102 @@ let risk;
 let message;
 let recommendation;
 
+const possibleConditions = [];
+
 if (completed === 0) {
 
-    risk = "⚪ No Assessment";
-    message = "No FAST assessments have been completed yet.";
-    recommendation = "Please complete at least one assessment.";
+    risk = "⚪ Assessment Incomplete";
+
+    message =
+        "Complete at least one neurological assessment.";
+
+    recommendation =
+        "Finish the assessment to receive an educational screening.";
 
 }
-else if (overall >= 8) {
 
-    risk = "🟢 Low Risk";
-    message = "No significant abnormalities were detected.";
-    recommendation = "Continue monitoring your health.";
-
-}
-else if (overall >= 6) {
-
-    risk = "🟡 Moderate Risk";
-    message = "Some FAST indicators require attention.";
-    recommendation = "Consult a healthcare professional.";
-
-}
 else {
 
-    risk = "🔴 High Risk";
-    message = "Multiple FAST indicators suggest possible stroke symptoms.";
-    recommendation = "🚑 Seek emergency medical attention immediately.";
+    // ---------- Possible Conditions ----------
+
+    if (faceScore < 7)
+        possibleConditions.push("🙂 Bell's Palsy");
+
+    if (
+        faceScore < 7 ||
+        armScore < 7 ||
+        speechScore < 7
+    )
+        possibleConditions.push("🧠 Stroke");
+
+    if (armScore < 7)
+        possibleConditions.push("🤲 Parkinson's Disease");
+
+    if (speechScore < 7)
+        possibleConditions.push("⚡ Other Neurological Disorder");
+
+    // remove duplicates
+    const uniqueConditions =
+        [...new Set(possibleConditions)];
+
+    const container =
+        document.getElementById("possibleConditions");
+
+    if (container) {
+
+        container.innerHTML = "";
+
+        uniqueConditions.forEach(condition => {
+
+            container.innerHTML += `
+                <span class="condition-chip">
+                    ${condition}
+                </span>
+            `;
+
+        });
+
+    }
+
+    // ---------- Overall Severity ----------
+
+    if (overall >= 8) {
+
+        risk = "🟢 Low Concern";
+
+        message =
+            "No significant neurological abnormalities were detected during this educational screening.";
+
+        recommendation =
+            "Continue monitoring your health and seek medical advice if symptoms develop.";
+
+    }
+
+    else if (overall >= 6) {
+
+        risk = "🟡 Neurological Signs Detected";
+
+        message =
+            "Some neurological signs were identified. These symptoms may overlap with several neurological conditions.";
+
+        recommendation =
+            "Arrange a prompt medical evaluation with a healthcare professional.";
+
+    }
+
+    else {
+
+        risk = "🔴 Urgent Neurological Signs";
+
+        message =
+            "Multiple neurological warning signs were detected. These findings may be associated with one or more neurological conditions.";
+
+        recommendation =
+            "🚑 Seek emergency medical attention immediately, especially if symptoms appeared suddenly.";
+
+    }
 
 }
-
 document.getElementById("riskLevel").textContent =
 risk;
 
@@ -316,7 +383,7 @@ if (user) {
 
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(20);
-    pdf.text("NeuroGuard Stroke Assessment Report", 20, 20);
+    pdf.text("NeuroGuard Neurological Screening Report", 20, 20);
 
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(11);
@@ -384,7 +451,7 @@ pdf.text(
 
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(15);
-    pdf.text("FAST Assessment Results", 20, 125);
+pdf.text("Neurological Assessment Results", 20, 125);
 
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(12);
@@ -534,7 +601,7 @@ pdf.text(
     );
 
     pdf.text(
-        "This report is intended for screening purposes only and is not a medical diagnosis.",
+        "This AI-assisted neurological screening is educational only and cannot diagnose any medical condition.",
         20,
         292
     );
