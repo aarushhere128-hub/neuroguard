@@ -1089,3 +1089,38 @@ html[data-theme="dark"] .comparison-table td{
     font-size:17px;
 
 }
+.condition-list{
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+
+    margin:18px 0;
+
+}
+
+.condition-chip{
+
+    padding:10px 16px;
+
+    border-radius:999px;
+
+    background:#eef5ff;
+
+    border:1px solid #b8d4ff;
+
+    font-weight:600;
+
+}
+
+.disclaimer-text{
+
+    margin-top:18px;
+
+    font-size:.92rem;
+
+    opacity:.8;
+
+    line-height:1.6;
+
+}
