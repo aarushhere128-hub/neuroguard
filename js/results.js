@@ -183,21 +183,21 @@ else {
 
     // ---------- Possible Conditions ----------
 
-    if (faceScore < 7)
-        possibleConditions.push("🙂 Bell's Palsy");
+  if (faceCompleted && faceScore < 7)
+    possibleConditions.push("🙂 Bell's Palsy");
 
-    if (
-        faceScore < 7 ||
-        armScore < 7 ||
-        speechScore < 7
-    )
-        possibleConditions.push("🧠 Stroke");
+if (
+    (faceCompleted && faceScore < 7) ||
+    (armCompleted && armScore < 7) ||
+    (speechCompleted && speechScore < 7)
+)
+    possibleConditions.push("🧠 Stroke");
 
-    if (armScore < 7)
-        possibleConditions.push("🤲 Parkinson's Disease");
+if (armCompleted && armScore < 7)
+    possibleConditions.push("🤲 Parkinson's Disease");
 
-    if (speechScore < 7)
-        possibleConditions.push("⚡ Other Neurological Disorder");
+if (speechCompleted && speechScore < 7)
+    possibleConditions.push("⚡ Other Neurological Disorder");
 
     // remove duplicates
     const uniqueConditions =
@@ -272,8 +272,8 @@ recommendation;
 const notifyBtn = document.getElementById("notifyBtn");
 
 if (
-    risk.includes("Moderate") ||
-    risk.includes("High")
+    risk.includes("Neurological Signs") ||
+    risk.includes("Urgent")
 ) {
     notifyBtn.style.display = "inline-block";
 }
