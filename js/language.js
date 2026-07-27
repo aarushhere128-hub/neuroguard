@@ -55,9 +55,9 @@ footerCopyright: "© 2026 NeuroGuard",
         learnButton: "Learn More",
 
         // Hero Stats
-        stat1: "Lifetime Stroke Risk",
-        stat2: "Potentially Preventable",
-        stat3: "Critical Treatment Window",
+       stat1: "People affected by neurological disorders",
+stat2: "Earlier recognition can improve outcomes",
+stat3: "Multiple neurological conditions",
 
         // Problem
         problemTitle: "The Problem",
@@ -314,10 +314,9 @@ footerCopyright: "© 2026 NeuroGuard • एआई-सहायित स्ट�
         learnButton: "और जानें",
 
         // Hero Stats
-        stat1: "जीवनकाल में स्ट्रोक का जोखिम",
-        stat2: "रोकथाम योग्य",
-        stat3: "महत्वपूर्ण उपचार समय",
-
+       stat1: "तंत्रिका संबंधी विकारों से प्रभावित लोग",
+stat2: "फ़र्क ला सकते हैं",
+stat3: "मान्यता प्राप्त तंत्रिका संबंधी विकार",
         // Problem
         problemTitle: "समस्या",
         problemDesc:
@@ -441,9 +440,9 @@ footerAbout: "हमारे बारे में",
         learnButton: "ਹੋਰ ਜਾਣੋ",
 
         // Hero Stats
-        stat1: "ਜੀਵਨਕਾਲ ਦੌਰਾਨ ਸਟ੍ਰੋਕ ਦਾ ਖਤਰਾ",
-        stat2: "ਰੋਕੇ ਜਾ ਸਕਣ ਵਾਲੇ",
-        stat3: "ਮਹੱਤਵਪੂਰਨ ਇਲਾਜ ਸਮਾਂ",
+       stat1: "ਤੰਤਰਿਕਾ ਸੰਬੰਧੀ ਬਿਮਾਰੀਆਂ ਨਾਲ ਪ੍ਰਭਾਵਿਤ ਲੋਕ",
+stat2: "ਫ਼ਰਕ ਪਾ ਸਕਦੇ ਹਨ",
+stat3: "ਮਾਨਤਾ ਪ੍ਰਾਪਤ ਤੰਤਰਿਕਾ ਸੰਬੰਧੀ ਬਿਮਾਰੀਆਂ",
 
         // Problem
         problemTitle: "ਸਮੱਸਿਆ",
