@@ -385,23 +385,32 @@ if (localStorage.getItem("speechCompleted") === "true") {
         "✓ Speech Test Complete";
 }
 
-    // =============================
-    // PROGRESS BAR
-    // =============================
+   // =============================
+// DYNAMIC PROGRESS BAR
+// =============================
+function updateProgress() {
+let completed = 0;
 
-    let completed = 0;
+if (localStorage.getItem("faceCompleted") === "true") completed++;
+if (localStorage.getItem("armCompleted") === "true") completed++;
+if (localStorage.getItem("speechCompleted") === "true") completed++;
+if (localStorage.getItem("symptomTime")) completed++;   // Time counts too
 
-    if (localStorage.getItem("faceCompleted") === "true") completed++;
-    if (localStorage.getItem("armCompleted") === "true") completed++;
-    if (localStorage.getItem("speechCompleted") === "true") completed++;
+const percent = completed * 25;
 
-    const percent = (completed / 3) * 100;
+document.getElementById("progressFill").style.width = percent + "%";
 
-    document.querySelector(".progress-fill").style.width =
-        percent + "%";
-
+// Display text
+if (completed === 4) {
+    document.getElementById("progressText").textContent =
+        "Assessment Complete ✓";
+} else {
     document.getElementById("progressText").textContent =
         `Step ${completed + 1} of 4`;
+}
+}
+// Initialize progress bar on page load
+updateProgress();
     // Load previously entered symptom time
 const symptomTimeInput = document.getElementById("symptomTime");
 
@@ -413,11 +422,15 @@ if (symptomTimeInput) {
     // Save every time the user types/selects
     symptomTimeInput.oninput = function () {
         localStorage.setItem("symptomTime", this.value);
+        
+        updateProgress();
     };
 
     // Save again if they leave the field
     symptomTimeInput.onchange = function () {
         localStorage.setItem("symptomTime", this.value);
+        updateProgress();
+        
     };
 };
 document.getElementById("reportButton").addEventListener("click", () => {
