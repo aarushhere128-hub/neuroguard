@@ -211,7 +211,31 @@ footerCopyright: "© 2026 NeuroGuard • AI-Assisted Stroke Awareness Platform",
         footerAbout: "About",
         footerTechnology: "Technology",
         footerContact: "Contact",
-        footerCopyright: "© 2026 NeuroGuard<br>Educational Prototype"
+        footerCopyright: "© 2026 NeuroGuard<br>Educational Prototype",
+        speechBadge: "🗣️ FAST Speech Assessment",
+speechInstructions: "Read the sentence below clearly.",
+startSpeechBtn: "Start Recording",
+listening: "🎤 Listening...",
+processing: "Analyzing speech...",
+complete: "✅ Assessment Complete",
+demoRunning: "🤖 Running Demo Assessment...",
+demoComplete: "✅ Demo Assessment Complete",
+
+targetSentenceTitle: "Read this sentence",
+recognizedTitle: "Recognized Speech",
+similarityTitle: "Similarity",
+speechScoreTitle: "Speech Score",
+speechRiskTitle: "Risk Level",
+
+speechNormal: "🟢 Normal",
+speechMild: "🟡 Mild Difficulty",
+speechPossible: "🟠 Possible Speech Impairment",
+speechSevere: "🔴 Significant Speech Difficulty",
+
+speechPermissionDenied: "❌ Microphone permission denied.",
+speechNotSupported: "❌ Speech recognition not supported.",
+speechNoSpeech: "⚠ No speech detected. Please try again.",
+speechStopped: "Recording stopped."
     },
 
     hi: {
@@ -419,7 +443,34 @@ footerAbout: "हमारे बारे में",
         footerAbout: "हमारे बारे में",
         footerTechnology: "तकनीक",
         footerContact: "संपर्क",
-        footerCopyright: "© 2026 NeuroGuard<br>शैक्षिक प्रोटोटाइप"
+        footerCopyright: "© 2026 NeuroGuard<br>शैक्षिक प्रोटोटाइप",
+        // =====================
+// Hindi
+// =====================
+speechBadge: "🗣️ FAST भाषण परीक्षण",
+speechInstructions: "नीचे दिया गया वाक्य स्पष्ट रूप से पढ़ें।",
+startSpeechBtn: "रिकॉर्डिंग शुरू करें",
+listening: "🎤 सुना जा रहा है...",
+processing: "भाषण का विश्लेषण किया जा रहा है...",
+complete: "✅ परीक्षण पूरा हुआ",
+demoRunning: "🤖 डेमो परीक्षण चल रहा है...",
+demoComplete: "✅ डेमो परीक्षण पूरा हुआ",
+
+targetSentenceTitle: "यह वाक्य पढ़ें",
+recognizedTitle: "पहचाना गया भाषण",
+similarityTitle: "समानता",
+speechScoreTitle: "भाषण स्कोर",
+speechRiskTitle: "जोखिम स्तर",
+
+speechNormal: "🟢 सामान्य",
+speechMild: "🟡 हल्की बोलने की कठिनाई",
+speechPossible: "🟠 संभावित बोलने में समस्या",
+speechSevere: "🔴 गंभीर बोलने की कठिनाई",
+
+speechPermissionDenied: "❌ माइक्रोफ़ोन की अनुमति अस्वीकार कर दी गई।",
+speechNotSupported: "❌ इस ब्राउज़र में स्पीच रिकग्निशन समर्थित नहीं है।",
+speechNoSpeech: "⚠ कोई आवाज़ नहीं मिली। कृपया पुनः प्रयास करें।",
+speechStopped: "रिकॉर्डिंग बंद हो गई।",
     },
     pa: {
         // Navbar
@@ -632,7 +683,34 @@ footerAbout: "ਸਾਡੇ ਬਾਰੇ",
         footerAbout: "ਸਾਡੇ ਬਾਰੇ",
         footerTechnology: "ਤਕਨਾਲੋਜੀ",
         footerContact: "ਸੰਪਰਕ",
-        footerCopyright: "© 2026 NeuroGuard<br>ਸਿੱਖਿਆਤਮਕ ਪ੍ਰੋਟੋਟਾਈਪ"
+        footerCopyright: "© 2026 NeuroGuard<br>ਸਿੱਖਿਆਤਮਕ ਪ੍ਰੋਟੋਟਾਈਪ",
+        // =====================
+// Punjabi
+// =====================
+speechBadge: "🗣️ FAST ਬੋਲਚਾਲ ਟੈਸਟ",
+speechInstructions: "ਹੇਠਾਂ ਦਿੱਤਾ ਵਾਕ ਸਾਫ਼-ਸੁਥਰੇ ਢੰਗ ਨਾਲ ਪੜ੍ਹੋ।",
+startSpeechBtn: "ਰਿਕਾਰਡਿੰਗ ਸ਼ੁਰੂ ਕਰੋ",
+listening: "🎤 ਸੁਣਿਆ ਜਾ ਰਿਹਾ ਹੈ...",
+processing: "ਬੋਲਚਾਲ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
+complete: "✅ ਮੁਲਾਂਕਣ ਪੂਰਾ ਹੋਇਆ",
+demoRunning: "🤖 ਡੈਮੋ ਮੁਲਾਂਕਣ ਚੱਲ ਰਿਹਾ ਹੈ...",
+demoComplete: "✅ ਡੈਮੋ ਮੁਲਾਂਕਣ ਪੂਰਾ ਹੋਇਆ",
+
+targetSentenceTitle: "ਇਹ ਵਾਕ ਪੜ੍ਹੋ",
+recognizedTitle: "ਪਛਾਣੀ ਗਈ ਬੋਲਚਾਲ",
+similarityTitle: "ਮਿਲਾਪ",
+speechScoreTitle: "ਬੋਲਚਾਲ ਸਕੋਰ",
+speechRiskTitle: "ਖਤਰੇ ਦਾ ਪੱਧਰ",
+
+speechNormal: "🟢 ਸਧਾਰਣ",
+speechMild: "🟡 ਹਲਕੀ ਬੋਲਣ ਦੀ ਮੁਸ਼ਕਲ",
+speechPossible: "🟠 ਸੰਭਾਵਿਤ ਬੋਲਣ ਵਿੱਚ ਰੁਕਾਵਟ",
+speechSevere: "🔴 ਗੰਭੀਰ ਬੋਲਣ ਦੀ ਮੁਸ਼ਕਲ",
+
+speechPermissionDenied: "❌ ਮਾਈਕ੍ਰੋਫੋਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਦਿੱਤੀ ਗਈ।",
+speechNotSupported: "❌ ਇਸ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਸਪੀਚ ਰਿਕਗਨੀਸ਼ਨ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ।",
+speechNoSpeech: "⚠ ਕੋਈ ਆਵਾਜ਼ ਨਹੀਂ ਮਿਲੀ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+speechStopped: "ਰਿਕਾਰਡਿੰਗ ਬੰਦ ਹੋ ਗਈ।",
     }
 };
 
@@ -678,6 +756,16 @@ if (
     window.armMessages?.[lang]?.[riskKey]
 ) {
     riskElement.textContent = window.armMessages[lang][riskKey];
+}
+const speechRiskElement = document.getElementById("speechRisk");
+const speechRiskKey = localStorage.getItem("speechRiskKey");
+
+if (
+    speechRiskElement &&
+    speechRiskKey &&
+    translations[lang][speechRiskKey]
+) {
+    speechRiskElement.textContent = translations[lang][speechRiskKey];
 }
 }
 // ==============================
