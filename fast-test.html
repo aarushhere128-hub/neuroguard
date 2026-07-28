@@ -340,7 +340,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // =============================
 // Clear previous assessment once
 // =============================
-//if (!sessionStorage.getItem("assessmentStarted")) {
+if (!sessionStorage.getItem("assessmentStarted")) {
 
     sessionStorage.setItem("assessmentStarted", "true");
 
@@ -353,7 +353,7 @@ window.addEventListener("DOMContentLoaded", () => {
 localStorage.removeItem("armCompleted");
 localStorage.removeItem("armScore");
 localStorage.removeItem("armRisk");
-localStorage.removeItem("armRiskKey");   // <-- ADD THIS
+localStorage.removeItem("armRiskKey");   
 
     localStorage.removeItem("speechCompleted");
     localStorage.removeItem("speechScore");
@@ -361,7 +361,7 @@ localStorage.removeItem("armRiskKey");   // <-- ADD THIS
     localStorage.removeItem("speechTranscript");
     localStorage.removeItem("speechSimilarity");
     localStorage.removeItem("symptomTime");
-//}
+}
    // =============================
 // FACE TEST
 // =============================
