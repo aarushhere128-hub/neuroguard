@@ -302,7 +302,7 @@ const droopingProb = drooping.probability;
 
 const faceScore = healthyProb * 10;
 
-let risk;
+
 let color;
 let riskKey;
 
@@ -348,6 +348,7 @@ console.log("Risk =", risk);
 console.log("Saving faceRisk...");
 localStorage.setItem("faceRisk", risk);
 console.log(localStorage.getItem("faceRisk"));
+localStorage.setItem("faceRiskKey", riskKey);
 localStorage.setItem("faceHealthy", (healthyProb * 100).toFixed(1));
 localStorage.setItem("faceDrooping", (droopingProb * 100).toFixed(1));
 localStorage.setItem("faceCompleted", "true");
