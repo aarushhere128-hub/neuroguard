@@ -189,25 +189,6 @@ function initRippleButtons(){
 
 }
 
-/* ==========================================================
-   PROGRESS BARS
-========================================================== */
-
-function initProgressBars(){
-
-    document.querySelectorAll(".progress-fill").forEach(bar=>{
-
-        const value=bar.dataset.progress||100;
-
-        setTimeout(()=>{
-
-            bar.style.width=value+"%";
-
-        },300);
-
-    });
-
-}
 
 /* ==========================================================
    TOAST NOTIFICATION
