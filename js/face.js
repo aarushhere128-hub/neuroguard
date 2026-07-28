@@ -90,6 +90,36 @@ function getText() {
     const lang = localStorage.getItem("language") || "en";
     return faceMessages[lang];
 }
+window.updateFaceResultLanguage = function () {
+
+    const riskKey = localStorage.getItem("faceRiskKey");
+    if (!riskKey) return;
+
+    const healthy = localStorage.getItem("faceHealthy");
+    const drooping = localStorage.getItem("faceDrooping");
+    const faceScore = localStorage.getItem("faceScore");
+
+    let color = "green";
+
+    if (riskKey === "high") color = "red";
+    else if (riskKey === "moderate") color = "orange";
+    else if (riskKey === "mild") color = "#d4a100";
+
+    score.innerHTML = `
+    <div style="font-size:34px;font-weight:bold;color:${color};">
+        ${faceScore}/10
+    </div>
+
+    <div style="font-size:22px;margin-top:10px;">
+        ${getText()[riskKey]}
+    </div>
+
+    <div style="margin-top:15px;">
+        ${getText().healthy} : ${healthy}%<br>
+        ${getText().drooping} : ${drooping}%
+    </div>
+    `;
+};
 let stream;
 console.log(upload);
 console.log(preview);
