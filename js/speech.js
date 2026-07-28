@@ -222,21 +222,36 @@ else {
 
         };
 
-        recognition.onerror = function (event) {
+   recognition.onerror = function (event) {
 
-            status.textContent =
-                "❌ Error: " + event.error;
+    if (event.error === "no-speech") {
+        status.textContent = "⚠ No speech detected. Please try again.";
 
-        };
+        recognizedText.textContent = "-";
+        similarity.textContent = "-";
+        speechScore.textContent = "-";
+        speechRisk.textContent = "-";
 
-        recognition.onend = function () {
+        localStorage.removeItem("speechTranscript");
+        localStorage.removeItem("speechSimilarity");
+        localStorage.removeItem("speechScore");
+        localStorage.removeItem("speechRisk");
+        localStorage.removeItem("speechCompleted");
 
-            if (status.textContent === "🎤 Listening...") {
+        return;
+    }
 
-                status.textContent =
-                    "Recording stopped.";
+    if (event.error === "not-allowed") {
+        status.textContent = "❌ Microphone permission denied.";
+        return;
+    }
 
-            }
+    status.textContent = "❌ Error: " + event.error;
+};
+     recognition.onend = function () {
+    if (status.textContent === "🎤 Listening...") {
+        status.textContent = "⚠ No speech detected. Please try again.";
+    }
 
         };
 
