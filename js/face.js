@@ -16,35 +16,74 @@ const video = document.getElementById("cameraPreview");
 const canvas = document.getElementById("captureCanvas");
 const captureBtn = document.getElementById("captureBtn");
 const faceMessages = {
-  en: {
+ en: {
+    uploadSuccess: "✅ Image uploaded successfully.",
+    photoCaptured: "✅ Photo captured successfully.",
+    detecting: "🔍 Detecting face...",
+    landmarks: "🧠 Extracting landmarks...",
+    symmetry: "📐 Measuring facial symmetry...",
+    aiScore: "🤖 Calculating AI score...",
+    runningModel: "🤖 Running TensorFlow model...",
+    modelNotLoaded: "❌ AI model not loaded.",
+    noFace: "❌ No human face detected.",
+    sideways: "⚠ Face turned sideways. Look straight at the camera.",
+    frontFacing: "⚠ Please upload a straight front-facing image.",
+    invalidOutput: "❌ Model output invalid.",
+    analysisComplete: "✅ Analysis Complete",
+
     healthy: "Healthy",
     drooping: "Drooping",
     normal: "🟢 Normal",
     mild: "🟡 Mild Risk",
     moderate: "🟠 Moderate Risk",
-    high: "🔴 High Risk",
-    analysisComplete: "✅ Analysis Complete"
-  },
+    high: "🔴 High Risk"
+},
 
-  hi: {
+ hi: {
+    uploadSuccess: "✅ चित्र सफलतापूर्वक अपलोड हो गया।",
+    photoCaptured: "✅ फोटो सफलतापूर्वक कैप्चर हो गई।",
+    detecting: "🔍 चेहरे का पता लगाया जा रहा है...",
+    landmarks: "🧠 चेहरे के लैंडमार्क निकाले जा रहे हैं...",
+    symmetry: "📐 चेहरे की समरूपता मापी जा रही है...",
+    aiScore: "🤖 एआई स्कोर की गणना की जा रही है...",
+    runningModel: "🤖 TensorFlow मॉडल चल रहा है...",
+    modelNotLoaded: "❌ एआई मॉडल लोड नहीं हुआ।",
+    noFace: "❌ कोई मानव चेहरा नहीं मिला।",
+    sideways: "⚠ कृपया सीधे कैमरे की ओर देखें।",
+    frontFacing: "⚠ कृपया सामने से ली गई स्पष्ट तस्वीर अपलोड करें।",
+    invalidOutput: "❌ मॉडल का आउटपुट अमान्य है।",
+    analysisComplete: "✅ विश्लेषण पूरा हुआ",
+
     healthy: "स्वस्थ",
     drooping: "चेहरे का झुकाव",
     normal: "🟢 सामान्य",
     mild: "🟡 हल्का जोखिम",
     moderate: "🟠 मध्यम जोखिम",
-    high: "🔴 उच्च जोखिम",
-    analysisComplete: "✅ विश्लेषण पूरा हुआ"
-  },
+    high: "🔴 उच्च जोखिम"
+},
 
-  pa: {
+pa: {
+    uploadSuccess: "✅ ਤਸਵੀਰ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਲੋਡ ਹੋ ਗਈ।",
+    photoCaptured: "✅ ਫੋਟੋ ਸਫਲਤਾਪੂਰਵਕ ਕੈਪਚਰ ਹੋ ਗਈ।",
+    detecting: "🔍 ਚਿਹਰਾ ਪਛਾਣਿਆ ਜਾ ਰਿਹਾ ਹੈ...",
+    landmarks: "🧠 ਚਿਹਰੇ ਦੇ ਲੈਂਡਮਾਰਕ ਲੱਭੇ ਜਾ ਰਹੇ ਹਨ...",
+    symmetry: "📐 ਚਿਹਰੇ ਦੀ ਸਮਰੂਪਤਾ ਮਾਪੀ ਜਾ ਰਹੀ ਹੈ...",
+    aiScore: "🤖 ਏਆਈ ਸਕੋਰ ਦੀ ਗਣਨਾ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
+    runningModel: "🤖 TensorFlow ਮਾਡਲ ਚੱਲ ਰਿਹਾ ਹੈ...",
+    modelNotLoaded: "❌ ਏਆਈ ਮਾਡਲ ਲੋਡ ਨਹੀਂ ਹੋਇਆ।",
+    noFace: "❌ ਕੋਈ ਮਨੁੱਖੀ ਚਿਹਰਾ ਨਹੀਂ ਮਿਲਿਆ।",
+    sideways: "⚠ ਕਿਰਪਾ ਕਰਕੇ ਕੈਮਰੇ ਵੱਲ ਸਿੱਧਾ ਦੇਖੋ।",
+    frontFacing: "⚠ ਕਿਰਪਾ ਕਰਕੇ ਸਾਹਮਣੇ ਤੋਂ ਲਈ ਗਈ ਸਾਫ਼ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ।",
+    invalidOutput: "❌ ਮਾਡਲ ਦਾ ਨਤੀਜਾ ਅਵੈਧ ਹੈ।",
+    analysisComplete: "✅ ਵਿਸ਼ਲੇਸ਼ਣ ਪੂਰਾ ਹੋਇਆ",
+
     healthy: "ਸਧਾਰਣ",
     drooping: "ਚਿਹਰੇ ਦਾ ਝੁਕਾਅ",
     normal: "🟢 ਸਧਾਰਣ",
     mild: "🟡 ਹਲਕਾ ਖਤਰਾ",
     moderate: "🟠 ਦਰਮਿਆਨਾ ਖਤਰਾ",
-    high: "🔴 ਉੱਚ ਖਤਰਾ",
-    analysisComplete: "✅ ਵਿਸ਼ਲੇਸ਼ਣ ਪੂਰਾ ਹੋਇਆ"
-  }
+    high: "🔴 ਉੱਚ ਖਤਰਾ"
+}
 };
 
 function getText() {
