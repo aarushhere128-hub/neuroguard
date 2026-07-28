@@ -189,7 +189,7 @@ upload.addEventListener("change", (e) => {
 
     // Reset UI
     score.textContent = "Face Score : -";
-    status.textContent = "✅ Image uploaded successfully.";
+    status.textContent = getText().uploadSuccess;
     analyzeBtn.disabled = false;
 
     // Store image for analysis
@@ -260,7 +260,7 @@ captureBtn.addEventListener("click", () => {
 
         analyzeBtn.disabled = false;
 
-        status.textContent = "✅ Photo captured successfully.";
+       status.textContent = getText().photoCaptured;
         
 
     };
@@ -283,16 +283,16 @@ analyzeBtn.addEventListener("click", async () => {
 
     if (!uploadedImage) return;
 
-    status.innerHTML = "🔍 Detecting face...";
+    status.innerHTML = getText().detecting;
     await wait(700);
 
-    status.innerHTML = "🧠 Extracting landmarks...";
+    status.innerHTML = getText().landmarks;
     await wait(900);
 
-    status.innerHTML = "📐 Measuring facial symmetry...";
+    status.innerHTML = getText().symmetry;
     await wait(900);
 
-    status.innerHTML = "🤖 Calculating AI score...";
+    status.innerHTML = getText().aiScore;
     await wait(1000);
 
     await detect(uploadedImage);
@@ -305,14 +305,14 @@ analyzeBtn.addEventListener("click", async () => {
 
 async function detect(image) {
     if (!faceLandmarker) {
-        status.textContent = "❌ AI model not loaded.";
+        status.textContent = getText().modelNotLoaded;
         return;
     }
 
     const result = faceLandmarker.detect(image);
 
     if (!result.faceLandmarks || result.faceLandmarks.length === 0) {
-        status.textContent = "❌ No human face detected.";
+        status.textContent = getText().noFace;
         score.textContent = "Face Score : -";
         return;
     }
@@ -330,7 +330,7 @@ const yaw =
 
 if(yaw>0.08){
     status.textContent =
-    "⚠ Face turned sideways. Look straight at the camera.";
+    getText().sideways;
     return;
 }
 
@@ -342,14 +342,14 @@ if(yaw>0.08){
 
     if (eyeLevelDiff > 0.05) {
         status.textContent =
-            "⚠ Please upload a straight front-facing image.";
+            getText().frontFacing;
         score.textContent = "Face Score : -";
         return;
     }
 
-    status.textContent = "✅ Analysis Complete";
+    status.textContent = getText().analysisComplete;
 
-status.textContent = "🤖 Running TensorFlow model...";
+status.textContent = getText().runningModel;
 
 const predictions = await model.predict(image);
 
@@ -362,7 +362,7 @@ const drooping =
     predictions.find(p => p.className === "Drooping Face");
 
 if (!healthy || !drooping) {
-    status.textContent = "❌ Model output invalid.";
+    status.textContent = getText().invalidOutput;
     return;
 }
 
