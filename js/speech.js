@@ -93,20 +93,23 @@ if (DEMO_MODE) {
         const percent = (60 + Math.random() * 30).toFixed(1);
 
         let score;
-        let risk;
-
-        if (percent >= 95) {
-            score = 10.0;
-            risk = "🟢 Normal";
-        }
-        else if (percent >= 80) {
-            score = 8.0;
-            risk = "🟡 Mild Speech Difficulty";
-        }
-        else {
-            score = 6.0;
-            risk = "🔴 Possible Speech Impairment";
-        }
+let risk;
+let riskKey;
+if (percent >= 95) {
+    score = 10.0;
+    risk = "🟢 Normal";
+    riskKey = "speechNormal";
+}
+else if (percent >= 80) {
+    score = 8.0;
+    risk = "🟡 Mild Difficulty";
+    riskKey = "speechMild";
+}
+else {
+    score = 6.0;
+    risk = "🔴 Significant Speech Difficulty";
+    riskKey = "speechSevere";
+}
 
         // Display results
         recognizedText.textContent = targetSentence;
@@ -121,6 +124,7 @@ if (DEMO_MODE) {
         localStorage.setItem("speechSimilarity", percent);
         localStorage.setItem("speechScore", score.toFixed(1));
         localStorage.setItem("speechRisk", risk);
+        localStorage.setItem("speechRiskKey", riskKey);
         localStorage.setItem("speechCompleted", "true");
 
         console.log("Speech demo saved.");
