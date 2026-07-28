@@ -38,8 +38,8 @@ window.armMessages = {
         upload: "Please upload an image.",
         analyzing: "Analyzing posture...",
         noPerson: "❌ No person detected.",
+        bodyNotVisible: "⚠ Please upload a clear image showing your full upper body with both arms visible.",
         complete: "✅ Analysis Complete",
-
         normal: "🟢 Normal",
         mild: "🟡 Mild Difference",
         weak: "🟠 Possible Arm Weakness",
@@ -52,8 +52,8 @@ window.armMessages = {
         upload: "कृपया एक चित्र अपलोड करें।",
         analyzing: "मुद्रा का विश्लेषण किया जा रहा है...",
         noPerson: "❌ कोई व्यक्ति नहीं मिला।",
+        bodyNotVisible: "⚠ कृपया ऐसी स्पष्ट तस्वीर अपलोड करें जिसमें आपका पूरा ऊपरी शरीर और दोनों हाथ स्पष्ट दिखाई दें।",
         complete: "✅ विश्लेषण पूरा हुआ",
-
         normal: "🟢 सामान्य",
         mild: "🟡 हल्का अंतर",
         weak: "🟠 हाथ में संभावित कमजोरी",
@@ -66,8 +66,8 @@ window.armMessages = {
         upload: "ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ।",
         analyzing: "ਪੋਸਚਰ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
         noPerson: "❌ ਕੋਈ ਵਿਅਕਤੀ ਨਹੀਂ ਮਿਲਿਆ।",
+        bodyNotVisible: "⚠ ਕਿਰਪਾ ਕਰਕੇ ਐਸੀ ਸਾਫ਼ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ ਜਿਸ ਵਿੱਚ ਤੁਹਾਡਾ ਪੂਰਾ ਉੱਪਰਲਾ ਸਰੀਰ ਅਤੇ ਦੋਵੇਂ ਬਾਂਹਾਂ ਸਪਸ਼ਟ ਦਿਖਾਈ ਦੇਣ।",
         complete: "✅ ਵਿਸ਼ਲੇਸ਼ਣ ਪੂਰਾ ਹੋਇਆ",
-
         normal: "🟢 ਸਧਾਰਣ",
         mild: "🟡 ਹਲਕਾ ਫਰਕ",
         weak: "🟠 ਬਾਂਹ ਵਿੱਚ ਸੰਭਾਵਿਤ ਕਮਜ਼ੋਰੀ",
@@ -229,28 +229,31 @@ async function detect() {
     const result =
         await poseLandmarker.detect(preview);
 
-    if (!result.landmarks.length) {
+if (
+    !result.landmarks ||
+    result.landmarks.length === 0
+) {
+    status.textContent = getText().noPerson;
+    return;
+}
 
-        status.textContent = getText().noPerson;
+const landmarks = result.landmarks[0];
 
-        return;
-
-    }
+// Reject if important landmarks aren't confidently detected
+if (
+    landmarks[11].visibility < 0.5 || // left shoulder
+    landmarks[12].visibility < 0.5 || // right shoulder
+    landmarks[15].visibility < 0.5 || // left wrist
+    landmarks[16].visibility < 0.5    // right wrist
+) {
+    status.textContent = getText().bodyNotVisible;
+    return;
+}
     
-
-    const landmarks = result.landmarks[0];
 
     const leftWrist = landmarks[15];
 
     const rightWrist = landmarks[16];
-    if (
-    leftWrist.visibility < 0.5 ||
-    rightWrist.visibility < 0.5
-) {
-    status.textContent =
-        "⚠ Please make sure both arms are fully visible.";
-    return;
-}
 
     leftText.textContent = leftWrist.y.toFixed(3);
 
