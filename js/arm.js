@@ -99,24 +99,17 @@ async function init() {
             "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
         );
 
-    poseLandmarker =
-        await PoseLandmarker.createFromOptions(
-            filesetResolver,
-            {
-
-                baseOptions: {
-
-                    modelAssetPath:
-                        "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task"
-
-                },
-
-                runningMode: "IMAGE",
-
-                numPoses: 1
-
-            });
-
+  poseLandmarker = await PoseLandmarker.createFromOptions(filesetResolver, {
+    baseOptions: {
+        modelAssetPath:
+            "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task"
+    },
+    runningMode: "IMAGE",
+    numPoses: 1,
+    minPoseDetectionConfidence: 0.7,
+    minPosePresenceConfidence: 0.7,
+    minTrackingConfidence: 0.7
+});
     status.textContent = getText().loaded;
 
 }
