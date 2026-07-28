@@ -398,6 +398,11 @@ if (localStorage.getItem("speechCompleted") === "true") completed++;
 if (localStorage.getItem("symptomTime")) completed++;   // Time counts too
 
 const percent = completed * 25;
+console.log("Face:", localStorage.getItem("faceCompleted"));
+console.log("Arm:", localStorage.getItem("armCompleted"));
+console.log("Speech:", localStorage.getItem("speechCompleted"));
+console.log("Time:", localStorage.getItem("symptomTime"));
+console.log("Completed =", completed);
 
 document.getElementById("progressFill").style.width = percent + "%";
 
