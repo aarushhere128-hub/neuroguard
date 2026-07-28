@@ -177,7 +177,7 @@ const translations = {
 
         subtitle:"Upload a clear front-facing image while smiling naturally.",
 
-        heading:"Instructions",
+        instructionHeading:"Instructions",
 
         uploadBtn:"📤 Upload Image",
         cameraBtn: "📷 Take Photo",
@@ -204,7 +204,7 @@ const translations = {
 
         subtitle:"एक साफ़ सामने की तस्वीर अपलोड करें।",
 
-        heading:"निर्देश",
+        instructionHeading:"निर्देश",
         cameraBtn: "📷 फोटो लें",
 
         uploadBtn:"📤 चित्र अपलोड करें",
@@ -231,7 +231,7 @@ const translations = {
 
         subtitle:"ਕਿਰਪਾ ਕਰਕੇ ਸਾਹਮਣੇ ਤੋਂ ਸਾਫ਼ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ।",
 
-        heading:"ਹਦਾਇਤਾਂ",
+        instructionHeading:"ਹਦਾਇਤਾਂ",
 
         uploadBtn:"📤 ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ",
         
@@ -274,7 +274,15 @@ language.addEventListener("change",()=>{
     document.getElementById("i2").innerHTML=t.instructionList[1];
     document.getElementById("i3").innerHTML=t.instructionList[2];
     document.getElementById("i4").innerHTML=t.instructionList[3];
-    document.getElementById("i5").innerHTML=t.instructionList[4];
+document.getElementById("i5").innerHTML=t.instructionList[4];
+
+// Save selected language
+localStorage.setItem("language", language.value);
+
+// Refresh face result if it already exists
+if (window.updateFaceResultLanguage) {
+    window.updateFaceResultLanguage();
+}
 
 });
 
