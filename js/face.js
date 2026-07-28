@@ -15,7 +15,42 @@ const cameraContainer = document.getElementById("cameraContainer");
 const video = document.getElementById("cameraPreview");
 const canvas = document.getElementById("captureCanvas");
 const captureBtn = document.getElementById("captureBtn");
+const faceMessages = {
+  en: {
+    healthy: "Healthy",
+    drooping: "Drooping",
+    normal: "🟢 Normal",
+    mild: "🟡 Mild Risk",
+    moderate: "🟠 Moderate Risk",
+    high: "🔴 High Risk",
+    analysisComplete: "✅ Analysis Complete"
+  },
 
+  hi: {
+    healthy: "स्वस्थ",
+    drooping: "चेहरे का झुकाव",
+    normal: "🟢 सामान्य",
+    mild: "🟡 हल्का जोखिम",
+    moderate: "🟠 मध्यम जोखिम",
+    high: "🔴 उच्च जोखिम",
+    analysisComplete: "✅ विश्लेषण पूरा हुआ"
+  },
+
+  pa: {
+    healthy: "ਸਧਾਰਣ",
+    drooping: "ਚਿਹਰੇ ਦਾ ਝੁਕਾਅ",
+    normal: "🟢 ਸਧਾਰਣ",
+    mild: "🟡 ਹਲਕਾ ਖਤਰਾ",
+    moderate: "🟠 ਦਰਮਿਆਨਾ ਖਤਰਾ",
+    high: "🔴 ਉੱਚ ਖਤਰਾ",
+    analysisComplete: "✅ ਵਿਸ਼ਲੇਸ਼ਣ ਪੂਰਾ ਹੋਇਆ"
+  }
+};
+
+function getText() {
+    const lang = localStorage.getItem("language") || "en";
+    return faceMessages[lang];
+}
 let stream;
 console.log(upload);
 console.log(preview);
@@ -269,28 +304,28 @@ const faceScore = healthyProb * 10;
 
 let risk;
 let color;
+let riskKey;
 
 if (droopingProb >= 0.80) {
-    risk = "🔴 High Risk";
+    riskKey = "high";
     color = "red";
 }
 else if (droopingProb >= 0.60) {
-    risk = "🟠 Moderate Risk";
+    riskKey = "moderate";
     color = "orange";
 }
 else if (droopingProb >= 0.40) {
-    risk = "🟡 Mild Risk";
+    riskKey = "mild";
     color = "#d4a100";
 }
 else {
-    risk = "🟢 Normal";
+    riskKey = "normal";
     color = "green";
 }
 
+const risk = getText()[riskKey];
 score.innerHTML = `
-<div style="font-size:34px;
-            font-weight:bold;
-            color:${color};">
+<div style="font-size:34px;font-weight:bold;color:${color};">
 ${faceScore.toFixed(1)}/10
 </div>
 
@@ -299,10 +334,10 @@ ${risk}
 </div>
 
 <div style="margin-top:15px;">
-Healthy :
+${getText().healthy} :
 ${(healthyProb * 100).toFixed(1)}%
 <br>
-Drooping :
+${getText().drooping} :
 ${(droopingProb * 100).toFixed(1)}%
 </div>
 `;
@@ -316,7 +351,7 @@ console.log(localStorage.getItem("faceRisk"));
 localStorage.setItem("faceHealthy", (healthyProb * 100).toFixed(1));
 localStorage.setItem("faceDrooping", (droopingProb * 100).toFixed(1));
 localStorage.setItem("faceCompleted", "true");
-status.textContent = "✅ Analysis Complete";
+status.textContent = getText().analysisComplete;
 
 } // <-- detect() ends here
 
