@@ -12,7 +12,7 @@ function initComponents() {
     initModal();
     initTooltips();
     initRippleButtons();
-    initProgressBars();
+
     initToast();
     initCopyButtons();
 
