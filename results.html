@@ -30,15 +30,20 @@
     <span>🧠 NeuroGuard</span>
 </div>
 
-<div class="nav-buttons">
+<div class="nav-actions">
+    <select id="languageSelect" class="language-select">
+        <option value="en">🇬🇧 English</option>
+        <option value="hi">🇮🇳 हिन्दी</option>
+        <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+    </select>
+
     <button id="themeToggle">🌙</button>
 
     <a href="index.html">
-        <button class="secondary">
+        <button class="secondary"  id="resultHomeBtn">
             Home
         </button>
     </a>
-
 </div>
 
 </nav>
@@ -46,32 +51,32 @@
 
 <section class="results-page">
 
-<div class="badge">
+<div class="badge" id="resultBadge">
 FAST Assessment Complete
 </div>
 
-<h1>
+<h1 id="resultHeading">
 Assessment Results
 </h1>
 
-<p>
+<p id="resultIntro">
 This assessment is an educational screening tool and <strong>does not provide a medical diagnosis.</strong>
 If stroke symptoms are suspected, seek emergency medical care immediately.
 </p> <hr>
 <div class="patient-info">
-    <h3>Patient Information</h3>
+    <h3 id="resultPatientInfoHeading">Patient Information</h3>
 
-    <p><strong>Name:</strong> <span id="patientName">-</span></p>
+    <p id="resultNameLabel"><strong>Name:</strong> <span id="patientName">-</span></p>
 
-    <p><strong>Age:</strong> <span id="patientAge">-</span></p>
+    <p id="resultAgeLabel"><strong>Age:</strong> <span id="patientAge">-</span></p>
 
-    <p><strong>Gender:</strong> <span id="patientGender">-</span></p>
+    <p id="resultGenderLabel"><strong>Gender:</strong> <span id="patientGender">-</span></p>
 </div>
 <div class="feature-grid">
 
 <div class="card">
 
-    <h2 id="assessmentTitle">
+    <h2 id="resultAssessmentTitle">
         Neurological Assessment
     </h2>
 
@@ -79,7 +84,7 @@ If stroke symptoms are suspected, seek emergency medical care immediately.
 
     <hr>
 
-    <h3>
+    <h3 id="resultConditionsHeading">
         Possible Conditions
     </h3>
 
@@ -87,7 +92,7 @@ If stroke symptoms are suspected, seek emergency medical care immediately.
 
     </div>
 
-    <p class="disclaimer-text">
+    <p class="disclaimer-text" id="resultConditionsDisclaimer">
 
         These conditions share similar neurological symptoms.
         NeuroGuard cannot determine which condition is present.
@@ -99,7 +104,7 @@ If stroke symptoms are suspected, seek emergency medical care immediately.
 
 <div class="card">
 
-<h3>
+<h3 id="resultFastSummaryHeading">
 FAST Summary
 </h3>
 
@@ -107,23 +112,23 @@ FAST Summary
 
 <li>
 <span id="faceIcon">⬜</span>
-Face Assessment
+<span id="resultFaceLabel">Face Assessment</span>
 <span id="faceResult"></span>
 </li>
 
 <li>
 <span id="armIcon">⬜</span>
- Arm Assessment
+<span id="resultArmLabel">Arm Assessment</span>
 <span id="armResult"></span>
 </li>
 
 <li>
-<span id="speechIcon">⬜</span> Speech Assessment
+<span id="speechIcon">⬜</span><span id="resultSpeechLabel">Speech Assessment</span>
 <span id="speechResult"></span>
 </li>
 
 <li>
-🕒 Symptom Time
+<span id="resultTimeLabel">Symptom Time</span>
 <span id="timeResult"></span>
 </li>
 
@@ -132,11 +137,11 @@ Face Assessment
 </div>
 <div class="card">
 
-    <h3>Overall NeuroGuard Score</h3>
+    <h3 id="resultOverallScoreHeading">Overall NeuroGuard Score</h3>
 
     <h1 id="overallScore">-- / 10</h1>
 
-    <p><strong>FAST Score:</strong>
+    <p><strong id="resultFastScoreLabel">FAST Score:</strong>
         <span id="baseScore">-- / 10</span>
     </p>
 
@@ -144,7 +149,7 @@ Face Assessment
         <span id="personalizedScore">-- / 10</span>
     </p>
 
-    <p>
+    <p id="resultScoreExplanation">
         FAST Score is calculated from the Face, Arm and Speech assessments.
         Personalized Score adjusts the FAST Score using your health profile.
     </p>
@@ -152,7 +157,7 @@ Face Assessment
 </div>
 <div class="card">
 
-<h3>
+<h3 id="resultRecommendationHeading">
 Recommended Action
 </h3>
 
@@ -164,18 +169,18 @@ Early treatment significantly improves recovery.
 
 </p>
 <button id="downloadReport" class="download-btn">
-    📄 Download PDF Report
+    📄 <span id="resultDownloadBtn">Download PDF Report</span>
 </button>
 <button class="primary" id="emergencyButton">
 
-🚑 Call Emergency Services
+ 🚑 <span id="resultEmergencyBtn">Call Emergency Services</span>
 
 </button>
 <button
     id="notifyBtn"
     class="primary"
     style="display:none;">
-    📱 Notify Emergency Contact
+    📱 <span id="resultNotifyBtn">Notify Emergency Contact</span>
 </button>
 
 </div>
@@ -184,7 +189,7 @@ Early treatment significantly improves recovery.
 
 <section>
 
-<h2>
+<h2 id="resultWhyHeading">>
 Why Immediate Action Matters
 </h2>
 
@@ -192,11 +197,11 @@ Why Immediate Action Matters
 
 <div class="card">
 
-<h3>
+<h3 id="resultBrainHeading">
 Brain Cells Die Quickly
 </h3>
 
-<p>
+<p id="resultBrainText">
 Every minute of untreated stroke can damage nearly two million brain cells.
 </p>
 
@@ -204,11 +209,11 @@ Every minute of untreated stroke can damage nearly two million brain cells.
 
 <div class="card">
 
-<h3>
+<h3 id="resultGoldenHeading">
 Golden Window
 </h3>
 
-<p>
+<p id="resultGoldenText">
 Treatment is most effective within approximately 4.5 hours of symptom onset.
 </p>
 
@@ -216,11 +221,11 @@ Treatment is most effective within approximately 4.5 hours of symptom onset.
 
 <div class="card">
 
-<h3>
+<h3 id="resultDriveHeading">
 Do Not Drive Yourself
 </h3>
 
-<p>
+<p id="resultDriveText">
 Always call emergency medical services whenever stroke is suspected.
 </p>
 
@@ -233,7 +238,7 @@ Always call emergency medical services whenever stroke is suspected.
 <div style="margin-top:60px;text-align:center;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
 
 <a href="fast-test.html">
-<button class="secondary">
+<button class="secondary" id="resultRetakeBtn">
 
 Retake Assessment
 
@@ -241,7 +246,7 @@ Retake Assessment
 </a>
 
 <a href="index.html">
-<button class="primary">
+<button class="primary" id="resultReturnHomeBtn">
 
 Return Home
 
@@ -268,6 +273,7 @@ Return Home
 <script src="js/animations.js"></script>
 <script src="js/app.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/results_lang.js"></script>
 <script type="module" src="js/results.js"></script>
 <script>
 if ("serviceWorker" in navigator) {
