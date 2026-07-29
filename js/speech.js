@@ -75,7 +75,16 @@ const targetSentence =
 
 // Display it on the page
 document.getElementById("targetSentence").textContent = targetSentence;
-
+document.addEventListener("DOMContentLoaded", () => {
+    [
+        "speechTranscript",
+        "speechSimilarity",
+        "speechScore",
+        "speechRisk",
+        "speechRiskKey",
+        "speechCompleted"
+    ].forEach(key => localStorage.removeItem(key));
+});
 // =========================================
 // DEMO MODE
 // =========================================
@@ -189,38 +198,39 @@ else {
                 percent.toFixed(1) + "%";
 
             let score;
-            let risk;
+let risk;
+let riskKey;
 
-            if (percent >= 90) {
+if (percent >= 90) {
     score = 10;
-    risk = t.speechNormal;
+    riskKey = "speechNormal";
 }
 else if (percent >= 75) {
     score = 8;
-    risk = t.speechMild;
+    riskKey = "speechMild";
 }
 else if (percent >= 60) {
     score = 6;
-    risk = t.speechPossible;
+    riskKey = "speechPossible";
 }
 else {
     score = 4;
-    risk = t.speechSevere;
+    riskKey = "speechSevere";
 }
 
-            speechScore.textContent =
-                score.toFixed(1) + " / 10";
+risk = t[riskKey];
 
-            speechRisk.textContent = risk;
+speechScore.textContent = score.toFixed(1) + " / 10";
+speechRisk.textContent = risk;
 
-            status.textContent =
-                t.complete;
+status.textContent = t.complete;
 
-            localStorage.setItem("speechTranscript", transcript);
-            localStorage.setItem("speechSimilarity", percent.toFixed(1));
-            localStorage.setItem("speechScore", score.toFixed(1));
-            localStorage.setItem("speechRisk", risk);
-            localStorage.setItem("speechCompleted", "true");
+localStorage.setItem("speechTranscript", transcript);
+localStorage.setItem("speechSimilarity", percent.toFixed(1));
+localStorage.setItem("speechScore", score.toFixed(1));
+localStorage.setItem("speechRisk", risk);
+localStorage.setItem("speechRiskKey", riskKey);
+localStorage.setItem("speechCompleted", "true");
 
             console.log("Speech assessment saved.");
 
