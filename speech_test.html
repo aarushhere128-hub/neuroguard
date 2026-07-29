@@ -42,11 +42,11 @@
 
 <ul>
 
-<li><a href="index.html">Home</a></li>
+<li><a href="index.html" id="navHome">Home</a></li>
 
-<li><a href="fast-test.html">Assessment</a></li>
+<li><a href="fast-test.html" id="navAssessment">Assessment</a></li>
 
-<li><a href="#instructions">Instructions</a></li>
+<li><a href="#instructions" id="navInstructions">Instructions</a></li>
 
 </ul>
 
@@ -70,7 +70,7 @@
 
 <a href="fast-test.html">
 
-<button class="secondary">
+<button class="secondary" id="backBtn">
 
 Back
 
@@ -98,7 +98,7 @@ Back
 
 <div class="hero-left">
 
-<div class="badge">
+<div class="badge" id="speechBadge">
 
 🗣️ FAST Speech Assessment
 
@@ -136,15 +136,15 @@ NeuroGuard compares your spoken words with the expected sentence to estimate spe
 
 <ol class="instruction-list">
 
-<li>Allow microphone permission.</li>
+<li id="speechInstruc1">Allow microphone permission.</li>
 
-<li>Sit in a quiet environment.</li>
+<li id="speechInstruc2">Sit in a quiet environment.</li>
 
-<li>Speak clearly at a normal pace.</li>
+<li id="speechInstruc3">Speak clearly at a normal pace.</li>
 
-<li>Read the sentence exactly as shown.</li>
+<li id="speechInstruc4">Read the sentence exactly as shown.</li>
 
-<li>Wait until recording finishes.</li>
+<li id="speechInstruc5">Wait until recording finishes.</li>
 
 </ol>
 
@@ -158,7 +158,7 @@ NeuroGuard compares your spoken words with the expected sentence to estimate spe
 
 <div class="card">
 
-<h2>
+<h2 id="targetSentenceTitle">
 
 Read This Sentence
 
@@ -196,13 +196,13 @@ Read This Sentence
 
 <div class="result-card">
 
-<h2>
+<h2 id="resultTitle">
 
 Assessment Result
 
 </h2>
 
-<p id="status">
+<p id="speech-status">
 
 Waiting to begin...
 
@@ -210,7 +210,7 @@ Waiting to begin...
 
 <hr>
 
-<h3>
+<h3 id="recognizedTitle">
 
 Recognized Speech
 
@@ -224,7 +224,7 @@ Recognized Speech
 
 <hr>
 
-<h3>
+<h3 id="speechScoreTitle">
 
 Speech Score
 
@@ -238,7 +238,7 @@ Speech Score
 
 <hr>
 
-<h3>
+<h3 id="similarityTitle">
 
 Similarity
 
@@ -252,7 +252,7 @@ Similarity
 
 <hr>
 
-<h3>
+<h3 id="speechRiskTitle">
 
 Risk Level
 
@@ -274,19 +274,21 @@ Pending
 
 <div class="card">
 
-<h2>
+<h2 id="noticeTitle">
 
 Educational Notice
 
 </h2>
 
-<p>
+<p id="noticeText">
 
 This speech assessment estimates speech clarity by comparing the recognized transcript with the expected sentence.
 
-<strong>This is an educational screening tool only and must not be used to diagnose stroke or any medical condition.</strong>
+<strong id="noticeStrong">This is an educational screening tool only and must not be used to diagnose stroke or any medical condition.</strong>
 
+<span id="noticeEnd">
 If you suspect a stroke, seek emergency medical care immediately.
+</span>
 
 </p>
 
@@ -316,19 +318,19 @@ AI-Assisted Stroke Awareness Platform
 
 <div>
 
-<a href="index.html">
+<a href="index.html" id="footerHome">
 
 Home
 
 </a>
 
-<a href="#">
+<a href="privacy.html" id="footerPrivacy">
 
 Privacy
 
 </a>
 
-<a href="#">
+<a href="index.html" id="footerAbout">
 
 About
 
