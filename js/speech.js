@@ -4,7 +4,7 @@
 
 // ===== CHANGE THIS WHEN YOU HAVE A MICROPHONE =====
 const demoToggle = document.getElementById("demoToggle");
-
+const t = translations[localStorage.getItem("language") || "en"];
 // Load previous preference
 demoToggle.checked =
     localStorage.getItem("demoMode") === "true";
@@ -148,7 +148,7 @@ else {
     if (!SpeechRecognition) {
 
         status.textContent =
-            "❌ Speech Recognition not supported.";
+            t.speechNotSupported;
 
         startBtn.disabled = true;
 
@@ -165,7 +165,7 @@ else {
 
         startBtn.addEventListener("click", () => {
 
-            status.textContent = "🎤 Listening...";
+            status.textContent = t.listening;
             recognizedText.textContent = "-";
 
             recognition.start();
@@ -214,7 +214,7 @@ else {
             speechRisk.textContent = risk;
 
             status.textContent =
-                "✅ Assessment Complete";
+                t.complete;
 
             localStorage.setItem("speechTranscript", transcript);
             localStorage.setItem("speechSimilarity", percent.toFixed(1));
@@ -229,7 +229,7 @@ else {
    recognition.onerror = function (event) {
 
     if (event.error === "no-speech") {
-        status.textContent = "⚠ No speech detected. Please try again.";
+        status.textContent = t.speechNoSpeech;
 
         recognizedText.textContent = "-";
         similarity.textContent = "-";
@@ -246,15 +246,15 @@ else {
     }
 
     if (event.error === "not-allowed") {
-        status.textContent = "❌ Microphone permission denied.";
+        status.textContent = t.speechPermissionDenied;
         return;
     }
 
     status.textContent = "❌ Error: " + event.error;
 };
      recognition.onend = function () {
-    if (status.textContent === "🎤 Listening...") {
-        status.textContent = "⚠ No speech detected. Please try again.";
+    if (status.textContent === t.listening) {
+        status.textContent = t.speechNoSpeech;
     }
 
         };
