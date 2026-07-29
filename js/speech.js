@@ -45,7 +45,7 @@ const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const startBtn = document.getElementById("startBtn");
-const status = document.getElementById("status");
+const status = document.getElementById("speechstatus");
 const recognizedText = document.getElementById("recognizedText");
 const speechScore = document.getElementById("speechScore");
 const similarity = document.getElementById("similarity");
