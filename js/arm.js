@@ -239,9 +239,9 @@ const rightElbow = landmarks[14];
 const leftWrist = landmarks[15];
 const rightWrist = landmarks[16];
 
+// 1. Landmarks must be visible
 const threshold = 0.75;
 
-// All important arm landmarks must be visible
 if (
     leftShoulder.visibility < threshold ||
     rightShoulder.visibility < threshold ||
@@ -254,25 +254,16 @@ if (
     return;
 }
 
-// Reject impossible arm positions
-if (
-    leftWrist.y < leftShoulder.y ||
-    rightWrist.y < rightShoulder.y
-) {
-    status.textContent = getText().bodyNotVisible;
-    return;
-}
-
-// Reject unrealistically short detected arms
+// 2. Arms must be long enough to be detected
 const leftArmLength =
-    Math.abs(leftShoulder.y - leftElbow.y) +
-    Math.abs(leftElbow.y - leftWrist.y);
+    Math.hypot(leftShoulder.x - leftElbow.x, leftShoulder.y - leftElbow.y) +
+    Math.hypot(leftElbow.x - leftWrist.x, leftElbow.y - leftWrist.y);
 
 const rightArmLength =
-    Math.abs(rightShoulder.y - rightElbow.y) +
-    Math.abs(rightElbow.y - rightWrist.y);
+    Math.hypot(rightShoulder.x - rightElbow.x, rightShoulder.y - rightElbow.y) +
+    Math.hypot(rightElbow.x - rightWrist.x, rightElbow.y - rightWrist.y);
 
-if (leftArmLength < 0.08 || rightArmLength < 0.08) {
+if (leftArmLength < 0.10 || rightArmLength < 0.10) {
     status.textContent = getText().bodyNotVisible;
     return;
 }
@@ -281,8 +272,12 @@ if (leftArmLength < 0.08 || rightArmLength < 0.08) {
     leftText.textContent = leftWrist.y.toFixed(3);
 
     rightText.textContent = rightWrist.y.toFixed(3);
+    const wristDiff = Math.abs(leftWrist.y - rightWrist.y);
+const elbowDiff = Math.abs(leftElbow.y - rightElbow.y);
 
-    const diff = Math.abs(leftWrist.y - rightWrist.y);
+const diff = wristDiff * 0.7 + elbowDiff * 0.3;
+
+   
 
     differenceText.textContent = diff.toFixed(3);
 
