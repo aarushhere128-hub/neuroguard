@@ -97,17 +97,17 @@ let risk;
 let riskKey;
 if (percent >= 95) {
     score = 10.0;
-    risk = "🟢 Normal";
+    risk = t.speechNormal;
     riskKey = "speechNormal";
 }
 else if (percent >= 80) {
     score = 8.0;
-    risk = "🟡 Mild Difficulty";
+    risk = t.speechMild;
     riskKey = "speechMild";
 }
 else {
     score = 6.0;
-    risk = "🔴 Significant Speech Difficulty";
+    risk = t.speechSevere;
     riskKey = "speechSevere";
 }
 
