@@ -235,7 +235,71 @@ speechSevere: "🔴 Significant Speech Difficulty",
 speechPermissionDenied: "❌ Microphone permission denied.",
 speechNotSupported: "❌ Speech recognition not supported.",
 speechNoSpeech: "⚠ No speech detected. Please try again.",
-speechStopped: "Recording stopped."
+speechStopped: "Recording stopped.",
+pageTitle: "NeuroGuard | Speech Assessment",
+
+logoText: "NeuroGuard",
+
+navHome: "Home",
+navAssessment: "Assessment",
+navInstructions: "Instructions",
+
+backBtn: "Back",
+
+demoLabel: "Demo Mode",
+
+speechBadge: "🗣️ FAST Speech Assessment",
+speechTitle: "Speech Clarity Test",
+
+speechDescription:
+"Read the sentence displayed below as clearly as possible. NeuroGuard compares your spoken words with the expected sentence to estimate speech clarity.",
+
+instructionsTitle: "📋 Instructions",
+
+speechInstruc1: "Allow microphone permission.",
+speechInstruc2: "Sit in a quiet environment.",
+speechInstruc3: "Speak clearly at a normal pace.",
+speechInstruc4: "Read the sentence exactly as shown.",
+speechInstruc5: "Wait until recording finishes.",
+
+targetSentenceTitle: "Read This Sentence",
+
+startBtn: "🎤 Start Recording",
+
+resultTitle: "Assessment Result",
+
+recognizedTitle: "Recognized Speech",
+
+speechScoreTitle: "Speech Score",
+
+similarityTitle: "Similarity",
+
+speechRiskTitle: "Risk Level",
+
+noticeTitle: "Educational Notice",
+
+noticeText:
+"This speech assessment estimates speech clarity by comparing the recognized transcript with the expected sentence.",
+
+noticeStrong:
+"This is an educational screening tool only and must not be used to diagnose stroke or any medical condition.",
+
+noticeEnd:
+"If you suspect a stroke, seek emergency medical care immediately.",
+
+footerLogo: "NeuroGuard",
+
+footerTagline: "AI-Assisted Stroke Awareness Platform",
+
+footerHome: "Home",
+
+footerPrivacy: "Privacy",
+
+footerAbout: "About",
+
+footerCopyright: "© 2026 NeuroGuard",
+speechstatus: "Waiting to begin...",
+
     },
 
     hi: {
@@ -471,6 +535,70 @@ speechPermissionDenied: "❌ माइक्रोफ़ोन की अनु�
 speechNotSupported: "❌ इस ब्राउज़र में स्पीच रिकग्निशन समर्थित नहीं है।",
 speechNoSpeech: "⚠ कोई आवाज़ नहीं मिली। कृपया पुनः प्रयास करें।",
 speechStopped: "रिकॉर्डिंग बंद हो गई।",
+pageTitle: "NeuroGuard | भाषण परीक्षण",
+
+logoText: "NeuroGuard",
+
+navHome: "होम",
+navAssessment: "परीक्षण",
+navInstructions: "निर्देश",
+
+backBtn: "वापस",
+
+demoLabel: "डेमो मोड",
+
+speechBadge: "🗣️ FAST भाषण परीक्षण",
+
+speechTitle: "भाषण स्पष्टता परीक्षण",
+
+speechDescription:
+"नीचे दिया गया वाक्य स्पष्ट रूप से पढ़ें। NeuroGuard आपके बोले गए शब्दों की अपेक्षित वाक्य से तुलना करके भाषण की स्पष्टता का अनुमान लगाता है।",
+
+instructionsTitle: "📋 निर्देश",
+
+speechInstruc1: "माइक्रोफ़ोन की अनुमति दें।",
+speechInstruc2: "शांत वातावरण में बैठें।",
+speechInstruc3: "सामान्य गति से स्पष्ट बोलें।",
+speechInstruc4: "दिया गया वाक्य ठीक उसी प्रकार पढ़ें।",
+speechInstruc5: "रिकॉर्डिंग समाप्त होने तक प्रतीक्षा करें।",
+
+targetSentenceTitle: "यह वाक्य पढ़ें",
+
+startBtn: "🎤 रिकॉर्डिंग शुरू करें",
+
+resultTitle: "परीक्षण परिणाम",
+
+recognizedTitle: "पहचाना गया भाषण",
+
+speechScoreTitle: "भाषण स्कोर",
+
+similarityTitle: "समानता",
+
+speechRiskTitle: "जोखिम स्तर",
+
+noticeTitle: "शैक्षिक सूचना",
+
+noticeText:
+"यह भाषण परीक्षण पहचाने गए भाषण की अपेक्षित वाक्य से तुलना करके भाषण की स्पष्टता का अनुमान लगाता है।",
+
+noticeStrong:
+"यह केवल शैक्षिक स्क्रीनिंग उपकरण है और इसका उपयोग स्ट्रोक या किसी अन्य चिकित्सीय स्थिति के निदान के लिए नहीं किया जाना चाहिए।",
+
+noticeEnd:
+"यदि आपको स्ट्रोक का संदेह हो, तो तुरंत आपातकालीन चिकित्सा सहायता प्राप्त करें।",
+
+footerLogo: "NeuroGuard",
+
+footerTagline: "एआई-सहायित स्ट्रोक जागरूकता मंच",
+
+footerHome: "होम",
+
+footerPrivacy: "गोपनीयता",
+
+footerAbout: "हमारे बारे में",
+
+footerCopyright: "© 2026 NeuroGuard",
+speechstatus: "शुरू करने की प्रतीक्षा की जा रही है...",
     },
     pa: {
         // Navbar
@@ -684,9 +812,6 @@ footerAbout: "ਸਾਡੇ ਬਾਰੇ",
         footerTechnology: "ਤਕਨਾਲੋਜੀ",
         footerContact: "ਸੰਪਰਕ",
         footerCopyright: "© 2026 NeuroGuard<br>ਸਿੱਖਿਆਤਮਕ ਪ੍ਰੋਟੋਟਾਈਪ",
-        // =====================
-// Punjabi
-// =====================
 speechBadge: "🗣️ FAST ਬੋਲਚਾਲ ਟੈਸਟ",
 speechInstructions: "ਹੇਠਾਂ ਦਿੱਤਾ ਵਾਕ ਸਾਫ਼-ਸੁਥਰੇ ਢੰਗ ਨਾਲ ਪੜ੍ਹੋ।",
 startSpeechBtn: "ਰਿਕਾਰਡਿੰਗ ਸ਼ੁਰੂ ਕਰੋ",
@@ -711,6 +836,71 @@ speechPermissionDenied: "❌ ਮਾਈਕ੍ਰੋਫੋਨ ਦੀ ਇਜਾਜ�
 speechNotSupported: "❌ ਇਸ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਸਪੀਚ ਰਿਕਗਨੀਸ਼ਨ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ।",
 speechNoSpeech: "⚠ ਕੋਈ ਆਵਾਜ਼ ਨਹੀਂ ਮਿਲੀ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
 speechStopped: "ਰਿਕਾਰਡਿੰਗ ਬੰਦ ਹੋ ਗਈ।",
+{
+pageTitle: "NeuroGuard | ਬੋਲਚਾਲ ਮੁਲਾਂਕਣ",
+
+logoText: "NeuroGuard",
+
+navHome: "ਮੁੱਖ ਪੰਨਾ",
+navAssessment: "ਮੁਲਾਂਕਣ",
+navInstructions: "ਹਦਾਇਤਾਂ",
+
+backBtn: "ਵਾਪਸ",
+
+demoLabel: "ਡੈਮੋ ਮੋਡ",
+
+speechBadge: "🗣️ FAST ਬੋਲਚਾਲ ਟੈਸਟ",
+
+speechTitle: "ਬੋਲਚਾਲ ਦੀ ਸਪਸ਼ਟਤਾ ਟੈਸਟ",
+
+speechDescription:
+"ਹੇਠਾਂ ਦਿੱਤਾ ਵਾਕ ਸਾਫ਼-ਸੁਥਰੇ ਢੰਗ ਨਾਲ ਪੜ੍ਹੋ। NeuroGuard ਤੁਹਾਡੀ ਬੋਲਚਾਲ ਦੀ ਉਮੀਦ ਕੀਤੇ ਵਾਕ ਨਾਲ ਤੁਲਨਾ ਕਰਕੇ ਸਪਸ਼ਟਤਾ ਦਾ ਅੰਦਾਜ਼ਾ ਲਗਾਉਂਦਾ ਹੈ।",
+
+instructionsTitle: "📋 ਹਦਾਇਤਾਂ",
+
+speechInstruc1: "ਮਾਈਕ੍ਰੋਫੋਨ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ।",
+speechInstruc2: "ਸ਼ਾਂਤ ਮਾਹੌਲ ਵਿੱਚ ਬੈਠੋ।",
+speechInstruc3: "ਸਧਾਰਣ ਗਤੀ ਨਾਲ ਸਾਫ਼ ਬੋਲੋ।",
+speechInstruc4: "ਵਾਕ ਨੂੰ ਬਿਲਕੁਲ ਜਿਵੇਂ ਦਿੱਤਾ ਹੈ ਉਸੇ ਤਰ੍ਹਾਂ ਪੜ੍ਹੋ।",
+speechInstruc5: "ਰਿਕਾਰਡਿੰਗ ਮੁੱਕਣ ਤੱਕ ਉਡੀਕ ਕਰੋ।",
+
+targetSentenceTitle: "ਇਹ ਵਾਕ ਪੜ੍ਹੋ",
+speechstatus:"ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
+startBtn: "🎤 ਰਿਕਾਰਡਿੰਗ ਸ਼ੁਰੂ ਕਰੋ",
+
+resultTitle: "ਮੁਲਾਂਕਣ ਨਤੀਜਾ",
+
+recognizedTitle: "ਪਛਾਣੀ ਗਈ ਬੋਲਚਾਲ",
+
+speechScoreTitle: "ਬੋਲਚਾਲ ਸਕੋਰ",
+
+similarityTitle: "ਮਿਲਾਪ",
+
+speechRiskTitle: "ਖਤਰੇ ਦਾ ਪੱਧਰ",
+
+noticeTitle: "ਸਿੱਖਿਆਤਮਕ ਸੂਚਨਾ",
+
+noticeText:
+"ਇਹ ਬੋਲਚਾਲ ਮੁਲਾਂਕਣ ਪਛਾਣੀ ਗਈ ਬੋਲਚਾਲ ਦੀ ਉਮੀਦ ਕੀਤੇ ਵਾਕ ਨਾਲ ਤੁਲਨਾ ਕਰਕੇ ਸਪਸ਼ਟਤਾ ਦਾ ਅੰਦਾਜ਼ਾ ਲਗਾਉਂਦਾ ਹੈ।",
+
+noticeStrong:
+"ਇਹ ਸਿਰਫ਼ ਸਿੱਖਿਆਤਮਕ ਸਕ੍ਰੀਨਿੰਗ ਟੂਲ ਹੈ ਅਤੇ ਇਸਦਾ ਉਪਯੋਗ ਸਟ੍ਰੋਕ ਜਾਂ ਕਿਸੇ ਵੀ ਮੈਡੀਕਲ ਬਿਮਾਰੀ ਦੀ ਪਛਾਣ ਲਈ ਨਹੀਂ ਕੀਤਾ ਜਾਣਾ ਚਾਹੀਦਾ।",
+
+noticeEnd:
+"ਜੇ ਤੁਹਾਨੂੰ ਸਟ੍ਰੋਕ ਦਾ ਸ਼ੱਕ ਹੋਵੇ ਤਾਂ ਤੁਰੰਤ ਐਮਰਜੈਂਸੀ ਮੈਡੀਕਲ ਸਹਾਇਤਾ ਲਵੋ।",
+
+footerLogo: "NeuroGuard",
+
+footerTagline: "ਏਆਈ-ਸਹਾਇਤ ਸਟ੍ਰੋਕ ਜਾਗਰੂਕਤਾ ਪਲੇਟਫਾਰਮ",
+
+footerHome: "ਮੁੱਖ ਪੰਨਾ",
+
+footerPrivacy: "ਪਰਾਈਵੇਸੀ",
+
+footerAbout: "ਸਾਡੇ ਬਾਰੇ",
+
+footerCopyright: "© 2026 NeuroGuard"
+}
     }
 };
 
