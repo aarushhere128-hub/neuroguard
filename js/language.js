@@ -836,7 +836,6 @@ speechPermissionDenied: "❌ ਮਾਈਕ੍ਰੋਫੋਨ ਦੀ ਇਜਾਜ�
 speechNotSupported: "❌ ਇਸ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਸਪੀਚ ਰਿਕਗਨੀਸ਼ਨ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ।",
 speechNoSpeech: "⚠ ਕੋਈ ਆਵਾਜ਼ ਨਹੀਂ ਮਿਲੀ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
 speechStopped: "ਰਿਕਾਰਡਿੰਗ ਬੰਦ ਹੋ ਗਈ।",
-{
 pageTitle: "NeuroGuard | ਬੋਲਚਾਲ ਮੁਲਾਂਕਣ",
 
 logoText: "NeuroGuard",
@@ -900,7 +899,7 @@ footerPrivacy: "ਪਰਾਈਵੇਸੀ",
 footerAbout: "ਸਾਡੇ ਬਾਰੇ",
 
 footerCopyright: "© 2026 NeuroGuard"
-}
+
     }
 };
 
