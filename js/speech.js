@@ -193,19 +193,19 @@ else {
 
             if (percent >= 90) {
     score = 10;
-    risk = "🟢 Normal";
+    risk = t.speechNormal;
 }
 else if (percent >= 75) {
     score = 8;
-    risk = "🟡 Mild Difficulty";
+    risk = t.speechMild;
 }
 else if (percent >= 60) {
     score = 6;
-    risk = "🟠 Possible Speech Impairment";
+    risk = t.speechPossible;
 }
 else {
     score = 4;
-    risk = "🔴 Significant Speech Difficulty";
+    risk = t.speechSevere;
 }
 
             speechScore.textContent =
