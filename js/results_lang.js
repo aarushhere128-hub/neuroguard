@@ -59,7 +59,8 @@ const resultTranslations = {
         retake: "Retake Assessment",
         returnHome: "Return Home",
 
-        footer: "© 2026 NeuroGuard • Educational Prototype"
+
+        
     },
 
     hi: {
@@ -118,7 +119,7 @@ const resultTranslations = {
         retake: "परीक्षण दोबारा करें",
         returnHome: "होम पर लौटें",
 
-        footer: "© 2026 NeuroGuard • शैक्षिक प्रोटोटाइप"
+    
     },
 
     pa: {
@@ -177,7 +178,7 @@ const resultTranslations = {
         retake: "ਮੁੜ ਟੈਸਟ ਕਰੋ",
         returnHome: "ਮੁੱਖ ਪੰਨੇ ਤੇ ਵਾਪਸ ਜਾਓ",
 
-        footer: "© 2026 NeuroGuard • ਸਿੱਖਿਆਤਮਕ ਪ੍ਰੋਟੋਟਾਈਪ"
+
     }
 };
 
@@ -229,7 +230,7 @@ function updateResultsLanguage() {
 
     document.getElementById("resultRetakeBtn").textContent = t.retake;
     document.getElementById("resultReturnHomeBtn").textContent = t.returnHome;
-    document.getElementById("resultFooter").textContent = t.footer;
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
