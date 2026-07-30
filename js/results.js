@@ -268,7 +268,7 @@ message;
 
 document.getElementById("recommendation").textContent =
 recommendation;
-const notifyBtn = document.getEleFmentById("notifyBtn");
+const notifyBtn = document.getElementById("notifyBtn");
 
 if (
     risk.includes("Neurological Signs") ||
