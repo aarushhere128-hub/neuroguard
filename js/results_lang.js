@@ -127,6 +127,7 @@ const resultTranslations = {
     notProvided: "प्रदान नहीं किया गया",
     assessmentIncomplete: "⚪ मूल्यांकन अधूरा",
     completeOneAssessment: "कम से कम एक न्यूरोलॉजिकल परीक्षण पूरा करें।",
+        finishAssessment: "शैक्षिक स्क्रीनिंग प्राप्त करने के लिए परीक्षण पूरा करें।"
     
     },
 
@@ -189,6 +190,7 @@ const resultTranslations = {
     notProvided: "ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤਾ ਗਿਆ",
     assessmentIncomplete: "⚪ ਮੁਲਾਂਕਣ ਅਧੂਰਾ",
     completeOneAssessment: "ਘੱਟੋ-ਘੱਟ ਇੱਕ ਨਿਊਰੋਲੋਜੀਕਲ ਟੈਸਟ ਪੂਰਾ ਕਰੋ।",
+    finishAssessment: "ਸਿੱਖਿਆਤਮਕ ਸਕ੍ਰੀਨਿੰਗ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਟੈਸਟ ਪੂਰਾ ਕਰੋ।"
 
 
     }
