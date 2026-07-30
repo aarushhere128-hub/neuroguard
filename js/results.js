@@ -13,6 +13,13 @@ import {
     getDoc,
     doc
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "login.html";
+    }
+});
 const faceCompleted =
     localStorage.getItem("faceCompleted") === "true";
 
