@@ -32,15 +32,16 @@ const speechScore =
     speechCompleted ? Number(localStorage.getItem("speechScore")) : 0;
 
 const faceRisk =
-    faceCompleted ? localStorage.getItem("faceRisk") : "Not Completed";
+    faceCompleted ? localStorage.getItem("faceRisk") : t.notCompleted;
 
 const armRisk =
-    armCompleted ? localStorage.getItem("armRisk") : "Not Completed";
-
+    armCompleted ? localStorage.getItem("armRisk") : t.notCompleted;
 const speechRisk =
-    speechCompleted ? localStorage.getItem("speechRisk") : "Not Completed";
+    speechCompleted ? localStorage.getItem("speechRisk") : t.notCompleted;
 const symptomTime =
-    localStorage.getItem("symptomTime") || "Not Provided";
+    localStorage.getItem("symptomTime") || t.notProvided;
+const lang = localStorage.getItem("language") || "en";
+const t = resultTranslations[lang];
 let emergencyName = "";
 let emergencyNumber = "";
 // Current time
@@ -169,15 +170,12 @@ const possibleConditions = [];
 
 if (completed === 0) {
 
-    risk = "⚪ Assessment Incomplete";
+    
+risk = t.assessmentIncomplete;
 
-    message =
-        "Complete at least one neurological assessment.";
+message = t.completeOneAssessment;
 
-    recommendation =
-        "Finish the assessment to receive an educational screening.";
-
-}
+recommendation = t.finishAssessment;
 
 else {
 
