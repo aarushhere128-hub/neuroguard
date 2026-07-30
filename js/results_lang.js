@@ -58,6 +58,11 @@ const resultTranslations = {
 
         retake: "Retake Assessment",
         returnHome: "Return Home",
+          notCompleted: "Not Completed",
+    notProvided: "Not Provided",
+    assessmentIncomplete: "⚪ Assessment Incomplete",
+    completeOneAssessment: "Complete at least one neurological assessment.",
+    finishAssessment: "Finish the assessment to receive an educational screening."
 
 
         
@@ -118,7 +123,10 @@ const resultTranslations = {
 
         retake: "परीक्षण दोबारा करें",
         returnHome: "होम पर लौटें",
-
+            notCompleted: "पूरा नहीं हुआ",
+    notProvided: "प्रदान नहीं किया गया",
+    assessmentIncomplete: "⚪ मूल्यांकन अधूरा",
+    completeOneAssessment: "कम से कम एक न्यूरोलॉजिकल परीक्षण पूरा करें।",
     
     },
 
@@ -177,6 +185,10 @@ const resultTranslations = {
 
         retake: "ਮੁੜ ਟੈਸਟ ਕਰੋ",
         returnHome: "ਮੁੱਖ ਪੰਨੇ ਤੇ ਵਾਪਸ ਜਾਓ",
+           notCompleted: "ਪੂਰਾ ਨਹੀਂ ਹੋਇਆ",
+    notProvided: "ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤਾ ਗਿਆ",
+    assessmentIncomplete: "⚪ ਮੁਲਾਂਕਣ ਅਧੂਰਾ",
+    completeOneAssessment: "ਘੱਟੋ-ਘੱਟ ਇੱਕ ਨਿਊਰੋਲੋਜੀਕਲ ਟੈਸਟ ਪੂਰਾ ਕਰੋ।",
 
 
     }
