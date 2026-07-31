@@ -188,7 +188,7 @@ contactTitle: "Contact NeuroGuard",
 contactDesc: "NeuroGuard is an educational prototype developed to improve stroke awareness and encourage rapid action during emergencies.",
 
 emailTitle: "📧 Email",
-emailText: "support@neuroguard.demo",
+emailText: "neuroguardofficial@gmail.com",
 
 emergencyTitle: "📞 Emergency",
 emergencyDesc: "If someone is showing stroke symptoms, call your local emergency services immediately.",
@@ -352,7 +352,7 @@ contactTitle: "NeuroGuard से संपर्क करें",
 contactDesc: "NeuroGuard एक शैक्षिक प्रोटोटाइप है जिसे स्ट्रोक जागरूकता बढ़ाने और आपातकालीन स्थिति में त्वरित कार्रवाई को प्रोत्साहित करने के लिए विकसित किया गया है।",
 
 emailTitle: "📧 ईमेल",
-emailText: "support@neuroguard.demo",
+emailText: "neuroguardofficial@gmail.com",
 compareBadge: "तुलना",
 compareTitle: "NeuroGuard की तुलना",
 compareDesc: "NeuroGuard AI-सहायित स्क्रीनिंग, बहुभाषी सहायता और आपातकालीन मार्गदर्शन को एक ही प्लेटफ़ॉर्म पर प्रदान करता है।",
@@ -643,7 +643,7 @@ contactTitle: "NeuroGuard ਨਾਲ ਸੰਪਰਕ ਕਰੋ",
 contactDesc: "NeuroGuard ਇੱਕ ਸਿੱਖਿਆਤਮਕ ਪ੍ਰੋਟੋਟਾਈਪ ਹੈ ਜੋ ਸਟ੍ਰੋਕ ਬਾਰੇ ਜਾਗਰੂਕਤਾ ਵਧਾਉਣ ਅਤੇ ਐਮਰਜੈਂਸੀ ਵਿੱਚ ਤੁਰੰਤ ਕਾਰਵਾਈ ਲਈ ਬਣਾਇਆ ਗਿਆ ਹੈ।",
 
 emailTitle: "📧 ਈਮੇਲ",
-emailText: "support@neuroguard.demo",
+emailText: "neuroguardofficial@gmail.com",
 
     armTitle1: "ਬਾਂਹ ਦੀ ਕਮਜ਼ੋਰੀ ਦੀ ਪਛਾਣ",
     armDescription1: "ਕੈਮਰੇ ਵੱਲ ਮੂੰਹ ਕਰਕੇ ਦੋਵੇਂ ਬਾਂਹਾਂ ਮੋਢਿਆਂ ਦੀ ਉਚਾਈ ਤੱਕ ਚੁੱਕੋ। ਆਪਣੇ ਪੂਰੇ ਉੱਪਰੀ ਸਰੀਰ ਦੀ ਸਾਫ਼ ਸਾਹਮਣੇ ਤੋਂ ਖਿੱਚੀ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ। NeuroGuard ਅਨੁਮਾਨ ਲਗਾਏਗਾ ਕਿ ਦੋਵੇਂ ਬਾਂਹਾਂ ਇਕੋ ਪੱਧਰ 'ਤੇ ਹਨ ਜਾਂ ਨਹੀਂ।",
