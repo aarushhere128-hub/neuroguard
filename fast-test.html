@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeuroGuard | FAST Assessment</title>
+<title>NeuroGuard | FAST Assessment Suite</title>
 
 <link rel="stylesheet" href="css/variables.css">
 <link rel="stylesheet" href="css/style.css">
@@ -19,8 +19,383 @@
 <link rel="manifest" href="manifest.json">
 
 <meta name="theme-color" content="#2563EB">
-
 <link rel="apple-touch-icon" href="assets/icon-192.png">
+
+<!-- GSAP Animation Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+/* =========================================================
+   Enhanced FAST Assessment Styling & Interactive Micro-UI
+========================================================= */
+
+:root {
+    --bg-main: #05070a;
+    --card-bg: rgba(15, 23, 42, 0.75);
+    --card-border: rgba(56, 189, 248, 0.18);
+    --primary-glow: rgba(37, 99, 235, 0.35);
+    --accent-blue: #38bdf8;
+    --accent-green: #34d399;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Assessment Hero Layout */
+.assessment-hero {
+    padding: 130px 6% 40px 6%;
+    text-align: center;
+    position: relative;
+}
+
+.assessment-hero .badge {
+    display: inline-block;
+    background: rgba(37, 99, 235, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: var(--accent-blue);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.assessment-hero h1 {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+.assessment-hero p {
+    color: #94a3b8;
+    font-size: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Premium Glass Progress HUD */
+.assessment-progress-wrapper {
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+    padding: 0 6%;
+}
+
+.progress-hud-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px var(--primary-glow);
+}
+
+.progress-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.progress-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-blue);
+}
+
+.progress-percentage {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #2563eb, #38bdf8);
+    border-radius: 4px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px var(--accent-blue);
+}
+
+/* Grid & Cards System */
+.assessment-grid-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 6% 60px 6%;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px 24px;
+    text-align: center;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(37, 99, 235, 0.25);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px auto;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-icon-wrapper {
+    transform: scale(1.08);
+    border-color: var(--accent-blue);
+}
+
+.card img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    flex-grow: 1;
+}
+
+/* Completed State Styling */
+.card.completed {
+    border-color: rgba(52, 211, 153, 0.4);
+    background: rgba(15, 23, 42, 0.85);
+}
+
+.card.completed::before {
+    background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+    opacity: 1;
+}
+
+.card.completed .card-icon-wrapper {
+    border-color: rgba(52, 211, 153, 0.4);
+    background: rgba(52, 211, 153, 0.1);
+}
+
+/* Interactive Time Input */
+.time-input-wrapper {
+    position: relative;
+    margin-top: auto;
+}
+
+.time-input-wrapper input[type="time"] {
+    width: 100%;
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    text-align: center;
+    transition: all 0.25s ease;
+}
+
+.time-input-wrapper input[type="time"]:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+/* Action Buttons */
+.card .primary-btn, .cta button {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.card .primary-btn {
+    background: #2563eb;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.card .primary-btn:hover {
+    background: #1d4ed8;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+    transform: translateY(-2px);
+}
+
+.card .primary-btn.completed-btn {
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: var(--accent-green);
+    box-shadow: none;
+}
+
+.card .primary-btn.completed-btn:hover {
+    background: rgba(52, 211, 153, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Emergency & Finish CTAs */
+.assessment-cta-section {
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+    padding: 0 6%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.cta-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 35px 30px;
+    text-align: center;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cta-card.emergency-card {
+    border-color: rgba(239, 68, 68, 0.3);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(127, 29, 29, 0.25));
+}
+
+.cta-card h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.cta-card p {
+    color: #94a3b8;
+    font-size: 15px;
+    max-width: 500px;
+    margin: 0 auto 24px auto;
+    line-height: 1.5;
+}
+
+.cta-card .emergency-btn {
+    background: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5);
+    padding: 14px 28px;
+    font-size: 15px;
+    border-radius: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+.cta-card .emergency-btn:hover {
+    background: #dc2626;
+    box-shadow: 0 6px 22px rgba(239, 68, 68, 0.7);
+    transform: translateY(-2px);
+}
+
+.cta-card .report-btn {
+    background: linear-gradient(135deg, #2563eb, #38bdf8);
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5);
+    padding: 14px 32px;
+    font-size: 15px;
+    border-radius: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+.cta-card .report-btn:hover {
+    opacity: 0.95;
+    box-shadow: 0 6px 26px rgba(56, 189, 248, 0.6);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .assessment-hero h1 { font-size: 32px; }
+    .feature-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 
 <body>
@@ -37,12 +412,10 @@ onAuthStateChanged(auth, (user) => {
 </script>
 
 <!-- ================= NAVBAR ================= -->
-
 <header>
 <nav>
-
 <div class="logo">
-<img src="assets/logo.png">
+<img src="assets/logo.png" alt="NeuroGuard">
 <span id="logoText">NeuroGuard</span>
 </div>
 
@@ -53,274 +426,140 @@ onAuthStateChanged(auth, (user) => {
 </ul>
 
 <div class="nav-actions">
-
 <select id="languageSelect" class="language-select">
     <option value="en">🇬🇧 English</option>
     <option value="hi">🇮🇳 हिन्दी</option>
     <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
 </select>
-
-<button id="themeToggle">
-🌙
-</button>
-
+<button id="themeToggle">🌙</button>
 <a href="index.html">
-<button class="secondary" id="backButton">
-Back
-</button>
+<button class="secondary" id="backButton">Back</button>
 </a>
-
 </div>
-<button class="hamburger" id="hamburger" aria-label="Open menu">
-    ☰
-</button>
+<button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
 </nav>
 </header>
 
 <!-- ================= HERO ================= -->
-
-<section id="assessment">
-
-<div class="hero-left">
-
-<div class="badge" id="badgeText">
-FAST Stroke Assessment
-</div>
-
-<h1 id="heroTitle">
-Complete the FAST Test
-</h1>
-
+<section id="assessment" class="assessment-hero">
+<div class="badge" id="badgeText">FAST Stroke Assessment</div>
+<h1 id="heroTitle">Complete the FAST Test</h1>
 <p id="heroDesc">
-Follow each guided assessment. NeuroGuard will help identify possible stroke symptoms using educational AI-assisted screening.
+Follow each guided assessment module. NeuroGuard will guide you through clinical screening to identify possible stroke indicators safely and accurately.
 </p>
-
-</div>
-
 </section>
-<!-- ================= PROGRESS ================= -->
 
-<section>
-
+<!-- ================= PROGRESS HUD ================= -->
+<div class="assessment-progress-wrapper">
+<div class="progress-hud-card">
+<div class="progress-header-row">
+<span class="progress-title" id="progressTitleLabel">Assessment Progress</span>
+<span class="progress-percentage" id="progressPercentage">0% Completed</span>
+</div>
 <div class="progress-container">
     <div id="progressFill" class="progress-fill"></div>
 </div>
+</div>
+</div>
 
-<p id="progressText">Step 1 of 4</p>
-
-</section>
-
-<!-- ================= FAST STEPS ================= -->
-
-<section>
-
+<!-- ================= FAST STEPS GRID ================= -->
+<section class="assessment-grid-section">
 <div class="feature-grid">
 
-<!-- Face -->
-
-<div class="card">
-
-<img src="assets/img2.png" width="50" height="60">
-
-<h3 id="faceTitle">
-Face
-</h3>
-
-<p id="faceDesc">
-Smile naturally while facing the camera.
-</p>
-<a href='face_test.html'>
-<button class="primary" id="faceButton">
-Start Face Test
-</button> </a>
-
+<!-- Face Test Card -->
+<div class="card" id="faceCard">
+<div>
+<div class="card-icon-wrapper">
+<img src="assets/img2.png" alt="Face Test">
 </div>
-
-<!-- Arms -->
-
-<div class="card">
-
-<img src="assets/img3.png">
-
-<h3 id="armTitle">
-Arms
-</h3>
-
-<p id="armDesc">
-Raise both arms equally for 10 seconds.
-</p>
-  <a href='arm_test.html'>
-<button class="primary" id="armButton">
-  Start Arm Test
-
-</button></a>
-
+<h3 id="faceTitle">Face</h3>
+<p id="faceDesc">Smile naturally while facing the camera to check for facial drooping.</p>
 </div>
-
-<!-- Speech -->
-
-<div class="card">
-
-<img src="assets/img5.png">
-
-<h3 id="speechTitle">
-Speech
-</h3>
-
-<p id="speechDesc">
-Read the displayed sentence aloud.
-</p>
-<a href='speech_test.html'>
-<button class="primary" id="speechButton">
-Start Speech Test
-</button>
+<a href="face_test.html" style="text-decoration:none;">
+<button class="primary-btn" id="faceButton">Start Face Test</button>
 </a>
 </div>
 
-<!-- Time -->
+<!-- Arms Test Card -->
+<div class="card" id="armCard">
+<div>
+<div class="card-icon-wrapper">
+<img src="assets/img3.png" alt="Arms Test">
+</div>
+<h3 id="armTitle">Arms</h3>
+<p id="armDesc">Raise both arms equally for 10 seconds to check for motor drift.</p>
+</div>
+<a href="arm_test.html" style="text-decoration:none;">
+<button class="primary-btn" id="armButton">Start Arm Test</button>
+</a>
+</div>
 
-<div class="card">
+<!-- Speech Test Card -->
+<div class="card" id="speechCard">
+<div>
+<div class="card-icon-wrapper">
+<img src="assets/img5.png" alt="Speech Test">
+</div>
+<h3 id="speechTitle">Speech</h3>
+<p id="speechDesc">Read the displayed sentence aloud to check for slurred speech.</p>
+</div>
+<a href="speech_test.html" style="text-decoration:none;">
+<button class="primary-btn" id="speechButton">Start Speech Test</button>
+</a>
+</div>
 
-<img src="assets/img4.png">
-
-<h3 id="timeTitle">
-Time
-</h3>
-
-<p id="timeDesc">
-Record when symptoms first appeared.
-</p>
-
-<input type="time" id="symptomTime">
-
+<!-- Time Card -->
+<div class="card" id="timeCard">
+<div>
+<div class="card-icon-wrapper">
+<img src="assets/img4.png" alt="Time Recorded">
+</div>
+<h3 id="timeTitle">Time</h3>
+<p id="timeDesc">Record the exact time when stroke symptoms first appeared.</p>
+</div>
+<div class="time-input-wrapper">
+<input type="time" id="symptomTime" aria-label="Symptom onset time">
+</div>
 </div>
 
 </div>
-
 </section>
 
-<!-- ================= CAMERA ================= -->
+<!-- ================= EMERGENCY & REPORT CTAS ================= -->
+<div class="assessment-cta-section">
 
-<!-- ================= RESULTS ================= -->
-
-<!--<section>
-
-<h2 id="summaryTitle">
-Assessment Summary
-</h2>
-
-<div class="three-cards">
-
-
-
-<div class="test-card">
-    <h3>😊 Face Test</h3>
-    <p id="faceResult">
-        Not completed
-    </p>
-    
-</div>
-
-<div>
-
-<h3 id="summaryArm">
-Arms
-</h3>
-
-<p id="armResult">
-Pending
-</p>
-
-</div>
-
-<div>
-
-<h3 id="summarySpeech">
-Speech
-</h3>
-
-<p id="speechResult">
-Pending
-</p>
-
-</div>
-
-</div>
-
-</section>
-
- ================= EMERGENCY ================= -->
-
-<section id="emergency" class="cta">
-<!--hello. website made by aarush sharma-->
-<h2 id="emergencyTitle">
-Emergency Guidance
-</h2>
-
+<!-- Emergency Card -->
+<div class="cta-card emergency-card" id="emergency">
+<h2 id="emergencyTitle">Emergency Guidance</h2>
 <p id="emergencyDesc">
-If any FAST symptom is detected, call emergency medical services immediately.
-Early treatment can significantly improve outcomes.
+If any FAST symptom is detected or suspected, call emergency medical services immediately. Immediate treatment significantly improves recovery outcomes.
 </p>
+<button class="emergency-btn" id="emergencyButton">🚑 Emergency Guidance</button>
+</div>
 
-<button class="primary emergency-btn" id="emergencyButton">
-🚑 Emergency Guidance
-</button>
-
-</section>
-<!-- ================= NEXT ================= -->
-
-<section class="cta">
-
-<h2 id="finishTitle">
-Finish Assessment
-</h2>
-
+<!-- Finish Report Card -->
+<div class="cta-card">
+<h2 id="finishTitle">Generate Report</h2>
 <p id="finishDesc">
-View your complete educational report.
+View your complete clinical summary and export your educational screening report.
 </p>
+<button class="report-btn" id="reportButton">Generate Complete Report</button>
+</div>
 
-
-<button class="primary" id="reportButton">
-Generate Report
-</button>
-</section>
+</div>
 
 <!-- ================= FOOTER ================= -->
-
 <footer>
-
 <div>
-
-<h3 id="footerTitle">
-NeuroGuard
-</h3>
-
-<p id="footerDesc">
-AI-Assisted Stroke Awareness Platform
-</p>
-
+<h3 id="footerTitle">NeuroGuard</h3>
+<p id="footerDesc">AI-Assisted Stroke Awareness Platform</p>
 </div>
-
 <div>
-
-<a href="index.html" id="footerHome">
-Home
-</a>
-
-<a href="privacy.html" id="footerPrivacy">
-Privacy
-</a>
-
-<a href="#" id="footerAbout">
-About
-</a>
-
+<a href="index.html" id="footerHome">Home</a>
+<a href="privacy.html" id="footerPrivacy">Privacy</a>
+<a href="#" id="footerAbout">About</a>
 </div>
-
-<p id="footerCopyright">
-© 2026 NeuroGuard
-</p>
-
+<p id="footerCopyright">© 2026 NeuroGuard</p>
 </footer>
 
 <!-- ================= SCRIPTS ================= -->
@@ -331,127 +570,102 @@ About
 <script src="js/animations.js"></script>
 <script src="js/language.js"></script>
 <script src="js/mobile-menu.js"></script>
+
 <script>
 window.addEventListener("DOMContentLoaded", () => {
+    // Session initialization logic
+    if (!sessionStorage.getItem("assessmentStarted")) {
+        sessionStorage.setItem("assessmentStarted", "true");
 
-    // =============================
-    // FACE TEST
-    // ============================
-    // =============================
-// Clear previous assessment once
-// =============================
-if (!sessionStorage.getItem("assessmentStarted")) {
+        localStorage.removeItem("faceCompleted");
+        localStorage.removeItem("faceScore");
+        localStorage.removeItem("faceRisk");
+        localStorage.removeItem("faceRiskKey");
+        localStorage.removeItem("faceHealthy");
+        localStorage.removeItem("faceDrooping");
 
-    sessionStorage.setItem("assessmentStarted", "true");
+        localStorage.removeItem("armCompleted");
+        localStorage.removeItem("armScore");
+        localStorage.removeItem("armRisk");
+        localStorage.removeItem("armRiskKey");
 
-    localStorage.removeItem("faceCompleted");
-    localStorage.removeItem("faceScore");
-    localStorage.removeItem("faceRisk");
-    localStorage.removeItem("faceRiskKey");
-    localStorage.removeItem("faceHealthy");
-    localStorage.removeItem("faceDrooping");
+        localStorage.removeItem("speechCompleted");
+        localStorage.removeItem("speechScore");
+        localStorage.removeItem("speechRisk");
+        localStorage.removeItem("speechTranscript");
+        localStorage.removeItem("speechSimilarity");
+        localStorage.removeItem("symptomTime");
+    }
 
-localStorage.removeItem("armCompleted");
-localStorage.removeItem("armScore");
-localStorage.removeItem("armRisk");
-localStorage.removeItem("armRiskKey");   
+    // Update status of completed modules
+    if (localStorage.getItem("faceCompleted") === "true") {
+        const btn = document.getElementById("faceButton");
+        btn.textContent = "✓ Face Test Complete";
+        btn.classList.add("completed-btn");
+        document.getElementById("faceCard").classList.add("completed");
+    }
 
-    localStorage.removeItem("speechCompleted");
-    localStorage.removeItem("speechScore");
-    localStorage.removeItem("speechRisk");
-    localStorage.removeItem("speechTranscript");
-    localStorage.removeItem("speechSimilarity");
-    localStorage.removeItem("symptomTime");
-}
-   // =============================
-// FACE TEST
-// =============================
-if (localStorage.getItem("faceCompleted") === "true") {
-    document.getElementById("faceButton").textContent =
-        "✓ Face Test Complete";
-}
+    if (localStorage.getItem("armCompleted") === "true") {
+        const btn = document.getElementById("armButton");
+        btn.textContent = "✓ Arm Test Complete";
+        btn.classList.add("completed-btn");
+        document.getElementById("armCard").classList.add("completed");
+    }
 
-// =============================
-// ARM TEST
-// =============================
-if (localStorage.getItem("armCompleted") === "true") {
-    document.getElementById("armButton").textContent =
-        "✓ Arm Test Complete";
-}
+    if (localStorage.getItem("speechCompleted") === "true") {
+        const btn = document.getElementById("speechButton");
+        btn.textContent = "✓ Speech Test Complete";
+        btn.classList.add("completed-btn");
+        document.getElementById("speechCard").classList.add("completed");
+    }
 
-// =============================
-// SPEECH TEST
-// =============================
-if (localStorage.getItem("speechCompleted") === "true") {
-    document.getElementById("speechButton").textContent =
-        "✓ Speech Test Complete";
-}
+    // Dynamic Progress Bar & Percentage Calculation
+    function updateProgress() {
+        let completed = 0;
 
-   // =============================
-// DYNAMIC PROGRESS BAR
-// =============================
-function updateProgress() {
-let completed = 0;
+        if (localStorage.getItem("faceCompleted") === "true") completed++;
+        if (localStorage.getItem("armCompleted") === "true") completed++;
+        if (localStorage.getItem("speechCompleted") === "true") completed++;
+        if (localStorage.getItem("symptomTime")) completed++;
 
-if (localStorage.getItem("faceCompleted") === "true") completed++;
-if (localStorage.getItem("armCompleted") === "true") completed++;
-if (localStorage.getItem("speechCompleted") === "true") completed++;
-if (localStorage.getItem("symptomTime")) completed++;   // Time counts too
+        const percent = completed * 25;
+        document.getElementById("progressFill").style.width = percent + "%";
+        document.getElementById("progressPercentage").textContent = `${percent}% Completed`;
 
-const percent = completed * 25;
-console.log("Face:", localStorage.getItem("faceCompleted"));
-console.log("Arm:", localStorage.getItem("armCompleted"));
-console.log("Speech:", localStorage.getItem("speechCompleted"));
-console.log("Time:", localStorage.getItem("symptomTime"));
-console.log("Completed =", completed);
+        if (completed === 4) {
+            document.getElementById("progressTitleLabel").textContent = "Assessment Complete ✓";
+            document.getElementById("timeCard").classList.add("completed");
+        } else {
+            document.getElementById("progressTitleLabel").textContent = `Step ${completed + 1} of 4 Completed`;
+        }
+    }
 
-document.getElementById("progressFill").style.width = percent + "%";
+    updateProgress();
 
-// Display text
-if (completed === 4) {
-    document.getElementById("progressText").textContent =
-        "Assessment Complete ✓";
-} else {
-    document.getElementById("progressText").textContent =
-        `Step ${completed + 1} of 4`;
-}
-}
-// Initialize progress bar on page load
-updateProgress();
-    // Load previously entered symptom time
-const symptomTimeInput = document.getElementById("symptomTime");
+    // Time input persistence
+    const symptomTimeInput = document.getElementById("symptomTime");
+    if (symptomTimeInput) {
+        symptomTimeInput.value = localStorage.getItem("symptomTime") || "";
 
-if (symptomTimeInput) {
+        symptomTimeInput.oninput = function () {
+            localStorage.setItem("symptomTime", this.value);
+            updateProgress();
+        };
+        symptomTimeInput.onchange = function () {
+            localStorage.setItem("symptomTime", this.value);
+            updateProgress();
+        };
+    }
 
-    // Load saved time
-    symptomTimeInput.value = localStorage.getItem("symptomTime") || "";
-
-    // Save every time the user types/selects
-    symptomTimeInput.oninput = function () {
-        localStorage.setItem("symptomTime", this.value);
-        
-        updateProgress();
-    };
-
-    // Save again if they leave the field
-    symptomTimeInput.onchange = function () {
-        localStorage.setItem("symptomTime", this.value);
-        updateProgress();
-        
-    };
-};
-document.getElementById("reportButton").addEventListener("click", () => {
-
-    const symptomTime =
-        document.getElementById("symptomTime").value;
-
-    localStorage.setItem("symptomTime", symptomTime);
-
-    window.location.href = "results.html";
-
-});
+    // Report generation redirection
+    document.getElementById("reportButton").addEventListener("click", () => {
+        const symptomTime = document.getElementById("symptomTime").value;
+        localStorage.setItem("symptomTime", symptomTime);
+        window.location.href = "results.html";
+    });
 });
 </script>
+
 <script>
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
@@ -461,6 +675,5 @@ if ("serviceWorker" in navigator) {
     });
 }
 </script>
-    
 </body>
 </html>
