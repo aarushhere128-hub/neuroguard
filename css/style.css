@@ -1138,3 +1138,217 @@ html[data-theme="dark"] .comparison-table td{
     background:linear-gradient(90deg,#00c6ff,#0072ff);
     transition:width .4s ease;
 }
+/* =========================================================
+   NeuroGuard - Living Digital Brain Hero Styles (10/10)
+========================================================= */
+
+#home {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 120px 8% 80px 8%;
+    background: #05070a;
+    overflow: hidden;
+    color: #f8fafc;
+}
+
+#neural-canvas-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* Faint Background EEG / ECG Lines Grid */
+.eeg-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 2;
+    pointer-events: none;
+    mask-image: radial-gradient(circle at 70% 50%, black 30%, transparent 80%);
+}
+
+/* Holographic Glass Card Tooltips */
+.neural-glass-card {
+    position: absolute;
+    top: 28%;
+    right: 12%;
+    width: 280px;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 20px;
+    border-radius: 16px;
+    backdrop-filter: blur(14px);
+    z-index: 10;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(37, 99, 235, 0.2);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.neural-glass-card.hidden {
+    opacity: 0;
+    transform: translateY(10px);
+    visibility: hidden;
+}
+
+.hologram-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.pulse-dot {
+    width: 10px;
+    height: 10px;
+    background: #38bdf8;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #38bdf8;
+    animation: pulse-ring 1.5s infinite;
+}
+
+@keyframes pulse-ring {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+}
+
+.hologram-header h4 {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.neural-glass-card p {
+    font-size: 13px !important;
+    color: #94a3b8 !important;
+    margin-bottom: 14px !important;
+    line-height: 1.5 !important;
+}
+
+.hologram-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #64748b;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 10px;
+}
+
+.text-glow {
+    color: #38bdf8;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+}
+
+/* Periodic Medical MRI Scan Sweep Line */
+.mri-scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #38bdf8, #60a5fa, transparent);
+    box-shadow: 0 0 25px #38bdf8, 0 0 50px #2563eb;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes mriScanSweep {
+    0% { top: 10%; opacity: 0; }
+    15% { opacity: 0.9; }
+    85% { opacity: 0.9; }
+    100% { top: 90%; opacity: 0; }
+}
+
+/* Foreground Hero Text */
+.hero-content-wrapper {
+    position: relative;
+    z-index: 6;
+    max-width: 620px;
+    pointer-events: auto;
+}
+
+.telegraphic-text {
+    font-size: 54px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 20px 0;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+.transmission-cursor {
+    display: inline-block;
+    width: 4px;
+    height: 48px;
+    background: var(--primary);
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink-cursor 0.8s infinite;
+}
+
+@keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+#home p {
+    color: #94a3b8;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+/* Stats Cards */
+.hero-stats {
+    display: flex;
+    gap: 18px;
+    margin-top: 35px;
+}
+
+.hero-stats div {
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px 18px;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    min-width: 135px;
+}
+
+.hero-stats h2 {
+    color: #38bdf8;
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.hero-stats p {
+    font-size: 12px !important;
+    margin: 0 !important;
+    color: #64748b !important;
+}
+
+@media (max-width: 968px) {
+    #home {
+        padding: 100px 5% 60px 5%;
+        justify-content: center;
+        text-align: center;
+    }
+    .hero-content-wrapper {
+        max-width: 100%;
+    }
+    .hero-stats {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .telegraphic-text {
+        font-size: 38px;
+    }
+    .neural-glass-card {
+        display: none; /* Hide interactive HUD on smaller mobile viewports for clean layout */
+    }
+}
