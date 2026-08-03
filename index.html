@@ -24,16 +24,19 @@
 
 <body>
 
-<!-- ================= LOADER ================= -->
-<div class="loading-screen">
+<!-- ================= LOADER & ERROR OVERLAY ================= -->
+<div class="loading-screen" id="loadingScreen">
     <div class="loader-logo">
         <img src="assets/logo.png" alt="NeuroGuard">
     </div>
-    <div class="loader-text">Initializing Living Neural Brain...</div>
-    <div class="loader-bar"></div>
+    <div class="loader-text" id="loaderText">Initializing Anatomical Matrix...</div>
+    <div class="loader-bar"><div class="loader-progress" id="loaderProgress"></div></div>
+    <div id="fallbackContainer" style="display: none; margin-top: 20px; text-align: center;">
+        <p style="color: #ef4444; font-size: 13px; margin-bottom: 12px;">Unable to load 3D anatomical model (assets/brain.glb).</p>
+        <button class="primary" id="fallbackContinueBtn" style="padding: 8px 20px; font-size: 13px;">Continue Anyway</button>
+    </div>
 </div>
 
-<!-- ================= WEBSITE ================= -->
 <div id="website">
 
 <!-- ================= NAVBAR ================= -->
@@ -51,16 +54,6 @@
 <li><a href="#technology" id="navtech">Technology</a></li>
 <li><a href="#comparison" id="navcompare">Comparison</a></li>
 <li><a href="contact.html" id="navcontact">Contact</a></li>
-<li class="mobile-only">
-    <select id="languageSelectMobile">
-        <option value="en">🇬🇧 English</option>
-        <option value="hi">🇮🇳 हिन्दी</option>
-        <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
-    </select>
-</li>
-<li class="mobile-only">
-    <button id="themeToggleMobile">🌙 Theme</button>
-</li>
 </ul>
 
 <div class="nav-actions">
@@ -79,32 +72,11 @@
 </nav>
 </header>
 
-<!-- ================= HERO (THE 10/10 LIVING BRAIN) ================= -->
-<section id="home">
-    <!-- WebGL Canvas Container -->
-    <div id="neural-canvas-container"></div>
+<!-- ================= HERO SECTION (40/60 SPLIT LAYOUT) ================= -->
+<section id="home" class="hero-split-container">
     
-    <!-- Faint Background ECG/EEG Lines -->
-    <div class="eeg-grid-overlay"></div>
-
-    <!-- Dynamic Medical Holographic Floating Glass Cards -->
-    <div id="neuralGlassCard" class="neural-glass-card hidden">
-        <div class="hologram-header">
-            <span class="pulse-dot"></span>
-            <h4 id="holoRegionTitle">Broca's Area</h4>
-        </div>
-        <p id="holoRegionDesc">Speech Production & Motor Articulation Mapping.</p>
-        <div class="hologram-stats">
-            <span>Activity: <strong id="holoActivity">98.4%</strong></span>
-            <span>Status: <strong class="text-glow">Active Firing</strong></span>
-        </div>
-    </div>
-
-    <!-- Periodic Medical MRI Scan Plane Indicator -->
-    <div class="mri-scan-line" id="mriScanLine"></div>
-
-    <!-- Hero Content Stack -->
-    <div class="hero-content-wrapper">
+    <!-- LEFT SIDE: Marketing Message, Copy & CTA (40%) -->
+    <div class="hero-left-col">
         <div class="badge">
             AI-Assisted Neural Awareness Platform
         </div>
@@ -114,8 +86,17 @@
         </h1>
 
         <p id="heroDescription">
-            NeuroGuard is an AI-assisted educational screening platform that guides users through FAST assessment, records symptom onset time, and provides structured emergency guidance during the critical pre-hospital window.
+            NeuroGuard is an AI-assisted educational screening platform that guides users through FAST assessment, records symptom onset time, and provides structured pre-hospital emergency guidance.
         </p>
+
+        <!-- Disease Overlay Mode Switchers -->
+        <div class="disease-mode-toolbar">
+            <span class="toolbar-label">Clinical View:</span>
+            <button class="mode-pill active" data-mode="healthy">Healthy</button>
+            <button class="mode-pill" data-mode="stroke">Stroke (MCA)</button>
+            <button class="mode-pill" data-mode="parkinsons">Parkinson's</button>
+            <button class="mode-pill" data-mode="alzheimers">Alzheimer's</button>
+        </div>
 
         <div class="hero-buttons">
             <a href="fast-test.html" id="startAssessmentLink">
@@ -131,23 +112,56 @@
         </div>
 
         <div class="hero-stats">
-            <div class="stat-card-pulse">
-                <h2 id="statCount1">3.4B</h2>
-                <p id="stat1">People affected by neurological disorders worldwide</p>
+            <div>
+                <h2>3.4B</h2>
+                <p>Affected globally</p>
             </div>
-            <div class="stat-card-pulse">
+            <div>
                 <h2>Minutes</h2>
-                <p id="stat2">Can make a difference</p>
+                <p>Critical window</p>
             </div>
-            <div class="stat-card-pulse">
-                <h2 id="statCount3">600+</h2>
-                <p id="stat3">Recognized Neurological Disorders</p>
+            <div>
+                <h2>600+</h2>
+                <p>Conditions mapped</p>
             </div>
         </div>
     </div>
+
+    <!-- RIGHT SIDE: 3D Anatomical Brain & Glass Info Panel (60%) -->
+    <div class="hero-right-col">
+        <!-- WebGL 3D Brain Container -->
+        <div id="brain-3d-container"></div>
+
+        <!-- Back to Full Brain Button (Active on region focus) -->
+        <button id="resetCameraBtn" class="reset-camera-btn">↩ Reset View</button>
+
+        <!-- Permanent Scannable Glass HUD Info Panel -->
+        <div id="sideInfoPanel" class="side-hud-panel default-state">
+            <div class="hud-header">
+                <span class="hud-pulse-dot" id="hudPulseDot"></span>
+                <h3 id="hudRegionTitle">Interactive Atlas</h3>
+            </div>
+            
+            <p id="hudRegionDesc" class="hud-desc">
+                Hover over any anatomical region on the 3D model or select a clinical condition overlay to explore neural pathways. Click any region to focus camera.
+            </p>
+
+            <div id="hudExpandedContent" style="display: none;">
+                <div class="hud-section-title">Core Functions</div>
+                <div class="scannable-tags" id="hudFunctionsTags"></div>
+
+                <div class="hud-section-title highlight-eval">NeuroGuard Tests</div>
+                <div class="scannable-tags check-tags" id="hudEvaluationsTags"></div>
+
+                <div class="hud-section-title">Common Disorders</div>
+                <div class="scannable-tags disorder-tags" id="hudConditionsTags"></div>
+            </div>
+        </div>
+    </div>
+
 </section>
 
-<!-- ================= PROBLEM ================= -->
+<!-- ================= PROBLEM SECTION ================= -->
 <section id="problem">
 <h2 id="problemTitle">The Problem</h2>
 <p id="problemDesc">Stroke treatment is highly time-sensitive, yet most delays occur before reaching the hospital.</p>
@@ -160,95 +174,12 @@
 </div>
 </section>
 
-<!-- ================= FEATURES ================= -->
-<section id="features">
-<h2 id="featuresTitle">Core Features</h2>
-<div class="feature-grid">
-<div class="card"><img src="assets/img2.png" alt="Face"><h3 id="feature1Title">Face Detection</h3><p id="feature1Desc">AI-assisted facial landmark analysis detects asymmetry.</p></div>
-<div class="card"><img src="assets/img3.png" alt="Arm"><h3 id="feature2Title">Arm Assessment</h3><p id="feature2Desc">Guided arm raise using pose estimation.</p></div>
-<div class="card"><img src="assets/img5.png" alt="Speech"><h3 id="feature3Title">Speech Analysis</h3><p id="feature3Desc">Detects slurred speech patterns.</p></div>
-<div class="card"><img src="assets/img4.png" alt="Timer"><h3 id="feature4Title">Symptom Timer</h3><p id="feature4Desc">Records exact symptom onset for clinicians.</p></div>
-</div>
-</section>
-
-<!-- ================= WHY ================= -->
-<section>
-<h2 id="whyTitle">Why NeuroGuard?</h2>
-<div class="three-cards">
-<div><h3 id="why1Title">Education</h3><p id="why1Desc">Interactive FAST learning.</p></div>
-<div><h3 id="why2Title">Guided Assessment</h3><p id="why2Desc">Reduces panic with structured testing.</p></div>
-<div><h3 id="why3Title">Emergency Guidance</h3><p id="why3Desc">Immediate next steps and hospital guidance.</p></div>
-</div>
-</section>
-
-<!-- ================= TECHNOLOGY ================= -->
-<section id="technology">
-<h2 id="techTitle">Technology Stack</h2>
-<div class="tech-grid">
-<div>Flutter</div><div>Firebase</div><div>MediaPipe</div><div>OpenCV</div><div>TensorFlow</div>
-</div>
-</section>
-
-<!-- ================= COMPARISON ================= -->
-<section id="comparison">
-    <div class="section-header">
-        <span class="badge" id="compareBadge">Comparison</span>
-        <h2 id="compareTitle">How NeuroGuard Compares</h2>
-        <p id="compareDesc">NeuroGuard combines AI screening, multilingual support, and emergency guidance.</p>
-    </div>
-    <div class="comparison-wrapper">
-        <table class="comparison-table">
-            <thead>
-                <tr>
-                    <th id="compareFeature">Feature</th>
-                    <th>NeuroGuard</th>
-                    <th id="compareTraditional">Traditional Awareness</th>
-                    <th id="compareApps">General Health Apps</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td id="row1">AI-Assisted FAST Screening</td><td>✅</td><td>❌</td><td>⚠️</td></tr>
-                <tr><td id="row2">Face Assessment</td><td>✅</td><td>❌</td><td>❌</td></tr>
-                <tr><td id="row3">Arm Assessment</td><td>✅</td><td>❌</td><td>❌</td></tr>
-                <tr><td id="row4">Speech Assessment</td><td>✅</td><td>❌</td><td>⚠️</td></tr>
-                <tr><td id="row5">Symptom Timer</td><td>✅</td><td>❌</td><td>❌</td></tr>
-                <tr><td id="row6">Emergency Guidance</td><td>✅</td><td>⚠️</td><td>⚠️</td></tr>
-                <tr><td id="row7">Multilingual Support</td><td>✅</td><td>❌</td><td>⚠️</td></tr>
-                <tr><td id="row8">Interactive FAST Learning</td><td>✅</td><td>⚠️</td><td>⚠️</td></tr>
-                <tr><td id="row9">Web-Based Access</td><td>✅</td><td>❌</td><td>⚠️</td></tr>
-                <tr><td id="row10">Purpose</td><td id="purposeNG">Educational Neural Screening</td><td id="purposeTA">General Awareness</td><td id="purposeHA">General Health Monitoring</td></tr>
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<!-- ================= CTA ================= -->
-<section class="cta">
-<h2 id="ctaTitle">Ready to Experience NeuroGuard?</h2>
-<p id="ctaDesc">Explore our prototype and discover how technology can help recognize symptoms earlier.</p>
-<a href="fast-test.html"><button class="primary" id="ctaButton">Launch Demo</button></a>
-</section>
-
-<!-- ================= FOOTER ================= -->
-<footer>
-<div>
-<h3 id="footerTitle">NeuroGuard</h3>
-<p id="footerText">AI-Assisted Neural Awareness & Emergency Response</p>
-</div>
-<div>
-<a href="privacy.html" id="footerPrivacy">Privacy</a>
-<a href="#problem" id="footerAbout">About</a>
-<a href="#technology" id="footerTechnology">Technology</a>
-<a href="contact.html" id="footerContact">Contact</a>
-</div>
-<p id="footerCopyright">© 2026 NeuroGuard Educational Prototype</p>
-</footer>
-
-<!-- Profile Overlay omitted for brevity, preserved in your code structure -->
 </div>
 
-<!-- Three.js + Post-Processing CDNs -->
+<!-- Three.js + Post-Processing + Controls CDNs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
@@ -257,16 +188,13 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-<!-- Core Application Scripts -->
 <script src="js/theme.js"></script>
 <script src="js/app.js"></script>
 <script src="js/navigation.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/language.js"></script>
-<script type="module" src="js/navbar-auth.js"></script>
-<script src="js/mobile-menu.js"></script>
 
-<!-- CINEMATIC 10/10 LIVING BRAIN WEBGL ENGINE -->
+<!-- PRODUCTION-READY MEDICAL 3D ENGINE -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Telegraphic Text Transmission
@@ -286,284 +214,396 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setTimeout(transmitText, 400);
 
-    // 2. Three.js Living Brain Core Setup
-    const container = document.getElementById("neural-canvas-container");
+    // 2. Three.js Setup & Dynamic Pixel Ratio Handling
+    const container = document.getElementById("brain-3d-container");
     if (!container) return;
 
+    let isMobile = window.innerWidth <= 1024;
+    let pixelRatio = isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
+
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x05070a, 0.035);
+    scene.fog = new THREE.FogExp2(0x05070a, 0.04);
 
-    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 22);
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 0, 6.5);
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile, powerPreference: "high-performance" });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(pixelRatio);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     container.appendChild(renderer.domElement);
 
+    // OrbitControls: Rotation enabled, zoom/pan disabled
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.enableRotate = true;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 1.0;
+    controls.dampingFactor = 0.05;
+    controls.enableDamping = true;
+
+    // Post-Processing
     const renderScene = new THREE.RenderPass(scene, camera);
-    const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.6, 0.4, 0.85);
+    const bloomPass = new THREE.UnrealBloomPass(
+        new THREE.Vector2(container.clientWidth, container.clientHeight), 
+        isMobile ? 0.8 : 1.2, 
+        0.4, 
+        0.85
+    );
     
     const composer = new THREE.EffectComposer(renderer);
     composer.addPass(renderScene);
     composer.addPass(bloomPass);
 
-    // 3. Anatomically Structured Cerebrum Geometry (True Brain Silhouette)
-    const particleCount = 16000;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const customAttributes = new Float32Array(particleCount); // Region tag
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+    scene.add(ambientLight);
 
-    for (let i = 0; i < particleCount; i++) {
-        let x, y, z;
-        let region = 0; // 0: Frontal, 1: Occipital, 2: Temporal, 3: Cerebellum / Brainstem
+    const dirLight = new THREE.DirectionalLight(0x38bdf8, 2.5);
+    dirLight.position.set(5, 5, 5);
+    scene.add(dirLight);
 
-        // Distribute particles across structured anatomical zones
-        const zoneRand = Math.random();
+    const backLight = new THREE.DirectionalLight(0x2563eb, 1.8);
+    backLight.position.set(-5, -5, -5);
+    scene.add(backLight);
 
-        if (zoneRand < 0.40) {
-            // Frontal Lobe (Wider, rounded front)
-            region = 0;
-            const u = Math.random() * Math.PI * 2;
-            const v = Math.random() * Math.PI;
-            const r = 4.5 * Math.cbrt(Math.random());
-            x = r * Math.sin(v) * Math.cos(u) * 1.1;
-            y = r * Math.sin(v) * Math.sin(u) * 0.8 + 0.5;
-            z = r * Math.cos(v) * 1.2 + 1.2; // Forward position
-        } else if (zoneRand < 0.65) {
-            // Parietal & Occipital Lobes (Top & Back curve)
-            region = zoneRand < 0.55 ? 0 : 1;
-            const u = Math.random() * Math.PI * 2;
-            const v = Math.random() * Math.PI;
-            const r = 4.2 * Math.cbrt(Math.random());
-            x = r * Math.sin(v) * Math.cos(u);
-            y = r * Math.sin(v) * Math.sin(u) * 0.85 + 0.8;
-            z = r * Math.cos(v) * 1.1 - 1.0; // Backward position
-        } else if (zoneRand < 0.88) {
-            // Temporal Lobes (Flanking sides left and right)
-            region = 2;
-            const side = Math.random() > 0.5 ? 1 : -1;
-            const u = Math.random() * Math.PI * 2;
-            const r = 2.8 * Math.cbrt(Math.random());
-            x = side * (3.2 + r * Math.cos(u) * 0.6);
-            y = r * Math.sin(u) * 0.6 - 1.0;
-            z = (Math.random() - 0.5) * 3.0;
-        } else {
-            // Cerebellum & Brainstem (Tucked underneath at the back)
-            region = 3;
-            const u = Math.random() * Math.PI * 2;
-            const r = 2.2 * Math.cbrt(Math.random());
-            x = r * Math.cos(u) * 0.9;
-            y = -2.5 + (Math.random() - 0.5) * 1.5;
-            z = -2.2 + (Math.random() - 0.5) * 1.8;
-        }
-
-        // Carve out the Longitudinal Fissure (Deep central groove separating Left & Right Hemispheres)
-        if (Math.abs(x) < 0.6) {
-            x += (x > 0 ? 0.6 : -0.6);
-        }
-
-        positions[i * 3]     = x;
-        positions[i * 3 + 1] = y;
-        positions[i * 3 + 2] = z;
-        customAttributes[i]  = region;
-    }
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('region', new THREE.BufferAttribute(customAttributes, 1));
-
-    // Custom GLSL Shader for Cortical Structure & Action Potentials
-    const vertexShader = `
-        attribute float region;
-        uniform float uTime;
-        uniform vec3 uMouse;
-        uniform float uAIAnalysis;
-        varying vec3 vPosition;
-        varying float vRegion;
-
-        void main() {
-            vRegion = region;
-            vec3 pos = position;
-
-            // Subtle organic breathing pulsation
-            float breath = sin(uTime * 1.2) * 0.025;
-            pos *= (1.0 + breath);
-
-            // fMRI Hemisphere activation reacting to cursor proximity
-            float distToMouse = distance(pos.xy, uMouse.xy);
-            if (distToMouse < 4.0) {
-                pos.z += (4.0 - distToMouse) * 0.3;
-            }
-
-            // AI Analysis grid wave
-            if (uAIAnalysis > 0.5) {
-                pos += sin(pos * 5.0 + uTime * 6.0) * 0.06;
-            }
-
-            vPosition = pos;
-            vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-            gl_PointSize = (14.0 / -mvPosition.z) * (1.0 + 0.3 * sin(uTime * 3.0 + region));
-            gl_Position = projectionMatrix * mvPosition;
-        }
-    `;
-
-    const fragmentShader = `
-        varying vec3 vPosition;
-        varying float vRegion;
-        uniform float uTime;
-
-        void main() {
-            // Circular point rendering
-            float d = distance(gl_PointCoord, vec2(0.5));
-            if (d > 0.5) discard;
-
-            vec3 color = vec3(0.22, 0.74, 0.97); // Cyan Blue default
-
-            if (vRegion == 0.0) color = vec3(0.35, 0.62, 1.0); // Frontal (Electric Blue)
-            else if (vRegion == 1.0) color = vec3(0.12, 0.92, 0.75); // Occipital (Teal)
-            else if (vRegion == 2.0) color = vec3(0.78, 0.35, 1.0); // Temporal (Violet)
-            else color = vec3(0.2, 0.85, 0.6); // Cerebellum (Emerald)
-
-            // Spontaneous action potential firing pulses
-            float spark = step(0.96, fract(sin(vPosition.x * 14.1 + uTime * 3.0) * 43758.5453));
-            color += vec3(spark * 0.9);
-
-            gl_FragColor = vec4(color, 0.85);
-        }
-    `;
-
-    const brainMaterial = new THREE.ShaderMaterial({
-        vertexShader,
-        fragmentShader,
-        uniforms: {
-            uTime: { value: 0 },
-            uMouse: { value: new THREE.Vector3(0, 0, 0) },
-            uAIAnalysis: { value: 0 }
+    // 3. Anatomical Data & Scannable Tags Mapping
+    const regionData = {
+        frontal: {
+            title: "Frontal Lobe",
+            desc: "Command center for executive function, voluntary movement, reasoning, and personality.",
+            functions: ["Executive Control", "Speech Output", "Motor Planning"],
+            evaluations: ["Facial Symmetry", "Motor Weakness"],
+            conditions: ["Stroke", "Tumor", "TBI"]
         },
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-    });
-
-    const brainMesh = new THREE.Points(geometry, brainMaterial);
-    scene.add(brainMesh);
-
-    // 4. Mouse Tracking & Interaction
-    let mouse = new THREE.Vector2(-100, -100);
-    let targetMouse = new THREE.Vector2(0, 0);
-
-    window.addEventListener('mousemove', (e) => {
-        targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-        targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-    });
-
-    // 5. MRI Scan Sweep simulation
-    const mriLine = document.getElementById("mriScanLine");
-    setInterval(() => {
-        if (mriLine) {
-            mriLine.style.animation = 'none';
-            void mriLine.offsetHeight;
-            mriLine.style.animation = 'mriScanSweep 2s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+        parietal: {
+            title: "Parietal Lobe",
+            desc: "Processes sensory data regarding touch, temperature, pressure, and spatial positioning.",
+            functions: ["Sensory Processing", "Spatial Awareness", "Body Mapping"],
+            evaluations: ["Sensory Response", "Coordination Test"],
+            conditions: ["Sensory Ataxia", "Ganser Syndrome", "Stroke"]
+        },
+        temporal: {
+            title: "Temporal Lobe",
+            desc: "Primary processing center for auditory signals, language comprehension, and memory encoding.",
+            functions: ["Language Decoding", "Auditory Signals", "Memory Encoding"],
+            evaluations: ["Speech Patterns", "Cognitive Recall"],
+            conditions: ["Alzheimer's", "Epilepsy", "Aphasia"]
+        },
+        occipital: {
+            title: "Occipital Lobe",
+            desc: "Visual processing powerhouse responsible for object recognition, color, and motion.",
+            functions: ["Visual Processing", "Motion Tracking", "Shape Recognition"],
+            evaluations: ["Visual Field Scan", "Symptom Onset"],
+            conditions: ["Cortical Blindness", "Agnosia", "Stroke"]
+        },
+        cerebellum: {
+            title: "Cerebellum",
+            desc: "Coordinates fine motor control, balance, posture, and procedural muscle memory.",
+            functions: ["Motor Balance", "Posture Control", "Coordination"],
+            evaluations: ["Balance Assessment", "Tremor Check"],
+            conditions: ["Ataxia", "Cerebellar Stroke", "Tremors"]
         }
-    }, 8000);
+    };
 
-    // 6. Interactive Hologram HUD Tooltips
-    const glassCard = document.getElementById("neuralGlassCard");
-    const holoTitle = document.getElementById("holoRegionTitle");
-    const holoDesc = document.getElementById("holoRegionDesc");
-    const holoActivity = document.getElementById("holoActivity");
+    let currentHoveredRegion = null;
 
-    function updateFunctionalRegion(x, y) {
-        if (!glassCard) return;
-        if (x < -0.2 && y > 0.1) {
-            glassCard.classList.remove("hidden");
-            holoTitle.innerText = "Broca's Area (Speech)";
-            holoDesc.innerText = "Processes linguistic articulation & semantic planning.";
-            holoActivity.innerText = "99.2% Active";
-        } else if (y < -0.3) {
-            glassCard.classList.remove("hidden");
-            holoTitle.innerText = "Occipital Lobe (Vision)";
-            holoDesc.innerText = "Visual cortex mapping optical sensor streams.";
-            holoActivity.innerText = "94.8% Active";
-        } else if (x > 0.3) {
-            glassCard.classList.remove("hidden");
-            holoTitle.innerText = "Temporal Lobe (Memory)";
-            holoDesc.innerText = "Encodes episodic memory and auditory pattern recall.";
-            holoActivity.innerText = "97.1% Active";
-        } else {
-            glassCard.classList.add("hidden");
+    function updateHUD(regionKey) {
+        if (currentHoveredRegion === regionKey) return;
+        currentHoveredRegion = regionKey;
+
+        const panel = document.getElementById("sideInfoPanel");
+        panel.classList.remove("default-state");
+        document.getElementById("hudExpandedContent").style.display = "block";
+
+        const data = regionData[regionKey];
+        if (!data) return;
+        document.getElementById("hudRegionTitle").innerText = data.title;
+        document.getElementById("hudRegionDesc").innerText = data.desc;
+        
+        document.getElementById("hudFunctionsTags").innerHTML = data.functions.map(f => `<span class="sc-tag">${f}</span>`).join('');
+        document.getElementById("hudEvaluationsTags").innerHTML = data.evaluations.map(e => `<span class="sc-tag check">✓ ${e}</span>`).join('');
+        document.getElementById("hudConditionsTags").innerHTML = data.conditions.map(c => `<span class="sc-tag disorder">${c}</span>`).join('');
+    }
+
+    function resetHUD() {
+        currentHoveredRegion = null;
+        const panel = document.getElementById("sideInfoPanel");
+        panel.classList.add("default-state");
+        document.getElementById("hudExpandedContent").style.display = "none";
+        document.getElementById("hudRegionTitle").innerText = "Interactive Atlas";
+        document.getElementById("hudRegionDesc").innerText = "Hover over any anatomical region on the 3D model or select a clinical condition overlay to explore neural pathways. Click any region to focus camera.";
+    }
+
+    // 4. Load GLTF Brain Model & Sketchfab-Style Fake Progress Loader
+    let brainModel = null;
+    const hitboxes = [];
+    const regionMeshes = { frontal: [], parietal: [], temporal: [], occipital: [], cerebellum: [] };
+    let currentHoveredHitbox = null;
+    let selectedHitbox = null;
+
+    const loader = new THREE.GLTFLoader();
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    const loadingScreen = document.getElementById("loadingScreen");
+    const loaderText = document.getElementById("loaderText");
+    const loaderProgress = document.getElementById("loaderProgress");
+    const fallbackContainer = document.getElementById("fallbackContainer");
+
+    // Sketchfab smooth progress simulation
+    let progressVal = 0;
+    const progressInterval = setInterval(() => {
+        if (progressVal < 85) {
+            progressVal += Math.random() * 12;
+            loaderProgress.style.width = Math.min(progressVal, 85) + '%';
         }
-    }
+    }, 150);
 
-    // 7. AI Analysis Mode on Button Hover
-    const startBtn = document.getElementById("demoButton");
-    if (startBtn) {
-        startBtn.addEventListener('mouseenter', () => {
-            brainMaterial.uniforms.uAIAnalysis.value = 1.0;
-            bloomPass.strength = 2.4;
-        });
-        startBtn.addEventListener('mouseleave', () => {
-            brainMaterial.uniforms.uAIAnalysis.value = 0.0;
-            bloomPass.strength = 1.6;
-        });
-    }
+    loader.load('assets/brain.glb', (gltf) => {
+        clearInterval(progressInterval);
+        loaderProgress.style.width = '100%';
 
-    // 8. Cinematic Scroll Zoom
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const maxScroll = window.innerHeight;
-        let scrollProgress = Math.min(scrollTop / maxScroll, 1.0);
-        camera.position.z = 22 - (scrollProgress * 16);
-        camera.position.y = scrollProgress * 3;
+        brainModel = gltf.scene;
+        brainModel.scale.set(1.4, 1.4, 1.4);
+        brainModel.position.set(0, -0.4, 0);
+
+        brainModel.traverse((child) => {
+            if (child.isMesh) {
+                child.material = child.material.clone();
+                child.material.roughness = 0.4;
+                child.material.metalness = 0.1;
+
+                // Group meshes by anatomical regions based on mesh names or fallback distribution
+                const name = child.name.toLowerCase();
+                if (name.includes('frontal') || child.position.z > 0.3) regionMeshes.frontal.push(child);
+                else if (name.includes('parietal') || (child.position.y > 0.5 && child.position.z <= 0.3)) regionMeshes.parietal.push(child);
+                else if (name.includes('temporal') || Math.abs(child.position.x) > 0.8) regionMeshes.temporal.push(child);
+                else if (name.includes('occipital') || child.position.z < -0.8) regionMeshes.occipital.push(child);
+                else regionMeshes.cerebellum.push(child);
+            }
+        });
+
+        // Ensure all arrays have at least one mesh as fallback
+        Object.keys(regionMeshes).forEach(key => {
+            if (regionMeshes[key].length === 0 && brainModel.children[0]) {
+                regionMeshes[key].push(brainModel.children[0]);
+            }
+        });
+
+        scene.add(brainModel);
+        buildLocalHitboxes();
+
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => { loadingScreen.style.display = 'none'; }, 500);
+        }, 400);
+
+    }, undefined, (error) => {
+        clearInterval(progressInterval);
+        console.warn("GLTF Load Notice: assets/brain.glb missing or failed to load.");
+        loaderText.innerText = "Model Acquisition Failed";
+        loaderProgress.style.display = 'none';
+        fallbackContainer.style.display = 'block';
     });
 
-    // 9. Click Transition
-    const assessmentLink = document.getElementById("startAssessmentLink");
-    if (assessmentLink) {
-        assessmentLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = assessmentLink.getAttribute('href');
-            gsap.to(brainMesh.scale, { x: 4.5, y: 4.5, z: 4.5, duration: 0.8, ease: "power2.in" });
-            gsap.to(camera.position, { z: 2, duration: 0.8, ease: "power2.in" });
+    // Fallback continue button
+    document.getElementById("fallbackContinueBtn").addEventListener('click', () => {
+        brainModel = new THREE.Group();
+        const fallbackGeo = new THREE.SphereGeometry(1.6, 32, 32);
+        const fallbackMat = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.5 });
+        const fallbackMesh = new THREE.Mesh(fallbackGeo, fallbackMat);
+        brainModel.add(fallbackMesh);
+        scene.add(brainModel);
+
+        Object.keys(regionMeshes).forEach(k => regionMeshes[k].push(fallbackMesh));
+        buildLocalHitboxes();
+
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => { loadingScreen.style.display = 'none'; }, 500);
+    });
+
+    // Build capsule/sphere invisible local hitboxes attached directly to brainModel
+    function buildLocalHitboxes() {
+        const hitboxConfigs = [
+            { name: 'frontal', geom: new THREE.SphereGeometry(0.7, 16, 16), pos: new THREE.Vector3(0, 0.3, 0.5) },
+            { name: 'parietal', geom: new THREE.SphereGeometry(0.6, 16, 16), pos: new THREE.Vector3(0, 0.9, -0.2) },
+            { name: 'temporal', geom: new THREE.SphereGeometry(0.5, 16, 16), pos: new THREE.Vector3(0.7, -0.1, 0) },
+            { name: 'occipital', geom: new THREE.SphereGeometry(0.6, 16, 16), pos: new THREE.Vector3(0, 0.2, -0.9) },
+            { name: 'cerebellum', geom: new THREE.SphereGeometry(0.5, 16, 16), pos: new THREE.Vector3(0, -0.7, -0.6) }
+        ];
+
+        hitboxConfigs.forEach(config => {
+            const mat = new THREE.MeshBasicMaterial({ visible: false });
+            const box = new THREE.Mesh(config.geom, mat);
+            box.position.copy(config.pos);
+            box.userData = { region: config.name };
             
-            const flash = document.createElement('div');
-            flash.style.cssText = 'position:fixed; inset:0; background:white; z-index:999999; opacity:0; transition:opacity 0.6s ease;';
-            document.body.appendChild(flash);
-            
-            setTimeout(() => { flash.style.opacity = '1'; }, 400);
-            setTimeout(() => { window.location.href = href; }, 1000);
+            // ATTACH TO BRAIN MODEL SO HITBOXES ROTATE WITH IT
+            brainModel.add(box);
+            hitboxes.push(box);
         });
     }
 
-    // 10. Render Loop
+    // 5. Mouse Interaction & Raycasting
+    container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
+    });
+
+    container.addEventListener('click', () => {
+        if (currentHoveredHitbox && !selectedHitbox) {
+            selectedHitbox = currentHoveredHitbox;
+            controls.autoRotate = false;
+
+            // Convert local hitbox position to world space for camera target
+            const worldPos = new THREE.Vector3();
+            selectedHitbox.getWorldPosition(worldPos);
+
+            gsap.to(controls.target, {
+                x: worldPos.x,
+                y: worldPos.y,
+                z: worldPos.z,
+                duration: 1.2,
+                ease: "power2.out",
+                onUpdate: () => controls.update()
+            });
+
+            const targetCamPos = worldPos.clone().add(new THREE.Vector3(0, 0.4, 3.2));
+            gsap.to(camera.position, {
+                x: targetCamPos.x,
+                y: targetCamPos.y,
+                z: targetCamPos.z,
+                duration: 1.2,
+                ease: "power2.out"
+            });
+
+            document.getElementById("resetCameraBtn").style.display = "block";
+            updateHUD(selectedHitbox.userData.region);
+        }
+    });
+
+    // Reset Camera Button
+    document.getElementById("resetCameraBtn").addEventListener('click', () => {
+        selectedHitbox = null;
+        controls.autoRotate = true;
+        document.getElementById("resetCameraBtn").style.display = "none";
+
+        gsap.to(controls.target, {
+            x: 0, y: 0, z: 0,
+            duration: 1.2,
+            ease: "power2.out",
+            onUpdate: () => controls.update()
+        });
+
+        gsap.to(camera.position, {
+            x: 0, y: 0, z: 6.5,
+            duration: 1.2,
+            ease: "power2.out"
+        });
+
+        resetHUD();
+    });
+
+    // 6. Anatomical Disease Overlays (Stroke MCA, Parkinson's Basal Ganglia, Alzheimer's Hippocampus)
+    const modePills = document.querySelectorAll('.mode-pill');
+    let currentDiseaseMode = 'healthy';
+
+    modePills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            modePills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            currentDiseaseMode = pill.getAttribute('data-mode');
+
+            // Reset all mesh colors
+            Object.values(regionMeshes).flat().forEach(m => {
+                m.material.color.set(0x334155);
+            });
+
+            if (currentDiseaseMode === 'stroke') {
+                bloomPass.strength = 1.8;
+                // Highlight left MCA territory (temporal & frontal left)
+                regionMeshes.temporal.forEach(m => m.material.color.set(0xef4444));
+                regionMeshes.frontal.forEach(m => m.material.color.set(0xdc2626));
+                updateHUD('temporal');
+            } else if (currentDiseaseMode === 'parkinsons') {
+                bloomPass.strength = 1.6;
+                regionMeshes.cerebellum.forEach(m => m.material.color.set(0xf59e0b));
+                updateHUD('cerebellum');
+            } else if (currentDiseaseMode === 'alzheimers') {
+                bloomPass.strength = 1.7;
+                regionMeshes.temporal.forEach(m => m.material.color.set(0x8b5cf6));
+                updateHUD('temporal');
+            } else {
+                bloomPass.strength = 1.2;
+                resetHUD();
+            }
+        });
+    });
+
+    // 7. Render Loop & Targeted Lobe Emissive Highlighting
     let clock = new THREE.Clock();
 
     function animate() {
         requestAnimationFrame(animate);
         const elapsedTime = clock.getElapsedTime();
 
-        brainMaterial.uniforms.uTime.value = elapsedTime;
+        if (brainModel && !selectedHitbox) {
+            controls.update();
+            brainModel.rotation.x = Math.sin(elapsedTime * 0.3) * 0.02;
+        }
 
-        mouse.x += (targetMouse.x - mouse.x) * 0.05;
-        mouse.y += (targetMouse.y - mouse.y) * 0.05;
-        brainMaterial.uniforms.uMouse.value.set(mouse.x * 8, mouse.y * 8, 0);
+        // Raycast against local hitboxes
+        if (hitboxes.length > 0 && !selectedHitbox) {
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(hitboxes);
 
-        // Controlled anatomical rotation
-        brainMesh.rotation.y = elapsedTime * 0.05 + mouse.x * 0.3;
-        brainMesh.rotation.x = Math.sin(elapsedTime * 0.2) * 0.03 - mouse.y * 0.3;
+            if (intersects.length > 0) {
+                const hitBox = intersects[0].object;
+                if (currentHoveredHitbox !== hitBox) {
+                    currentHoveredHitbox = hitBox;
+                    const region = hitBox.userData.region;
+                    updateHUD(region);
 
-        updateFunctionalRegion(mouse.x, mouse.y);
+                    // ONLY glow the specific lobe meshes, not the whole brain
+                    Object.keys(regionMeshes).forEach(key => {
+                        const targetIntensity = (key === region) ? 2.5 : 0;
+                        const targetColor = currentDiseaseMode === 'stroke' ? 0xef4444 : 0x38bdf8;
+                        regionMeshes[key].forEach(m => {
+                            gsap.to(m.material, { emissiveIntensity: targetIntensity, duration: 0.3 });
+                            m.material.emissive.set(targetColor);
+                        });
+                    });
+                }
+            } else if (currentHoveredHitbox) {
+                currentHoveredHitbox = null;
+                Object.values(regionMeshes).flat().forEach(m => {
+                    gsap.to(m.material, { emissiveIntensity: 0, duration: 0.3 });
+                });
+                if (!selectedHitbox) resetHUD();
+            }
+        }
+
         composer.render();
     }
 
     animate();
 
+    // 8. Dynamic Resize Handler with Updated Mobile Detection
     window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        
+        isMobile = window.innerWidth <= 1024;
+        pixelRatio = isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2);
+
+        camera.aspect = width / height;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        composer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(pixelRatio);
+        composer.setSize(width, height);
     });
 });
 </script>
