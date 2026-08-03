@@ -302,7 +302,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     container.appendChild(renderer.domElement);
 
-    // Unreal Bloom Post-Processing for High-End Glow
     const renderScene = new THREE.RenderPass(scene, camera);
     const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.6, 0.4, 0.85);
     
@@ -310,45 +309,71 @@ document.addEventListener("DOMContentLoaded", () => {
     composer.addPass(renderScene);
     composer.addPass(bloomPass);
 
-    // 3. Volumetric Neural Organism Geometry (50,000+ Mixed Particles: Synapses, Neurons, DNA, Data)
-    const particleCount = 12000;
+    // 3. Anatomically Structured Cerebrum Geometry (True Brain Silhouette)
+    const particleCount = 16000;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
-    const originalPositions = new Float32Array(particleCount * 3);
-    const customAttributes = new Float32Array(particleCount); // Storing region tags & states
+    const customAttributes = new Float32Array(particleCount); // Region tag
 
     for (let i = 0; i < particleCount; i++) {
-        // Parametric double-lobe distribution mimicking an anatomical cerebrum
-        const u = Math.random() * Math.PI * 2;
-        const v = Math.acos(Math.random() * 2 - 1);
-        const r = 5.8 * (0.6 + 0.4 * Math.cbrt(Math.random()));
+        let x, y, z;
+        let region = 0; // 0: Frontal, 1: Occipital, 2: Temporal, 3: Cerebellum / Brainstem
 
-        let x = r * Math.sin(v) * Math.cos(u);
-        let y = r * Math.sin(v) * Math.sin(u) * 0.75;
-        let z = r * Math.cos(v) * 0.65;
+        // Distribute particles across structured anatomical zones
+        const zoneRand = Math.random();
 
-        // Split hemispheres
-        if (x > 0) x += 0.6; else x -= 0.6;
+        if (zoneRand < 0.40) {
+            // Frontal Lobe (Wider, rounded front)
+            region = 0;
+            const u = Math.random() * Math.PI * 2;
+            const v = Math.random() * Math.PI;
+            const r = 4.5 * Math.cbrt(Math.random());
+            x = r * Math.sin(v) * Math.cos(u) * 1.1;
+            y = r * Math.sin(v) * Math.sin(u) * 0.8 + 0.5;
+            z = r * Math.cos(v) * 1.2 + 1.2; // Forward position
+        } else if (zoneRand < 0.65) {
+            // Parietal & Occipital Lobes (Top & Back curve)
+            region = zoneRand < 0.55 ? 0 : 1;
+            const u = Math.random() * Math.PI * 2;
+            const v = Math.random() * Math.PI;
+            const r = 4.2 * Math.cbrt(Math.random());
+            x = r * Math.sin(v) * Math.cos(u);
+            y = r * Math.sin(v) * Math.sin(u) * 0.85 + 0.8;
+            z = r * Math.cos(v) * 1.1 - 1.0; // Backward position
+        } else if (zoneRand < 0.88) {
+            // Temporal Lobes (Flanking sides left and right)
+            region = 2;
+            const side = Math.random() > 0.5 ? 1 : -1;
+            const u = Math.random() * Math.PI * 2;
+            const r = 2.8 * Math.cbrt(Math.random());
+            x = side * (3.2 + r * Math.cos(u) * 0.6);
+            y = r * Math.sin(u) * 0.6 - 1.0;
+            z = (Math.random() - 0.5) * 3.0;
+        } else {
+            // Cerebellum & Brainstem (Tucked underneath at the back)
+            region = 3;
+            const u = Math.random() * Math.PI * 2;
+            const r = 2.2 * Math.cbrt(Math.random());
+            x = r * Math.cos(u) * 0.9;
+            y = -2.5 + (Math.random() - 0.5) * 1.5;
+            z = -2.2 + (Math.random() - 0.5) * 1.8;
+        }
+
+        // Carve out the Longitudinal Fissure (Deep central groove separating Left & Right Hemispheres)
+        if (Math.abs(x) < 0.6) {
+            x += (x > 0 ? 0.6 : -0.6);
+        }
 
         positions[i * 3]     = x;
         positions[i * 3 + 1] = y;
         positions[i * 3 + 2] = z;
-
-        originalPositions[i * 3]     = x;
-        originalPositions[i * 3 + 1] = y;
-        originalPositions[i * 3 + 2] = z;
-
-        // Assign Functional Regions: 0=Frontal(Motor/Speech), 1=Occipital(Vision), 2=Temporal(Memory), 3=Cerebellum(Balance)
-        if (z > 1.5) customAttributes[i] = 0; // Frontal / Broca's
-        else if (z < -1.5) customAttributes[i] = 1; // Occipital (Vision)
-        else if (Math.abs(x) > 3.0) customAttributes[i] = 2; // Temporal (Memory)
-        else customAttributes[i] = 3; // Cerebellum / Core
+        customAttributes[i]  = region;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('region', new THREE.BufferAttribute(customAttributes, 1));
 
-    // Custom Shader Material for Organic Firing & Magnetic Interaction
+    // Custom GLSL Shader for Cortical Structure & Action Potentials
     const vertexShader = `
         attribute float region;
         uniform float uTime;
@@ -361,24 +386,24 @@ document.addEventListener("DOMContentLoaded", () => {
             vRegion = region;
             vec3 pos = position;
 
-            // Living Breath Expansion/Contraction
-            float breath = sin(uTime * 1.2) * 0.04;
+            // Subtle organic breathing pulsation
+            float breath = sin(uTime * 1.2) * 0.025;
             pos *= (1.0 + breath);
 
-            // fMRI Hemisphere activation responding to mouse proximity
+            // fMRI Hemisphere activation reacting to cursor proximity
             float distToMouse = distance(pos.xy, uMouse.xy);
-            if (distToMouse < 4.5) {
-                pos.z += (4.5 - distToMouse) * 0.35;
+            if (distToMouse < 4.0) {
+                pos.z += (4.0 - distToMouse) * 0.3;
             }
 
-            // AI Analysis Scan Grid Mode
+            // AI Analysis grid wave
             if (uAIAnalysis > 0.5) {
-                pos += sin(pos * 6.0 + uTime * 8.0) * 0.08;
+                pos += sin(pos * 5.0 + uTime * 6.0) * 0.06;
             }
 
             vPosition = pos;
             vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-            gl_PointSize = (18.0 / -mvPosition.z) * (1.0 + 0.3 * sin(uTime * 3.0 + region));
+            gl_PointSize = (14.0 / -mvPosition.z) * (1.0 + 0.3 * sin(uTime * 3.0 + region));
             gl_Position = projectionMatrix * mvPosition;
         }
     `;
@@ -389,20 +414,20 @@ document.addEventListener("DOMContentLoaded", () => {
         uniform float uTime;
 
         void main() {
-            // Circular particle point rendering
+            // Circular point rendering
             float d = distance(gl_PointCoord, vec2(0.5));
             if (d > 0.5) discard;
 
             vec3 color = vec3(0.22, 0.74, 0.97); // Cyan Blue default
 
-            if (vRegion == 0.0) color = vec3(0.38, 0.65, 1.0); // Motor / Speech (Electric Blue)
-            else if (vRegion == 1.0) color = vec3(0.12, 0.92, 0.75); // Vision (Teal)
-            else if (vRegion == 2.0) color = vec3(0.78, 0.35, 1.0); // Memory (Violet)
-            else color = vec3(0.2, 0.85, 0.6); // Balance
+            if (vRegion == 0.0) color = vec3(0.35, 0.62, 1.0); // Frontal (Electric Blue)
+            else if (vRegion == 1.0) color = vec3(0.12, 0.92, 0.75); // Occipital (Teal)
+            else if (vRegion == 2.0) color = vec3(0.78, 0.35, 1.0); // Temporal (Violet)
+            else color = vec3(0.2, 0.85, 0.6); // Cerebellum (Emerald)
 
-            // Action potential spontaneous firing flash
-            float spark = step(0.97, fract(sin(vPosition.x * 12.1 + uTime * 3.5) * 43758.5453));
-            color += vec3(spark * 0.8);
+            // Spontaneous action potential firing pulses
+            float spark = step(0.96, fract(sin(vPosition.x * 14.1 + uTime * 3.0) * 43758.5453));
+            color += vec3(spark * 0.9);
 
             gl_FragColor = vec4(color, 0.85);
         }
@@ -424,22 +449,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const brainMesh = new THREE.Points(geometry, brainMaterial);
     scene.add(brainMesh);
 
-    // 4. Mouse Tracking & Magnetic Field Interaction
+    // 4. Mouse Tracking & Interaction
     let mouse = new THREE.Vector2(-100, -100);
     let targetMouse = new THREE.Vector2(0, 0);
-    const raycaster = new THREE.Raycaster();
-    const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 
     window.addEventListener('mousemove', (e) => {
         targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
         targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
-        // Raycasting for interactive region cards (Broca's, Occipital, Motor, Memory)
-        mouse.x = targetMouse.x;
-        mouse.y = targetMouse.y;
     });
 
-    // 5. MRI Scanner Sweep Simulation every 8 seconds
+    // 5. MRI Scan Sweep simulation
     const mriLine = document.getElementById("mriScanLine");
     setInterval(() => {
         if (mriLine) {
@@ -449,7 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 8000);
 
-    // 6. Interactive Hologram Tooltips based on Mouse Zones
+    // 6. Interactive Hologram HUD Tooltips
     const glassCard = document.getElementById("neuralGlassCard");
     const holoTitle = document.getElementById("holoRegionTitle");
     const holoDesc = document.getElementById("holoRegionDesc");
@@ -477,7 +496,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 7. AI Analysis Mode on Start Assessment Hover
+    // 7. AI Analysis Mode on Button Hover
     const startBtn = document.getElementById("demoButton");
     if (startBtn) {
         startBtn.addEventListener('mouseenter', () => {
@@ -490,30 +509,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 8. Cinematic Camera Scroll Zoom (Flying INTO the brain)
-    let scrollProgress = 0;
+    // 8. Cinematic Scroll Zoom
     window.addEventListener('scroll', () => {
         const scrollTop = window.scrollY;
         const maxScroll = window.innerHeight;
-        scrollProgress = Math.min(scrollTop / maxScroll, 1.0);
-
-        // Camera flies forward into the neural net
+        let scrollProgress = Math.min(scrollTop / maxScroll, 1.0);
         camera.position.z = 22 - (scrollProgress * 16);
         camera.position.y = scrollProgress * 3;
     });
 
-    // 9. Movie-Quality Click Transition on "Start Assessment"
+    // 9. Click Transition
     const assessmentLink = document.getElementById("startAssessmentLink");
     if (assessmentLink) {
         assessmentLink.addEventListener('click', (e) => {
             e.preventDefault();
             const href = assessmentLink.getAttribute('href');
-
-            // GSAP Cinematic Collapse Transition
             gsap.to(brainMesh.scale, { x: 4.5, y: 4.5, z: 4.5, duration: 0.8, ease: "power2.in" });
             gsap.to(camera.position, { z: 2, duration: 0.8, ease: "power2.in" });
             
-            // Flash white screen and navigate
             const flash = document.createElement('div');
             flash.style.cssText = 'position:fixed; inset:0; background:white; z-index:999999; opacity:0; transition:opacity 0.6s ease;';
             document.body.appendChild(flash);
@@ -523,7 +536,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 10. Animation Render Loop
+    // 10. Render Loop
     let clock = new THREE.Clock();
 
     function animate() {
@@ -532,24 +545,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         brainMaterial.uniforms.uTime.value = elapsedTime;
 
-        // Smooth magnetic mouse lerp
         mouse.x += (targetMouse.x - mouse.x) * 0.05;
         mouse.y += (targetMouse.y - mouse.y) * 0.05;
-
         brainMaterial.uniforms.uMouse.value.set(mouse.x * 8, mouse.y * 8, 0);
 
-        // Organic slow rotation & breathing
-        brainMesh.rotation.y = elapsedTime * 0.06 + mouse.x * 0.35;
-        brainMesh.rotation.x = Math.sin(elapsedTime * 0.25) * 0.04 - mouse.y * 0.35;
+        // Controlled anatomical rotation
+        brainMesh.rotation.y = elapsedTime * 0.05 + mouse.x * 0.3;
+        brainMesh.rotation.x = Math.sin(elapsedTime * 0.2) * 0.03 - mouse.y * 0.3;
 
         updateFunctionalRegion(mouse.x, mouse.y);
-
         composer.render();
     }
 
     animate();
 
-    // Resize Handler
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
