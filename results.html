@@ -16,16 +16,331 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
 
-<meta name="theme-color" content="#2563EB">
+    <meta name="theme-color" content="#2563EB">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
 
-<link rel="apple-touch-icon" href="assets/icon-192.png">
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+    /* =========================================================
+       Enhanced Results Page Styling & Clinical UI HUD
+    ========================================================= */
+
+    :root {
+        --bg-main: #05070a;
+        --card-bg: rgba(15, 23, 42, 0.75);
+        --card-border: rgba(56, 189, 248, 0.18);
+        --primary-glow: rgba(37, 99, 235, 0.35);
+        --accent-blue: #38bdf8;
+        --accent-green: #34d399;
+        --accent-red: #ef4444;
+    }
+
+    body {
+        background-color: var(--bg-main);
+        color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+    }
+
+    /* Results Page Hero */
+    .results-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 120px 6% 80px 6%;
+    }
+
+    .results-hero-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .results-page .badge {
+        display: inline-block;
+        background: rgba(37, 99, 235, 0.15);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        color: var(--accent-blue);
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        margin-bottom: 16px;
+        text-transform: uppercase;
+    }
+
+    .results-page h1 {
+        font-size: 40px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 12px;
+        color: #ffffff;
+    }
+
+    .results-page > p {
+        color: #94a3b8;
+        font-size: 16px;
+        max-width: 700px;
+        margin: 0 auto 30px auto;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    .results-page hr {
+        border: none;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+        margin: 30px 0;
+    }
+
+    /* Patient Info Glass HUD Bar */
+    .patient-info {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 20px 30px;
+        backdrop-filter: blur(16px);
+        margin-bottom: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .patient-info h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--accent-blue);
+        margin: 0;
+    }
+
+    .patient-info-details {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    .patient-info p {
+        margin: 0;
+        font-size: 14px;
+        color: #cbd5e1;
+    }
+
+    .patient-info strong {
+        color: #94a3b8;
+        margin-right: 6px;
+    }
+
+    /* Grid layout for cards */
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin-bottom: 60px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 30px 24px;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(56, 189, 248, 0.4);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(37, 99, 235, 0.2);
+    }
+
+    .card h2, .card h3 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 16px;
+    }
+
+    .card p {
+        color: #94a3b8;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 16px;
+    }
+
+    .condition-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .disclaimer-text {
+        font-size: 12px;
+        color: #64748b;
+        font-style: italic;
+        margin-top: auto;
+    }
+
+    /* Results List (FAST Summary) */
+    .results-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 16px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .results-list li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        font-size: 14px;
+    }
+
+    .results-list li span:nth-child(2) {
+        flex-grow: 1;
+        margin-left: 10px;
+        color: #e2e8f0;
+        font-weight: 500;
+    }
+
+    /* Score Styling */
+    #overallScore {
+        font-size: 38px;
+        font-weight: 800;
+        color: var(--accent-blue);
+        margin: 10px 0 20px 0;
+        letter-spacing: -0.02em;
+    }
+
+    .card p strong {
+        color: #cbd5e1;
+    }
+
+    #resultScoreExplanation {
+        font-size: 13px;
+        color: #64748b;
+        margin-top: 16px;
+    }
+
+    /* Action Buttons inside Recommendation Card */
+    .card button, .card a button {
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+        margin-top: 10px;
+    }
+
+    .download-btn {
+        background: rgba(56, 189, 248, 0.15);
+        border: 1px solid rgba(56, 189, 248, 0.3) !important;
+        color: var(--accent-blue);
+    }
+
+    .download-btn:hover {
+        background: rgba(56, 189, 248, 0.25);
+        transform: translateY(-2px);
+    }
+
+    #emergencyButton {
+        background: var(--accent-red);
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+    }
+
+    #emergencyButton:hover {
+        background: #dc2626;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+        transform: translateY(-2px);
+    }
+
+    #notifyBtn {
+        background: #2563eb;
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+
+    #notifyBtn:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+    }
+
+    /* Why Immediate Action Matters Section */
+    .results-page h2#resultWhyHeading {
+        font-size: 26px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 24px;
+        text-align: left;
+    }
+
+    .three-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 50px;
+    }
+
+    .three-cards .card h3 {
+        color: var(--accent-blue);
+        font-size: 18px;
+    }
+
+    /* Bottom Nav Actions */
+    .results-bottom-actions {
+        margin-top: 50px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .results-bottom-actions button {
+        padding: 12px 28px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    @media (max-width: 768px) {
+        .results-page h1 { font-size: 32px; }
+        .patient-info { flex-direction: column; align-items: flex-start; }
+        .patient-info-details { flex-direction: column; gap: 8px; }
+    }
+    </style>
 </head>
 
 <body>
 
 <header>
 <nav>
-
 <div class="logo">
     <span>🧠 NeuroGuard</span>
 </div>
@@ -40,17 +355,17 @@
     <button id="themeToggle">🌙</button>
 
     <a href="index.html">
-        <button class="secondary"  id="resultHomeBtn">
+        <button class="secondary" id="resultHomeBtn">
             Home
         </button>
     </a>
 </div>
-
 </nav>
 </header>
 
 <section class="results-page">
 
+<div class="results-hero-header">
 <div class="badge" id="resultBadge">
 FAST Assessment Complete
 </div>
@@ -62,91 +377,92 @@ Assessment Results
 <p id="resultIntro">
 This assessment is an educational screening tool and <strong>does not provide a medical diagnosis.</strong>
 If stroke symptoms are suspected, seek emergency medical care immediately.
-</p> <hr>
-<div class="patient-info">
-    <h3 id="resultPatientInfoHeading">Patient Information</h3>
-<p>
-    <strong id="resultNameLabel">Name:</strong>
-    <span id="patientName">-</span>
-</p>
-
-<p>
-    <strong id="resultAgeLabel">Age:</strong>
-    <span id="patientAge">-</span>
-</p>
-
-<p>
-    <strong id="resultGenderLabel">Gender:</strong>
-    <span id="patientGender">-</span>
 </p>
 </div>
+
+<hr>
+
+<div class="patient-info">
+    <h3 id="resultPatientInfoHeading">Patient Information</h3>
+    <div class="patient-info-details">
+        <p>
+            <strong id="resultNameLabel">Name:</strong>
+            <span id="patientName">-</span>
+        </p>
+        <p>
+            <strong id="resultAgeLabel">Age:</strong>
+            <span id="patientAge">-</span>
+        </p>
+        <p>
+            <strong id="resultGenderLabel">Gender:</strong>
+            <span id="patientGender">-</span>
+        </p>
+    </div>
+</div>
+
 <div class="feature-grid">
 
+<!-- Neurological Assessment Card -->
 <div class="card">
-
     <h2 id="resultAssessmentTitle">
         Neurological Assessment
     </h2>
-
     <p id="overallMessage"></p>
-
-    <hr>
-
+    <hr style="border:none; height:1px; background:rgba(255,255,255,0.06); margin:16px 0;">
     <h3 id="resultConditionsHeading">
         Possible Conditions
     </h3>
-
-    <div id="possibleConditions" class="condition-list">
-
-    </div>
-
+    <div id="possibleConditions" class="condition-list"></div>
     <p class="disclaimer-text" id="resultConditionsDisclaimer">
-
         These conditions share similar neurological symptoms.
         NeuroGuard cannot determine which condition is present.
         This educational assessment is not a medical diagnosis.
-
     </p>
-
 </div>
 
+<!-- FAST Summary Card -->
 <div class="card">
-
 <h3 id="resultFastSummaryHeading">
 FAST Summary
 </h3>
 
 <ul class="results-list">
-
 <li>
+<div>
 <span id="faceIcon">⬜</span>
 <span id="resultFaceLabel">Face Assessment</span>
+</div>
 <span id="faceResult"></span>
 </li>
 
 <li>
+<div>
 <span id="armIcon">⬜</span>
 <span id="resultArmLabel">Arm Assessment</span>
+</div>
 <span id="armResult"></span>
 </li>
 
 <li>
-<span id="speechIcon">⬜</span><span id="resultSpeechLabel">Speech Assessment</span>
+<div>
+<span id="speechIcon">⬜</span>
+<span id="resultSpeechLabel">Speech Assessment</span>
+</div>
 <span id="speechResult"></span>
 </li>
 
 <li>
+<div>
 <span id="resultTimeLabel">Symptom Time</span>
+</div>
 <span id="timeResult"></span>
 </li>
-
 </ul>
-
 </div>
+
+<!-- Overall Score Card -->
 <div class="card">
-
     <h3 id="resultOverallScoreHeading">Overall NeuroGuard Score</h3>
-
     <h1 id="overallScore">-- / 10</h1>
 
     <p><strong id="resultFastScoreLabel">FAST Score:</strong>
@@ -164,118 +480,91 @@ FAST Summary
         FAST Score is calculated from the Face, Arm and Speech assessments.
         Personalized Score adjusts the FAST Score using your health profile.
     </p>
-
 </div>
-<div class="card">
 
+<!-- Recommended Action Card -->
+<div class="card">
 <h3 id="resultRecommendationHeading">
 Recommended Action
 </h3>
 
 <p id="recommendation">
-
 If these symptoms are occurring now,
 call emergency medical services immediately.
 Early treatment significantly improves recovery.
-
 </p>
+
 <button id="downloadReport" class="download-btn">
     📄 <span id="resultDownloadBtn">Download PDF Report</span>
 </button>
+
 <button class="primary" id="emergencyButton">
-
- 🚑 <span id="resultEmergencyBtn">Call Emergency Services</span>
-
+   🚑 <span id="resultEmergencyBtn">Call Emergency Services</span>
 </button>
-<button
-    id="notifyBtn"
-    class="primary"
-    style="display:none;">
+
+<button id="notifyBtn" class="primary" style="display:none;">
     📱 <span id="resultNotifyBtn">Notify Emergency Contact</span>
 </button>
-
 </div>
 
 </div>
 
-<section>
-
-<h2 id="resultWhyHeading">>
+<!-- Why Immediate Action Matters -->
+<section style="margin-top: 60px;">
+<h2 id="resultWhyHeading">
 Why Immediate Action Matters
 </h2>
 
 <div class="three-cards">
-
 <div class="card">
-
 <h3 id="resultBrainHeading">
 Brain Cells Die Quickly
 </h3>
-
 <p id="resultBrainText">
 Every minute of untreated stroke can damage nearly two million brain cells.
 </p>
-
 </div>
 
 <div class="card">
-
 <h3 id="resultGoldenHeading">
 Golden Window
 </h3>
-
 <p id="resultGoldenText">
 Treatment is most effective within approximately 4.5 hours of symptom onset.
 </p>
-
 </div>
 
 <div class="card">
-
 <h3 id="resultDriveHeading">
 Do Not Drive Yourself
 </h3>
-
 <p id="resultDriveText">
 Always call emergency medical services whenever stroke is suspected.
 </p>
-
 </div>
-
 </div>
-
 </section>
 
-<div style="margin-top:60px;text-align:center;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
-
-<a href="fast-test.html">
+<div class="results-bottom-actions">
+<a href="fast-test.html" style="text-decoration:none;">
 <button class="secondary" id="resultRetakeBtn">
-
 Retake Assessment
-
 </button>
 </a>
 
-<a href="index.html">
+<a href="index.html" style="text-decoration:none;">
 <button class="primary" id="resultReturnHomeBtn">
-
 Return Home
-
 </button>
 </a>
-
 </div>
 
 </section>
 
 <footer>
-
 <p>
-
 © 2026 NeuroGuard • Educational Prototype
-
 </p>
-
 </footer>
 
 <script src="js/theme.js"></script>
