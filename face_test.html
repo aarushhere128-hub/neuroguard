@@ -3,288 +3,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Face Assessment | NeuroGuard</title>
 
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/face.css">
 
-    <!-- TensorFlow.js -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="theme-color" content="#2563EB">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+
+    <!-- TensorFlow.js & Teachable Machine -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.7.4/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.4/dist/teachablemachine-image.min.js"></script>
+    
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.4/dist/teachablemachine-image.min.js"></script>
+    <style>
+    /* =========================================================
+       Unified Face Assessment Modern Glass HUD Styling
+    ========================================================= */
 
-<script type="module" src="js/face.js"></script>
-<link rel="manifest" href="manifest.json">
+    :root {
+        --bg-main: #05070a;
+        --card-bg: rgba(15, 23, 42, 0.75);
+        --card-border: rgba(56, 189, 248, 0.18);
+        --primary-glow: rgba(37, 99, 235, 0.35);
+        --accent-blue: #38bdf8;
+        --accent-green: #34d399;
+        --accent-red: #ef4444;
+    }
 
-<meta name="theme-color" content="#2563EB">
+    body {
+        background-color: var(--bg-main);
+        color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+    }
 
-<link rel="apple-touch-icon" href="assets/icon-192.png">
+    .face-assessment-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 120px 6% 80px 6%;
+    }
+
+    .face-assessment-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        padding: 40px 36px;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px var(--primary-glow);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Top Navigation bar embedded */
+    .face-top-bar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+
+    .face-assessment-card h1 {
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .subtitle {
+        color: #94a3b8;
+        font-size: 15px;
+        text-align: center;
+        max-width: 550px;
+        margin: 0 auto 30px auto;
+        line-height: 1.5;
+    }
+
+    /* Instructions Box */
+    .instructions-box {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 22px 26px;
+        margin-bottom: 30px;
+    }
+
+    .instructions-box h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--accent-blue);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 12px;
+    }
+
+    .instructions-box ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+    }
+
+    .instructions-box li {
+        font-size: 14px;
+        color: #cbd5e1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Upload & Camera Option Group */
+    .upload-options {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+    }
+
+    .custom-action-btn {
+        background: #2563eb;
+        color: #ffffff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        text-decoration: none;
+    }
+
+    .custom-action-btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+    }
+
+    .secondary-action-btn {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        color: #cbd5e1;
+        box-shadow: none;
+    }
+
+    .secondary-action-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+    }
+
+    /* Camera Stream Container */
+    #cameraContainer {
+        margin: 20px auto;
+        max-width: 500px;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        background: #020617;
+        text-align: center;
+    }
+
+    #cameraPreview {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    #captureBtn {
+        width: 100%;
+        background: #10b981;
+        border-radius: 0 0 16px 16px;
+        padding: 14px;
+        font-weight: 700;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    #captureBtn:hover {
+        background: #059669;
+    }
+
+    /* Preview & Image Container */
+    .preview-container {
+        margin: 20px auto;
+        max-width: 320px;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    #preview {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Model Status and Loading */
+    #loadingModel, #status {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+        margin: 14px 0;
+        color: var(--accent-blue);
+    }
+
+    /* Analyze Main Button */
+    .analyze-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #2563eb, #38bdf8);
+        color: #ffffff;
+        border: none;
+        padding: 14px;
+        border-radius: 14px;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        transition: all 0.25s ease;
+        margin-top: 10px;
+    }
+
+    .analyze-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+    .analyze-btn:not(:disabled):hover {
+        opacity: 0.95;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5);
+    }
+
+    /* Results Box Card */
+    #resultCard {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 20px;
+        margin-top: 24px;
+        text-align: center;
+    }
+
+    #score {
+        font-size: 22px;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 6px;
+    }
+
+    #confidence {
+        font-size: 14px;
+        color: #94a3b8;
+        margin: 0;
+    }
+
+    /* Back Link */
+    .back-btn-wrapper {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .back-btn {
+        color: #94a3b8;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+
+    .back-btn:hover {
+        color: var(--accent-blue);
+    }
+
+    @media (max-width: 768px) {
+        .face-assessment-card { padding: 24px 20px; }
+        .face-assessment-card h1 { font-size: 28px; }
+    }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
-
-    <div class="card">
-
-        <!-- Top Bar -->
-        <div class="top-bar">
-
-            <select id="languageSelect">
-
-                <option value="en">🇬🇧 English</option>
-                <option value="hi">🇮🇳 हिन्दी</option>
-                <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
-
-            </select>
-
-            
-
-        </div>
-
-        <h1 id="title">🧠 Face Assessment</h1>
-
-        <p class="subtitle" id="subtitle">
-            Upload a clear front-facing image while smiling naturally.
-        </p>
-
-        <div class="instructions">
-
-            <h3 id="instructionHeading">Instructions</h3>
-
-            <ul id="instructionList">
-
-                <li id="i1">😊 Smile naturally</li>
-                <li id="i2">💡 Ensure good lighting</li>
-                <li id="i3">👤 Only one face should be visible</li>
-                <li id="i4">📷 Keep your face straight</li>
-                <li id="i5">😷 Remove masks or sunglasses</li>
-
-            </ul>
-
-        </div>
-
-        <!-- Upload -->
-
-       <div class="upload-options">
-
-<button class="upload-btn" id="cameraBtn">
-    📷 Take Photo
-</button>
-
-<label for="imageUpload" class="upload-btn" id="uploadBtn">
-📤 Upload Photo
-</label>
-<input
-    type="file"
-    id="imageUpload"
-    accept="image/*"
-    style="display:none;"
->
+<header>
+<nav>
+<div class="logo">
+    <span>🧠 NeuroGuard</span>
+</div>
+<div class="nav-actions">
+    <select id="languageSelect" class="language-select">
+        <option value="en">🇬🇧 English</option>
+        <option value="hi">🇮🇳 हिन्दी</option>
+        <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+    </select>
 
 </div>
-<div id="cameraContainer" style="display:none;">
+</nav>
+</header>
 
-    <video
-        id="cameraPreview"
-        autoplay
-        playsinline
-        muted
-        width="100%">
-    </video>
+<div class="face-assessment-container">
+<div class="face-assessment-card">
 
-    <button id="captureBtn" class="analyze-btn">
-        📸 Capture
-    </button>
+    <h1 id="title">🧠 Face Assessment</h1>
 
-</div>
+    <p class="subtitle" id="subtitle">
+        Upload a clear front-facing image while smiling naturally or capture live via camera.
+    </p>
 
-<canvas id="captureCanvas" style="display:none;"></canvas>
-        <!-- Preview -->
+    <div class="instructions-box">
+        <h3 id="instructionHeading">Instructions</h3>
+        <ul id="instructionList">
+            <li id="i1">😊 Smile naturally</li>
+            <li id="i2">💡 Ensure good lighting</li>
+            <li id="i3">👤 Only one face should be visible</li>
+            <li id="i4">📷 Keep your face straight</li>
+            <li id="i5">😷 Remove masks or sunglasses</li>
+        </ul>
+    </div>
 
-        <div class="preview-container">
-
-            <img
-                id="preview"
-                alt="Image Preview"
-                style="display:none;"
-            >
-
-        </div>
-
-        <!-- Analyze -->
-
-        <button
-            id="analyzeBtn"
-            class="analyze-btn"
-            disabled>
-
-            🤖 Analyze Face
-
+    <!-- Upload Options -->
+    <div class="upload-options">
+        <button class="custom-action-btn" id="cameraBtn">
+            📷 Take Photo
         </button>
 
-        <!-- Loading -->
+        <label for="imageUpload" class="custom-action-btn secondary-action-btn" id="uploadBtn">
+            📤 Upload Photo
+        </label>
+        <input type="file" id="imageUpload" accept="image/*" style="display:none;">
+    </div>
 
-        <p id="loadingModel">
-            🧠 Loading AI Model...
-        </p>
+    <!-- Camera Live View -->
+    <div id="cameraContainer" style="display:none;">
+        <video id="cameraPreview" autoplay playsinline muted></video>
+        <button id="captureBtn">📸 Capture Frame</button>
+    </div>
 
-        <!-- Status -->
+    <canvas id="captureCanvas" style="display:none;"></canvas>
 
-        <p id="status"></p>
+    <!-- Preview Container -->
+    <div class="preview-container">
+        <img id="preview" alt="Image Preview" style="display:none;">
+    </div>
 
-        <!-- Results -->
+    <!-- Analyze Button -->
+    <button id="analyzeBtn" class="analyze-btn" disabled>
+        🤖 Analyze Face
+    </button>
 
-        <div id="resultCard">
+    <!-- Loading & Status -->
+    <p id="loadingModel">🧠 Loading AI Model...</p>
+    <p id="status"></p>
 
-            <h2 id="score">
+    <!-- Results Display -->
+    <div id="resultCard" style="display:none;">
+        <h2 id="score">Face Score : -</h2>
+        <p id="confidence"></p>
+    </div>
 
-                Face Score : -
-
-            </h2>
-
-            <p id="confidence"></p>
-
-        </div>
-
-        <!-- Back -->
-
-        <a
-            href="fast-test.html"
-            class="back-btn"
-            id="backBtn">
-
+    <!-- Back Navigation -->
+    <div class="back-btn-wrapper">
+        <a href="fast-test.html" class="back-btn" id="backBtn">
             ← Back to FAST Test
-
         </a>
-
     </div>
 
 </div>
+</div>
 
-<!-- Face JS -->
+<footer>
+<p>© 2026 NeuroGuard • Educational Prototype</p>
+</footer>
 
+<!-- Main Scripts -->
+
+<script src="js/navigation.js"></script>
+<script src="js/components.js"></script>
+<script src="js/animations.js"></script>
+<script type="module" src="js/face.js"></script>
 
 <script>
-
 const translations = {
-
-    en:{
-
-        title:"🧠 Face Assessment",
-
-        subtitle:"Upload a clear front-facing image while smiling naturally.",
-
-        instructionHeading:"Instructions",
-
-        uploadBtn:"📤 Upload Image",
+    en: {
+        title: "🧠 Face Assessment",
+        subtitle: "Upload a clear front-facing image while smiling naturally.",
+        instructionHeading: "Instructions",
+        uploadBtn: "📤 Upload Photo",
         cameraBtn: "📷 Take Photo",
-
-        analyzeBtn:"🤖 Analyze Face",
-
-        backBtn:"← Back to FAST Test",
-
-        loadingModel:"🧠 Loading AI Model...",
-
-        instructionList:[
+        analyzeBtn: "🤖 Analyze Face",
+        backBtn: "← Back to FAST Test",
+        loadingModel: "🧠 Loading AI Model...",
+        instructionList: [
             "😊 Smile naturally",
             "💡 Ensure good lighting",
             "👤 Only one face should be visible",
             "📷 Keep your face straight",
             "😷 Remove masks or sunglasses"
         ]
-
     },
-
-    hi:{
-
-        title:"🧠 चेहरे की जाँच",
-
-        subtitle:"एक साफ़ सामने की तस्वीर अपलोड करें।",
-
-        instructionHeading:"निर्देश",
+    hi: {
+        title: "🧠 चेहरे की जाँच",
+        subtitle: "एक साफ़ सामने की तस्वीर अपलोड करें।",
+        instructionHeading: "निर्देश",
         cameraBtn: "📷 फोटो लें",
-
-        uploadBtn:"📤 चित्र अपलोड करें",
-
-        analyzeBtn:"🤖 चेहरा विश्लेषण करें",
-
-        backBtn:"← FAST परीक्षण पर वापस जाएँ",
-
-        loadingModel:"🧠 AI मॉडल लोड हो रहा है...",
-
-        instructionList:[
+        uploadBtn: "📤 चित्र अपलोड करें",
+        analyzeBtn: "🤖 चेहरा विश्लेषण करें",
+        backBtn: "← FAST परीक्षण पर वापस जाएँ",
+        loadingModel: "🧠 AI मॉडल लोड हो रहा है...",
+        instructionList: [
             "😊 सामान्य रूप से मुस्कुराएँ",
             "💡 अच्छी रोशनी रखें",
             "👤 केवल एक चेहरा दिखाई दे",
             "📷 सीधे कैमरे की ओर देखें",
             "😷 मास्क या चश्मा हटाएँ"
         ]
-
     },
-
-    pa:{
-
-        title:"🧠 ਚਿਹਰੇ ਦੀ ਜਾਂਚ",
-
-        subtitle:"ਕਿਰਪਾ ਕਰਕੇ ਸਾਹਮਣੇ ਤੋਂ ਸਾਫ਼ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ।",
-
-        instructionHeading:"ਹਦਾਇਤਾਂ",
-
-        uploadBtn:"📤 ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ",
-        
-
-        analyzeBtn:"🤖 ਚਿਹਰੇ ਦੀ ਜਾਂਚ ਕਰੋ",
+    pa: {
+        title: "🧠 ਚਿਹਰੇ ਦੀ ਜਾਂਚ",
+        subtitle: "ਕਿਰਪਾ ਕਰਕੇ ਸਾਹਮਣੇ ਤੋਂ ਸਾਫ਼ ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ।",
+        instructionHeading: "ਹਦਾਇਤਾਂ",
+        uploadBtn: "📤 ਤਸਵੀਰ ਅੱਪਲੋਡ ਕਰੋ",
+        analyzeBtn: "🤖 ਚਿਹਰੇ ਦੀ ਜਾਂਚ ਕਰੋ",
         cameraBtn: "📷 ਫੋਟੋ ਖਿੱਚੋ",
-
-        backBtn:"← FAST ਟੈਸਟ ਵੱਲ ਵਾਪਸ ਜਾਓ",
-
-        loadingModel:"🧠 AI ਮਾਡਲ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
-
-        instructionList:[
+        backBtn: "← FAST ਟੈਸਟ ਵੱਲ ਵਾਪਸ ਜਾਓ",
+        loadingModel: "🧠 AI ਮਾਡਲ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+        instructionList: [
             "😊 ਕੁਦਰਤੀ ਤਰੀਕੇ ਨਾਲ ਮੁਸਕਰਾਓ",
             "💡 ਚੰਗੀ ਰੌਸ਼ਨੀ ਵਿੱਚ ਤਸਵੀਰ ਲਵੋ",
             "👤 ਸਿਰਫ਼ ਇੱਕ ਚਿਹਰਾ ਦਿਖਾਈ ਦੇਵੇ",
             "📷 ਕੈਮਰੇ ਵੱਲ ਸਿੱਧਾ ਵੇਖੋ",
             "😷 ਮਾਸਕ ਜਾਂ ਐਨਕ ਹਟਾਓ"
         ]
-
     }
-
 };
 
-const language=document.getElementById("languageSelect");
+const language = document.getElementById("languageSelect");
 
-language.addEventListener("change",()=>{
+language.addEventListener("change", () => {
+    const t = translations[language.value];
+    if (!t) return;
 
-    const t=translations[language.value];
-
-    document.getElementById("title").innerHTML=t.title;
-    document.getElementById("subtitle").innerHTML=t.subtitle;
-    document.getElementById("instructionHeading").innerHTML=t.instructionHeading;
-    document.getElementById("uploadBtn").innerHTML=t.uploadBtn;
+    document.getElementById("title").innerHTML = t.title;
+    document.getElementById("subtitle").innerHTML = t.subtitle;
+    document.getElementById("instructionHeading").innerHTML = t.instructionHeading;
+    document.getElementById("uploadBtn").innerHTML = t.uploadBtn;
     document.getElementById("cameraBtn").innerHTML = t.cameraBtn;
-    document.getElementById("analyzeBtn").innerHTML=t.analyzeBtn;
-    document.getElementById("backBtn").innerHTML=t.backBtn;
-    document.getElementById("loadingModel").innerHTML=t.loadingModel;
+    document.getElementById("analyzeBtn").innerHTML = t.analyzeBtn;
+    document.getElementById("backBtn").innerHTML = t.backBtn;
+    document.getElementById("loadingModel").innerHTML = t.loadingModel;
 
-    document.getElementById("i1").innerHTML=t.instructionList[0];
-    document.getElementById("i2").innerHTML=t.instructionList[1];
-    document.getElementById("i3").innerHTML=t.instructionList[2];
-    document.getElementById("i4").innerHTML=t.instructionList[3];
-document.getElementById("i5").innerHTML=t.instructionList[4];
+    document.getElementById("i1").innerHTML = t.instructionList[0];
+    document.getElementById("i2").innerHTML = t.instructionList[1];
+    document.getElementById("i3").innerHTML = t.instructionList[2];
+    document.getElementById("i4").innerHTML = t.instructionList[3];
+    document.getElementById("i5").innerHTML = t.instructionList[4];
 
-// Save selected language
-localStorage.setItem("language", language.value);
+    localStorage.setItem("language", language.value);
 
-// Refresh face result if it already exists
-if (window.updateFaceResultLanguage) {
-    window.updateFaceResultLanguage();
-}
-
+    if (window.updateFaceResultLanguage) {
+        window.updateFaceResultLanguage();
+    }
 });
 
+
 </script>
+
 <script>
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
