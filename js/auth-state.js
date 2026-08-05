@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         overflow: hidden;
                         padding: 8px 0;">
                         
-                        <a href="health.html" style="
+                        <a href="health-info.html" style="
                             display: block; 
                             padding: 12px 18px; 
                             color: #f8fafc; 
