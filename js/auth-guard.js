@@ -6,9 +6,9 @@ document.documentElement.style.visibility = "hidden";
 
 onAuthStateChanged(auth, (user) => {
     if (!user) {
-        // User is NOT logged in, save the current page and redirect to login
+        // User is NOT logged in, save the current page and redirect to login.html
         sessionStorage.setItem("redirectAfterLogin", window.location.href);
-        window.location.replace("index.html");
+        window.location.replace("login.html");
     } else {
         // User is logged in, show the page content
         document.documentElement.style.visibility = "visible";
