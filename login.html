@@ -1,121 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroGuard | Login</title>
 
-<title>NeuroGuard | Login</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
-<link rel="stylesheet" href="css/variables.css">
-<link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
 
-<link rel="stylesheet" href="css/navbar.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/animations.css">
-<link rel="stylesheet" href="css/responsive.css">
+    <meta name="theme-color" content="#2563EB">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="manifest" href="manifest.json">
+    <style>
+    /* =========================================================
+        Modern Glass HUD Login Styling Matching NeuroGuard Theme
+    ========================================================= */
+    :root {
+        --bg-main: #05070a;
+        --card-bg: rgba(15, 23, 42, 0.75);
+        --card-border: rgba(56, 189, 248, 0.18);
+        --primary-glow: rgba(37, 99, 235, 0.35);
+        --accent-blue: #38bdf8;
+    }
 
-<meta name="theme-color" content="#2563EB">
+    body {
+        background-color: var(--bg-main);
+        color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0;
+        overflow-x: hidden;
+    }
 
-<link rel="apple-touch-icon" href="assets/icon-192.png">
+    .login-hero {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .login-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        padding: 40px 36px;
+        width: 100%;
+        max-width: 440px;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px var(--primary-glow);
+        position: relative;
+    }
+
+    .login-badge {
+        display: inline-block;
+        background: rgba(37, 99, 235, 0.15);
+        color: var(--accent-blue);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 16px;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .login-card h1 {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        margin-bottom: 8px;
+    }
+
+    .login-subtitle {
+        color: #94a3b8;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 28px;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 18px;
+    }
+
+    .login-card input {
+        width: 100%;
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        padding: 14px 16px;
+        color: #ffffff;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .login-card input:focus {
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+        background: rgba(30, 41, 59, 0.9);
+    }
+
+    .login-card input::placeholder {
+        color: #64748b;
+    }
+
+    .login-submit-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #2563eb, #38bdf8);
+        color: #ffffff;
+        border: none;
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        transition: all 0.25s ease;
+        margin-top: 10px;
+    }
+
+    .login-submit-btn:hover {
+        opacity: 0.95;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+    }
+
+    #message {
+        font-size: 13px;
+        text-align: center;
+        margin-top: 14px;
+        min-height: 18px;
+        color: #f87171;
+    }
+
+    .login-divider {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin: 24px 0;
+    }
+
+    .signup-prompt {
+        text-align: center;
+        font-size: 13px;
+        color: #94a3b8;
+        margin-bottom: 12px;
+    }
+
+    .signup-action-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #cbd5e1;
+        padding: 12px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .signup-action-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 13px;
+        color: #64748b;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    </style>
 </head>
 
 <body>
 
 <header>
-<nav>
-
-<div class="logo">
-<img src="assets/logo.png" alt="Logo">
-<span>NeuroGuard</span>
-</div>
-
-<div class="nav-actions">
-<a href="index.html">
-<button class="secondary">
-Home
-</button>
-</a>
-</div>
-
-</nav>
+    <nav>
+        <div class="logo">
+            <img src="assets/logo.png" alt="Logo">
+            <span>NeuroGuard</span>
+        </div>
+        <div class="nav-actions">
+            <a href="index.html">
+                <button class="secondary">Home</button>
+            </a>
+        </div>
+    </nav>
 </header>
 
-<section class="hero">
+<section class="login-hero">
+    <div class="login-card">
+        <div class="login-badge">
+            Welcome Back
+        </div>
 
-<div class="card" style="max-width:500px;margin:auto;">
+        <h1>Login</h1>
+        <p class="login-subtitle">
+            Sign in to continue your FAST assessments and view your medical records.
+        </p>
 
-<div class="badge">
-Welcome Back
-</div>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email Address" required>
+            </div>
 
-<h1>Login</h1>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
 
-<p>
-Sign in to continue your FAST assessments and view your reports.
-</p>
+            <button type="submit" class="login-submit-btn">
+                Sign In
+            </button>
+        </form>
 
-<br>
+        <p id="message"></p>
 
-<form id="loginForm">
+        <hr class="login-divider">
 
-<input
-type="email"
-id="email"
-placeholder="Email Address"
-required>
-
-<br><br>
-
-<input
-type="password"
-id="password"
-placeholder="Password"
-required>
-
-<br><br>
-
-<button
-type="submit"
-class="primary"
-style="width:100%;">
-Login
-</button>
-
-</form>
-
-<br>
-
-<p id="message"></p>
-
-<hr>
-
-<p style="text-align:center;">
-Don't have an account?
-</p>
-
-<div style="text-align:center;">
-
-<a href="signup.html">
-<button class="secondary">
-Create Account
-</button>
-</a>
-
-</div>
-
-</div>
-
+        <p class="signup-prompt">Don't have an account?</p>
+        
+        <a href="signup.html" class="signup-action-btn">
+            Create Account
+        </a>
+    </div>
 </section>
 
 <footer>
-<p>
-© 2026 NeuroGuard
-</p>
+    <p>© 2026 NeuroGuard • Educational Prototype</p>
 </footer>
 
 <script type="module" src="js/login.js"></script>
