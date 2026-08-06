@@ -26,10 +26,11 @@
     
     <!-- GSAP Animation Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script type="module" src="js/auth-guard.js"></script>
+    <script type="module" src="js/auth-guard.js"></script>
+    
     <style>
     /* =========================================================
-       Unified Face Assessment Modern Glass HUD Styling
+        Unified Face Assessment Modern Glass HUD Styling
     ========================================================= */
 
     :root {
@@ -275,6 +276,29 @@
         margin-bottom: 6px;
     }
 
+    /* Risk Level Badge Styling */
+    .risk-normal {
+        color: #34d399;
+        background: rgba(52, 211, 153, 0.1);
+        padding: 6px 12px;
+        border-radius: 8px;
+        display: inline-block;
+        margin: 8px 0;
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .risk-elevated {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+        padding: 6px 12px;
+        border-radius: 8px;
+        display: inline-block;
+        margin: 8px 0;
+        font-weight: 700;
+        font-size: 16px;
+    }
+
     #confidence {
         font-size: 14px;
         color: #94a3b8;
@@ -319,7 +343,6 @@
         <option value="hi">🇮🇳 हिन्दी</option>
         <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
     </select>
-
 </div>
 </nav>
 </header>
@@ -381,6 +404,7 @@
     <!-- Results Display -->
     <div id="resultCard" style="display:none;">
         <h2 id="score">Face Score : -</h2>
+        <div id="riskLevelBadge"></div>
         <p id="confidence"></p>
     </div>
 
@@ -399,7 +423,6 @@
 </footer>
 
 <!-- Main Scripts -->
-
 <script src="js/navigation.js"></script>
 <script src="js/components.js"></script>
 <script src="js/animations.js"></script>
@@ -487,8 +510,6 @@ language.addEventListener("change", () => {
         window.updateFaceResultLanguage();
     }
 });
-
-
 </script>
 
 <script>
