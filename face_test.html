@@ -480,33 +480,59 @@ const translations = {
     }
 };
 
-const language = document.getElementById("languageSelect");
+document.addEventListener("DOMContentLoaded", () => {
+    const languageContainer = document.getElementById("languageMenuContainer");
+    if (!languageContainer) return;
 
-language.addEventListener("change", () => {
-    const t = translations[language.value];
+    // Listen for language updates from language.js or custom components
+    window.addEventListener("languageChanged", (e) => {
+        const langCode = e.detail || localStorage.getItem("language") || "en";
+        updateTextContent(langCode);
+    });
+
+    // Initial sync
+    const currentLang = localStorage.getItem("language") || "en";
+    updateTextContent(currentLang);
+});
+
+function updateTextContent(langCode) {
+    const t = translations[langCode];
     if (!t) return;
 
-    document.getElementById("title").innerHTML = t.title;
-    document.getElementById("subtitle").innerHTML = t.subtitle;
-    document.getElementById("instructionHeading").innerHTML = t.instructionHeading;
-    document.getElementById("uploadBtn").innerHTML = t.uploadBtn;
-    document.getElementById("cameraBtn").innerHTML = t.cameraBtn;
-    document.getElementById("analyzeBtn").innerHTML = t.analyzeBtn;
-    document.getElementById("backBtn").innerHTML = t.backBtn;
-    document.getElementById("loadingModel").innerHTML = t.loadingModel;
+    const titleEl = document.getElementById("title");
+    const subtitleEl = document.getElementById("subtitle");
+    const instructionHeadingEl = document.getElementById("instructionHeading");
+    const uploadBtnEl = document.getElementById("uploadBtn");
+    const cameraBtnEl = document.getElementById("cameraBtn");
+    const analyzeBtnEl = document.getElementById("analyzeBtn");
+    const backBtnEl = document.getElementById("backBtn");
+    const loadingModelEl = document.getElementById("loadingModel");
 
-    document.getElementById("i1").innerHTML = t.instructionList[0];
-    document.getElementById("i2").innerHTML = t.instructionList[1];
-    document.getElementById("i3").innerHTML = t.instructionList[2];
-    document.getElementById("i4").innerHTML = t.instructionList[3];
-    document.getElementById("i5").innerHTML = t.instructionList[4];
+    if (titleEl) titleEl.innerHTML = t.title;
+    if (subtitleEl) subtitleEl.innerHTML = t.subtitle;
+    if (instructionHeadingEl) instructionHeadingEl.innerHTML = t.instructionHeading;
+    if (uploadBtnEl) uploadBtnEl.innerHTML = t.uploadBtn;
+    if (cameraBtnEl) cameraBtnEl.innerHTML = t.cameraBtn;
+    if (analyzeBtnEl) analyzeBtnEl.innerHTML = t.analyzeBtn;
+    if (backBtnEl) backBtnEl.innerHTML = t.backBtn;
+    if (loadingModelEl) loadingModelEl.innerHTML = t.loadingModel;
 
-    localStorage.setItem("language", language.value);
+    const i1 = document.getElementById("i1");
+    const i2 = document.getElementById("i2");
+    const i3 = document.getElementById("i3");
+    const i4 = document.getElementById("i4");
+    const i5 = document.getElementById("i5");
+
+    if (i1) i1.innerHTML = t.instructionList[0];
+    if (i2) i2.innerHTML = t.instructionList[1];
+    if (i3) i3.innerHTML = t.instructionList[2];
+    if (i4) i4.innerHTML = t.instructionList[3];
+    if (i5) i5.innerHTML = t.instructionList[4];
 
     if (window.updateFaceResultLanguage) {
         window.updateFaceResultLanguage();
     }
-});
+}
 </script>
 
 <script>
