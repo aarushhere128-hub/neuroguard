@@ -1,4 +1,3 @@
-
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
 import { auth } from "./firebase.js";
 import {
@@ -17,6 +16,8 @@ const upload = document.getElementById("imageUpload");
 
 const preview = document.getElementById("preview");
 const score = document.getElementById("score");
+const riskLevelBadge = document.getElementById("riskLevelBadge"); // Added reference
+const confidenceElement = document.getElementById("confidence"); // Added reference
 const analyzeBtn = document.getElementById("analyzeBtn");
 const status = document.getElementById("status");
 const cameraBtn = document.getElementById("cameraBtn");
@@ -108,25 +109,18 @@ window.updateFaceResultLanguage = function () {
     const drooping = localStorage.getItem("faceDrooping");
     const faceScore = localStorage.getItem("faceScore");
 
-    let color = "green";
+    score.innerText = `Face Score : ${faceScore} / 10`;
 
-    if (riskKey === "high") color = "red";
-    else if (riskKey === "moderate") color = "orange";
-    else if (riskKey === "mild") color = "#d4a100";
+    if (riskKey === "high" || riskKey === "moderate") {
+        riskLevelBadge.className = "risk-elevated";
+    } else {
+        riskLevelBadge.className = "risk-normal";
+    }
+    riskLevelBadge.innerText = `Risk Level: ${getText()[riskKey]}`;
 
-    score.innerHTML = `
-    <div style="font-size:34px;font-weight:bold;color:${color};">
-        ${faceScore}/10
-    </div>
-
-    <div style="font-size:22px;margin-top:10px;">
-        ${getText()[riskKey]}
-    </div>
-
-    <div style="margin-top:15px;">
+    confidenceElement.innerHTML = `
         ${getText().healthy} : ${healthy}%<br>
         ${getText().drooping} : ${drooping}%
-    </div>
     `;
 };
 let stream;
@@ -198,6 +192,8 @@ upload.addEventListener("change", (e) => {
 
     // Reset UI
     score.textContent = "Face Score : -";
+    if(riskLevelBadge) riskLevelBadge.textContent = "";
+    if(confidenceElement) confidenceElement.textContent = "";
     status.textContent = getText().uploadSuccess;
     analyzeBtn.disabled = false;
 
@@ -323,6 +319,8 @@ async function detect(image) {
     if (!result.faceLandmarks || result.faceLandmarks.length === 0) {
         status.textContent = getText().noFace;
         score.textContent = "Face Score : -";
+        if(riskLevelBadge) riskLevelBadge.textContent = "";
+        if(confidenceElement) confidenceElement.textContent = "";
         return;
     }
 
@@ -353,6 +351,8 @@ if(yaw>0.08){
         status.textContent =
             getText().frontFacing;
         score.textContent = "Face Score : -";
+        if(riskLevelBadge) riskLevelBadge.textContent = "";
+        if(confidenceElement) confidenceElement.textContent = "";
         return;
     }
 
@@ -381,44 +381,41 @@ const droopingProb = drooping.probability;
 const faceScore = healthyProb * 10;
 
 
-let color;
 let riskKey;
 
 if (droopingProb >= 0.80) {
     riskKey = "high";
-    color = "red";
 }
 else if (droopingProb >= 0.60) {
     riskKey = "moderate";
-    color = "orange";
 }
 else if (droopingProb >= 0.40) {
     riskKey = "mild";
-    color = "#d4a100";
 }
 else {
     riskKey = "normal";
-    color = "green";
 }
 
 const risk = getText()[riskKey];
-score.innerHTML = `
-<div style="font-size:34px;font-weight:bold;color:${color};">
-${faceScore.toFixed(1)}/10
-</div>
 
-<div style="font-size:22px;margin-top:10px;">
-${risk}
-</div>
+// Update UI elements cleanly matching target structure
+score.innerText = `Face Score : ${faceScore.toFixed(1)} / 10`;
 
-<div style="margin-top:15px;">
-${getText().healthy} :
-${(healthyProb * 100).toFixed(1)}%
-<br>
-${getText().drooping} :
-${(droopingProb * 100).toFixed(1)}%
-</div>
+if (riskKey === "high" || riskKey === "moderate" || riskKey === "mild") {
+    riskLevelBadge.className = "risk-elevated";
+} else {
+    riskLevelBadge.className = "risk-normal";
+}
+riskLevelBadge.innerText = `Risk Level: ${risk}`;
+
+confidenceElement.innerHTML = `
+${getText().healthy} : ${(healthyProb * 100).toFixed(1)}%<br>
+${getText().drooping} : ${(droopingProb * 100).toFixed(1)}%
 `;
+
+// Ensure resultCard container is visible if it was hidden
+const resultCard = document.getElementById("resultCard");
+if (resultCard) resultCard.style.display = "block";
 
 // Save results
 localStorage.setItem("faceScore", faceScore.toFixed(1));
