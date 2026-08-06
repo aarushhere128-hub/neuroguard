@@ -423,7 +423,7 @@
 <script src="js/components.js"></script>
 <script src="js/animations.js"></script>
 <script type="module" src="js/face.js"></script>
-<script type="module" src="js/language.js"></script>
+
 
 <script>
 const translations = {
@@ -481,23 +481,26 @@ const translations = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    const languageContainer = document.getElementById("languageMenuContainer");
-    if (!languageContainer) return;
+    // Initial sync based on stored or default language
+    const currentLang = localStorage.getItem("language") || "en";
+    updateTextContent(currentLang);
 
-    // Listen for language updates from language.js or custom components
+    // Listen for custom language change events dispatched by language.js
     window.addEventListener("languageChanged", (e) => {
         const langCode = e.detail || localStorage.getItem("language") || "en";
         updateTextContent(langCode);
     });
 
-    // Initial sync
-    const currentLang = localStorage.getItem("language") || "en";
-    updateTextContent(currentLang);
+    // Fallback watcher for storage changes across tabs or custom manual updates
+    window.addEventListener("storage", (e) => {
+        if (e.key === "language") {
+            updateTextContent(e.newValue || "en");
+        }
+    });
 });
 
 function updateTextContent(langCode) {
-    const t = translations[langCode];
-    if (!t) return;
+    const t = translations[langCode] || translations["en"];
 
     const titleEl = document.getElementById("title");
     const subtitleEl = document.getElementById("subtitle");
@@ -529,7 +532,7 @@ function updateTextContent(langCode) {
     if (i4) i4.innerHTML = t.instructionList[3];
     if (i5) i5.innerHTML = t.instructionList[4];
 
-    if (window.updateFaceResultLanguage) {
+    if (typeof window.updateFaceResultLanguage === "function") {
         window.updateFaceResultLanguage();
     }
 }
