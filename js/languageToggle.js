@@ -11,7 +11,7 @@ const SUPPORTED_LANGUAGES = [
 /**
  * Initializes and renders the dynamic language toggle menu into a given container.
  * @param {string} containerId - The ID of the element where the pills should be rendered.
- * @param {Function} [onLanguageChange] - Optional callback function to execute when language changes.
+ * @param {Function} [onLanguageChange] - Callback function executed when language changes.
  */
 export function initLanguageToggle(containerId = "languageMenuContainer", onLanguageChange = null) {
     const container = document.getElementById(containerId);
@@ -39,9 +39,7 @@ export function initLanguageToggle(containerId = "languageMenuContainer", onLang
             // Save preference
             localStorage.setItem("language", lang.code);
 
-            console.log(`🌍 Language switched to: ${lang.label} (${lang.code})`);
-
-            // Execute callback or reload page to update page strings
+            // Execute callback or reload page to update translations
             if (typeof onLanguageChange === "function") {
                 onLanguageChange(lang.code);
             } else {
