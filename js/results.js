@@ -13,13 +13,14 @@ import {
     getDoc,
     doc
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-
+import { initLanguageToggle } from "./languageToggle.js";
 
 onAuthStateChanged(auth, (user) => {
     if (!user) {
         window.location.href = "login.html";
     }
 });
+
 const faceCompleted =
     localStorage.getItem("faceCompleted") === "true";
 
@@ -37,21 +38,25 @@ const armScore =
 
 const speechScore =
     speechCompleted ? Number(localStorage.getItem("speechScore")) : 0;
+
 const lang = localStorage.getItem("language") || "en";
-const t = resultTranslations[lang];
+const t = resultTranslations[lang] || resultTranslations["en"];
+
 const faceRisk =
     faceCompleted ? localStorage.getItem("faceRisk") : t.notCompleted;
 
 const armRisk =
     armCompleted ? localStorage.getItem("armRisk") : t.notCompleted;
+
 const speechRisk =
     speechCompleted ? localStorage.getItem("speechRisk") : t.notCompleted;
+
 const symptomTime =
     localStorage.getItem("symptomTime") || t.notProvided;
 
 let emergencyName = "";
 let emergencyNumber = "";
-let currentGpsUrl = ""; // Stores live maps URL for fallback/database sync if needed
+let currentGpsUrl = ""; 
 
 // =============================
 // Live GPS Display on Page Load
@@ -80,8 +85,10 @@ if (navigator.geolocation && gpsDisplay && locationText) {
 }
 
 // Current time
-document.getElementById("timeResult").textContent =
-    localStorage.getItem("symptomTime") || t.notProvided;
+const timeResultEl = document.getElementById("timeResult");
+if (timeResultEl) {
+    timeResultEl.textContent = localStorage.getItem("symptomTime") || t.notProvided;
+}
 
 onAuthStateChanged(auth, async (user) => {
     if (!user) return;
@@ -94,9 +101,6 @@ onAuthStateChanged(auth, async (user) => {
             const data = snapshot.data();
             emergencyName = data.emergencyName || "";
             emergencyNumber = data.emergencyNumber || "";
-
-            console.log("Emergency Contact:", emergencyName);
-            console.log("Emergency Number:", emergencyNumber);
         }
     }
     catch (err) {
@@ -105,9 +109,13 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // Show module risks
-document.getElementById("faceResult").textContent = faceRisk;
-document.getElementById("armResult").textContent = armRisk;
-document.getElementById("speechResult").textContent = speechRisk;
+const faceResultEl = document.getElementById("faceResult");
+const armResultEl = document.getElementById("armResult");
+const speechResultEl = document.getElementById("speechResult");
+
+if (faceResultEl) faceResultEl.textContent = faceRisk;
+if (armResultEl) armResultEl.textContent = armRisk;
+if (speechResultEl) speechResultEl.textContent = speechRisk;
 
 // Calculate overall score
 let completed = 0;
@@ -129,9 +137,13 @@ if (speechCompleted) {
 }
 
 // Update completion icons
-document.getElementById("faceIcon").textContent = faceCompleted ? "✅" : "❌";
-document.getElementById("armIcon").textContent = armCompleted ? "✅" : "❌";
-document.getElementById("speechIcon").textContent = speechCompleted ? "✅" : "❌";
+const faceIcon = document.getElementById("faceIcon");
+const armIcon = document.getElementById("armIcon");
+const speechIcon = document.getElementById("speechIcon");
+
+if (faceIcon) faceIcon.textContent = faceCompleted ? "✅" : "❌";
+if (armIcon) armIcon.textContent = armCompleted ? "✅" : "❌";
+if (speechIcon) speechIcon.textContent = speechCompleted ? "✅" : "❌";
 
 let overall =
     completed > 0 ? Number((total / completed).toFixed(1)) : 0;
@@ -139,36 +151,27 @@ const baseScore = overall;
 
 // Overall Risk
 sessionStorage.removeItem("assessmentStarted");
-const user = auth.currentUser;
-console.log("Current User:", user);
 
 onAuthStateChanged(auth, async (user) => {
-    console.log("Current User:", user);
-
-    if (!user) {
-        console.log("No user is logged in.");
-        return;
-    }
+    if (!user) return;
 
     const userDoc = await getDoc(doc(db, "users", user.uid));
-    const healthDoc = await getDoc(
-        doc(db, "healthProfiles", user.uid)
-    );
+    const healthDoc = await getDoc(doc(db, "healthProfiles", user.uid));
 
-    const healthData = healthDoc.exists()
-        ? healthDoc.data()
-        : {};
+    const healthData = healthDoc.exists() ? healthDoc.data() : {};
         
     if (completed > 0) {
         overall = calculateFinalRisk(overall, healthData);
-        document.getElementById("baseScore").textContent = baseScore.toFixed(1) + " / 10";
-        document.getElementById("personalizedScore").textContent = overall.toFixed(1) + " / 10";
+        const baseScoreEl = document.getElementById("baseScore");
+        const personalizedScoreEl = document.getElementById("personalizedScore");
+        if (baseScoreEl) baseScoreEl.textContent = baseScore.toFixed(1) + " / 10";
+        if (personalizedScoreEl) personalizedScoreEl.textContent = overall.toFixed(1) + " / 10";
     }
     
-    document.getElementById("overallScore").textContent =
-        completed === 0
-            ? "-- / 10"
-            : overall.toFixed(1) + " / 10";
+    const overallScoreEl = document.getElementById("overallScore");
+    if (overallScoreEl) {
+        overallScoreEl.textContent = completed === 0 ? "-- / 10" : overall.toFixed(1) + " / 10";
+    }
     
     let risk;
     let message;
@@ -182,7 +185,6 @@ onAuthStateChanged(auth, async (user) => {
         recommendation = t.finishAssessment;
     }
     else {
-        // ---------- Possible Conditions ----------
         if (faceCompleted && faceScore < 7)
             possibleConditions.push("🙂 Bell's Palsy");
 
@@ -199,7 +201,6 @@ onAuthStateChanged(auth, async (user) => {
         if (speechCompleted && speechScore < 7)
             possibleConditions.push("⚡ Other Neurological Disorder");
 
-        // remove duplicates
         const uniqueConditions = [...new Set(possibleConditions)];
         const container = document.getElementById("possibleConditions");
 
@@ -214,7 +215,6 @@ onAuthStateChanged(auth, async (user) => {
             });
         }
 
-        // ---------- Overall Severity ----------
         if (overall >= 8) {
             risk = "🟢 Low Concern";
             message = "No significant neurological abnormalities were detected during this educational screening.";
@@ -232,116 +232,75 @@ onAuthStateChanged(auth, async (user) => {
         }
     }
 
-    document.getElementById("resultAssessmentTitle").textContent = risk;
-    document.getElementById("overallMessage").textContent = message;
-    document.getElementById("recommendation").textContent = recommendation;
+    const titleEl = document.getElementById("resultAssessmentTitle");
+    const msgEl = document.getElementById("overallMessage");
+    const recEl = document.getElementById("recommendation");
+
+    if (titleEl) titleEl.textContent = risk;
+    if (msgEl) msgEl.textContent = message;
+    if (recEl) recEl.textContent = recommendation;
 
     const notifyBtn = document.getElementById("notifyBtn");
 
     if (
-        risk.includes("Neurological Signs") ||
-        risk.includes("Urgent")
+        notifyBtn &&
+        (risk.includes("Neurological Signs") || risk.includes("Urgent"))
     ) {
         notifyBtn.style.display = "inline-block";
     }
 
-    // Updated Notify Button Handler with Live GPS Location
-    notifyBtn.addEventListener("click", () => {
-        if (!emergencyNumber) {
-            alert("No emergency contact has been added.");
-            return;
-        }
+    if (notifyBtn) {
+        notifyBtn.addEventListener("click", () => {
+            if (!emergencyNumber) {
+                alert("No emergency contact has been added.");
+                return;
+            }
 
-        if (!confirm(`Notify ${emergencyName}?`))
-            return;
+            if (!confirm(`Notify ${emergencyName}?`)) return;
 
-        if (!navigator.geolocation) {
-            alert("Geolocation is not supported by your browser.");
-            return;
-        }
+            if (!navigator.geolocation) {
+                alert("Geolocation is not supported by your browser.");
+                return;
+            }
 
-        const originalText = notifyBtn.innerHTML;
-        notifyBtn.innerHTML = "📍 Acquiring Live GPS...";
-        notifyBtn.disabled = true;
+            const originalText = notifyBtn.innerHTML;
+            notifyBtn.innerHTML = "📍 Acquiring Live GPS...";
+            notifyBtn.disabled = true;
 
-        const options = {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
-        };
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                    const currentSymptomTime = localStorage.getItem("symptomTime") || t.notProvided;
 
-                const symptomTime =
-                    localStorage.getItem("symptomTime") || t.notProvided;
+                    const sms = `Hello ${emergencyName},\n\nI have completed a NeuroGuard FAST assessment.\n\nOverall Risk: ${risk}\n\nFace:\n${faceRisk} (${faceScore}/10)\n\nArm:\n${armRisk} (${armScore}/10)\n\nSpeech:\n${speechRisk} (${speechScore}/10)\n\nSymptom Onset:\n${currentSymptomTime}\n\nLive Location:\n${googleMapsUrl}\n\nThis is an AI-assisted educational assessment and is NOT a medical diagnosis.\n\nPlease contact me immediately if possible.\n\nGenerated by NeuroGuard`;
 
-                const sms =
-`Hello ${emergencyName},
+                    notifyBtn.innerHTML = originalText;
+                    notifyBtn.disabled = false;
 
-I have completed a NeuroGuard FAST assessment.
-
-Overall Risk: ${risk}
-
-Face:
-${faceRisk} (${faceScore}/10)
-
-Arm:
-${armRisk} (${armScore}/10)
-
-Speech:
-${speechRisk} (${speechScore}/10)
-
-Symptom Onset:
-${symptomTime}
-
-Live Location:
-${googleMapsUrl}
-
-This is an AI-assisted educational assessment and is NOT a medical diagnosis.
-
-Please contact me immediately if possible.
-
-Generated by NeuroGuard`;
-
-                notifyBtn.innerHTML = originalText;
-                notifyBtn.disabled = false;
-
-                window.location.href =
-                    `sms:${emergencyNumber}?body=${encodeURIComponent(sms)}`;
-            },
-            (error) => {
-                notifyBtn.innerHTML = originalText;
-                notifyBtn.disabled = false;
-
-                switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                        alert("Location permission was denied. Please allow location access to share your live GPS coordinates.");
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        alert("Location information is currently unavailable.");
-                        break;
-                    case error.TIMEOUT:
-                        alert("The request to get your GPS location timed out.");
-                        break;
-                    default:
-                        alert("An unknown error occurred while retrieving location.");
-                        break;
-                }
-            },
-            options
-        );
-    });
+                    window.location.href = `sms:${emergencyNumber}?body=${encodeURIComponent(sms)}`;
+                },
+                (error) => {
+                    notifyBtn.innerHTML = originalText;
+                    notifyBtn.disabled = false;
+                    alert("Location error occurred while retrieving coordinates.");
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        });
+    }
 
     if (userDoc.exists()) {
         const userData = userDoc.data();
-        console.log("User Data:", userData);
-        document.getElementById("patientName").textContent = userData.name;
-        document.getElementById("patientAge").textContent = userData.age;
-        document.getElementById("patientGender").textContent = userData.gender;
+        const pName = document.getElementById("patientName");
+        const pAge = document.getElementById("patientAge");
+        const pGender = document.getElementById("patientGender");
+
+        if (pName) pName.textContent = userData.name;
+        if (pAge) pAge.textContent = userData.age;
+        if (pGender) pGender.textContent = userData.gender;
         
         await addDoc(collection(db, "assessments"), {
             uid: user.uid,
@@ -359,237 +318,298 @@ Generated by NeuroGuard`;
             symptomTime: localStorage.getItem("symptomTime") || t.notProvided,
             createdAt: serverTimestamp()
         });
-
-        console.log("✅ Assessment saved!");
     }
 });
 
-// Debug
-console.log("Face:", faceScore);
-console.log("Arm:", armScore);
-console.log("Speech:", speechScore);
-console.log("Overall:", overall);
+// PDF Generation
+const downloadReportBtn = document.getElementById("downloadReport");
+if (downloadReportBtn) {
+    downloadReportBtn.addEventListener("click", async () => {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        const user = auth.currentUser;
 
-document.getElementById("downloadReport").addEventListener("click", async () => {
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF();
-    const user = auth.currentUser;
+        let healthData = {};
 
-    let healthData = {};
-
-    if (user) {
-        const healthDoc = await getDoc(
-            doc(db, "healthProfiles", user.uid)
-        );
-
-        if (healthDoc.exists()) {
-            healthData = healthDoc.data();
+        if (user) {
+            const healthDoc = await getDoc(doc(db, "healthProfiles", user.uid));
+            if (healthDoc.exists()) {
+                healthData = healthDoc.data();
+            }
         }
+
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(20);
+        pdf.text("NeuroGuard Neurological Screening Report", 20, 20);
+
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(11);
+        pdf.text("Generated on: " + new Date().toLocaleString(), 20, 30);
+
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(15);
+        pdf.text("Patient Information", 20, 45);
+
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(12);
+
+        pdf.text("Name: " + (document.getElementById("patientName")?.textContent || "-"), 20, 55);
+        pdf.text("Age: " + (document.getElementById("patientAge")?.textContent || "-"), 20, 65);
+        pdf.text("Gender: " + (document.getElementById("patientGender")?.textContent || "-"), 20, 75);
+        pdf.text("Blood Group: " + (healthData.bloodGroup || "Not Set"), 20, 85);
+        pdf.text("Emergency Contact: " + (healthData.emergencyContact || "Not Set"), 20, 95);
+        pdf.text("Symptom Started: " + (localStorage.getItem("symptomTime") || t.notProvided), 20, 105);
+
+        pdf.save("NeuroGuard_Report.pdf");
+    });
+}
+
+// =========================================
+// NeuroGuard | Results Page Language Dictionaries
+// =========================================
+const resultTranslations = {
+    en: {
+        pageTitle: "FAST Test Results | NeuroGuard",
+        home: "Home",
+        badge: "FAST Assessment Complete",
+        heading: "Assessment Results",
+        intro: 'This assessment is an educational screening tool and <strong>does not provide a medical diagnosis.</strong><br>If stroke symptoms are suspected, seek emergency medical care immediately.',
+        patientInfo: "Patient Information",
+        name: "Name:",
+        age: "Age:",
+        gender: "Gender:",
+        assessment: "Neurological Assessment",
+        conditions: "Possible Conditions",
+        disclaimer: "These conditions share similar neurological symptoms. NeuroGuard cannot determine which condition is present. This educational assessment is not a medical diagnosis.",
+        fastSummary: "FAST Summary",
+        face: "Face Assessment",
+        arm: "Arm Assessment",
+        speech: "Speech Assessment",
+        time: "Symptom Time",
+        overallScore: "Overall NeuroGuard Score",
+        fastScore: "FAST Score:",
+        personalizedScore: "Personalized Score:",
+        scoreExplanation: "FAST Score is calculated from the Face, Arm and Speech assessments. Personalized Score adjusts the FAST Score using your health profile.",
+        recommendationHeading: "Recommended Action",
+        recommendation: "If these symptoms are occurring now, call emergency medical services immediately. Early treatment significantly improves recovery.",
+        download: "📄 Download PDF Report",
+        emergency: "🚑 Call Emergency Services",
+        notify: "📱 Notify Emergency Contact",
+        why: "Why Immediate Action Matters",
+        brainHeading: "Brain Cells Die Quickly",
+        brainText: "Every minute of untreated stroke can damage nearly two million brain cells.",
+        goldenHeading: "Golden Window",
+        goldenText: "Treatment is most effective within approximately 4.5 hours of symptom onset.",
+        driveHeading: "Do Not Drive Yourself",
+        driveText: "Always call emergency medical services whenever stroke is suspected.",
+        retake: "Retake Assessment",
+        returnHome: "Return Home",
+        notCompleted: "Not Completed",
+        notProvided: "Not Provided",
+        assessmentIncomplete: "⚪ Assessment Incomplete",
+        completeOneAssessment: "Complete at least one neurological assessment.",
+        finishAssessment: "Finish the assessment to receive an educational screening."
+    },
+    hi: {
+        pageTitle: "FAST परीक्षण परिणाम | NeuroGuard",
+        home: "होम",
+        badge: "FAST परीक्षण पूर्ण",
+        heading: "परीक्षण परिणाम",
+        intro: 'यह परीक्षण केवल शैक्षिक स्क्रीनिंग के लिए है और <strong>चिकित्सीय निदान प्रदान नहीं करता।</strong><br>यदि स्ट्रोक के लक्षण हों, तो तुरंत आपातकालीन चिकित्सा सहायता प्राप्त करें।',
+        patientInfo: "रोगी की जानकारी",
+        name: "नाम:",
+        age: "आयु:",
+        gender: "लिंग:",
+        assessment: "तंत्रिका संबंधी मूल्यांकन",
+        conditions: "संभावित स्थितियाँ",
+        disclaimer: "इन सभी स्थितियों के लक्षण समान हो सकते हैं। NeuroGuard यह निर्धारित नहीं कर सकता कि वास्तव में कौन-सी स्थिति मौजूद है। यह केवल शैक्षिक मूल्यांकन है।",
+        fastSummary: "FAST सारांश",
+        face: "चेहरा परीक्षण",
+        arm: "भुजा परीक्षण",
+        speech: "बोलने का परीक्षण",
+        time: "लक्षण शुरू होने का समय",
+        overallScore: "कुल NeuroGuard स्कोर",
+        fastScore: "FAST स्कोर:",
+        personalizedScore: "व्यक्तिगत स्कोर:",
+        scoreExplanation: "FAST स्कोर चेहरे, भुजा और बोलने के परीक्षणों से प्राप्त होता है। व्यक्तिगत स्कोर आपके स्वास्थ्य प्रोफ़ाइल के आधार पर समायोजित किया जाता है।",
+        recommendationHeading: "सुझाई गई कार्रवाई",
+        recommendation: "यदि ये लक्षण अभी मौजूद हैं, तो तुरंत आपातकालीन चिकित्सा सेवा से संपर्क करें। शीघ्र उपचार से बेहतर सुधार की संभावना बढ़ती है।",
+        download: "📄 PDF रिपोर्ट डाउनलोड करें",
+        emergency: "🚑 आपातकालीन सेवा को कॉल करें",
+        notify: "📱 आपातकालीन संपर्क को सूचित करें",
+        why: "तुरंत कार्रवाई क्यों ज़रूरी है",
+        brainHeading: "मस्तिष्क की कोशिकाएँ तेजी से नष्ट होती हैं",
+        brainText: "अनुपचारित स्ट्रोक के हर मिनट में लगभग बीस लाख मस्तिष्क कोशिकाएँ क्षतिग्रस्त हो सकती हैं।",
+        goldenHeading: "गोल्डन समय",
+        goldenText: "लक्षण शुरू होने के लगभग 4.5 घंटे के भीतर उपचार सबसे प्रभावी होता है।",
+        driveHeading: "खुद वाहन न चलाएँ",
+        driveText: "यदि स्ट्रोक का संदेह हो, तो हमेशा आपातकालीन चिकित्सा सेवा को बुलाएँ।",
+        retake: "परीक्षण दोबारा करें",
+        returnHome: "होम पर लौटें",
+        notCompleted: "पूरा नहीं हुआ",
+        notProvided: "प्रदान नहीं किया गया",
+        assessmentIncomplete: "⚪ मूल्यांकन अधूरा",
+        completeOneAssessment: "कम से कम एक न्यूरोलॉजिकल परीक्षण पूरा करें।",
+        finishAssessment: "शैक्षिक स्क्रीनिंग प्राप्त करने के लिए परीक्षण पूरा करें।"
+    },
+    pa: {
+        pageTitle: "FAST ਟੈਸਟ ਨਤੀਜੇ | NeuroGuard",
+        home: "ਮੁੱਖ ਪੰਨਾ",
+        badge: "FAST ਟੈਸਟ ਪੂਰਾ",
+        heading: "ਟੈਸਟ ਦੇ ਨਤੀਜੇ",
+        intro: 'ਇਹ ਮੁਲਾਂਕਣ ਸਿਰਫ਼ ਸਿੱਖਿਆਤਮਕ ਸਕ੍ਰੀਨਿੰਗ ਲਈ ਹੈ ਅਤੇ <strong>ਕੋਈ ਡਾਕਟਰੀ ਨਿਦਾਨ ਨਹੀਂ ਕਰਦਾ।</strong><br>ਜੇ ਸਟ੍ਰੋਕ ਦੇ ਲੱਛਣ ਹਨ ਤਾਂ ਤੁਰੰਤ ਐਮਰਜੈਂਸੀ ਮੈਡੀਕਲ ਸਹਾਇਤਾ ਲਵੋ।',
+        patientInfo: "ਮਰੀਜ਼ ਦੀ ਜਾਣਕਾਰੀ",
+        name: "ਨਾਮ:",
+        age: "ਉਮਰ:",
+        gender: "ਲਿੰਗ:",
+        assessment: "ਨਿਊਰੋਲੋਜੀਕਲ ਮੁਲਾਂਕਣ",
+        conditions: "ਸੰਭਾਵਿਤ ਸਥਿਤੀਆਂ",
+        disclaimer: "ਇਨ੍ਹਾਂ ਸਾਰੀਆਂ ਸਥਿਤੀਆਂ ਦੇ ਲੱਛਣ ਮਿਲਦੇ-ਜੁਲਦੇ ਹੋ ਸਕਦੇ ਹਨ। NeuroGuard ਇਹ ਨਹੀਂ ਦੱਸ ਸਕਦਾ ਕਿ ਅਸਲ ਵਿੱਚ ਕਿਹੜੀ ਸਥਿਤੀ ਮੌਜੂਦ ਹੈ। ਇਹ ਸਿਰਫ਼ ਸਿੱਖਿਆਤਮਕ ਮੁਲਾਂਕਣ ਹੈ।",
+        fastSummary: "FAST ਸੰਖੇਪ",
+        face: "ਚਿਹਰਾ ਟੈਸਟ",
+        arm: "ਬਾਂਹ ਟੈਸਟ",
+        speech: "ਬੋਲਣ ਦਾ ਟੈਸਟ",
+        time: "ਲੱਛਣ ਸ਼ੁਰੂ ਹੋਣ ਦਾ ਸਮਾਂ",
+        overallScore: "ਕੁੱਲ NeuroGuard ਸਕੋਰ",
+        fastScore: "FAST ਸਕੋਰ:",
+        personalizedScore: "ਵਿਅਕਤੀਗਤ ਸਕੋਰ:",
+        scoreExplanation: "FAST ਸਕੋਰ ਚਿਹਰੇ, ਬਾਂਹ ਅਤੇ ਬੋਲਣ ਦੇ ਟੈਸਟਾਂ ਤੋਂ ਬਣਦਾ ਹੈ। ਵਿਅਕਤੀਗਤ ਸਕੋਰ ਤੁਹਾਡੇ ਸਿਹਤ ਪ੍ਰੋਫਾਈਲ ਦੇ ਅਨੁਸਾਰ ਸੋਧਿਆ ਜਾਂਦਾ ਹੈ।",
+        recommendationHeading: "ਸਿਫ਼ਾਰਸ਼ੀ ਕਾਰਵਾਈ",
+        recommendation: "ਜੇ ਇਹ ਲੱਛਣ ਇਸ ਵੇਲੇ ਹਨ, ਤਾਂ ਤੁਰੰਤ ਐਮਰਜੈਂਸੀ ਮੈਡੀਕਲ ਸੇਵਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ। ਜਲਦੀ ਇਲਾਜ ਨਾਲ ਠੀਕ ਹੋਣ ਦੀ ਸੰਭਾਵਨਾ ਵਧਦੀ ਹੈ।",
+        download: "📄 PDF ਰਿਪੋਰਟ ਡਾਊਨਲੋਡ ਕਰੋ",
+        emergency: "🚑 ਐਮਰਜੈਂਸੀ ਸੇਵਾਵਾਂ ਨੂੰ ਕਾਲ ਕਰੋ",
+        notify: "📱 ਐਮਰਜੈਂਸੀ ਸੰਪਰਕ ਨੂੰ ਸੂਚਿਤ ਕਰੋ",
+        why: "ਤੁਰੰਤ ਕਾਰਵਾਈ ਕਿਉਂ ਜ਼ਰੂਰੀ ਹੈ",
+        brainHeading: "ਦਿਮਾਗ ਦੀਆਂ ਕੋਸ਼ਿਕਾਵਾਂ ਤੇਜ਼ੀ ਨਾਲ ਨਸ਼ਟ ਹੁੰਦੀਆਂ ਹਨ",
+        brainText: "ਬਿਨਾਂ ਇਲਾਜ ਵਾਲੇ ਸਟ੍ਰੋਕ ਦੇ ਹਰ ਮਿੰਟ ਵਿੱਚ ਲਗਭਗ ਵੀਹ ਲੱਖ ਦਿਮਾਗੀ ਕੋਸ਼ਿਕਾਵਾਂ ਨੁਕਸਾਨ ਝੱਲ ਸਕਦੀਆਂ ਹਨ।",
+        goldenHeading: "ਗੋਲਡਨ ਸਮਾਂ",
+        goldenText: "ਲੱਛਣ ਸ਼ੁਰੂ ਹੋਣ ਤੋਂ ਲਗਭਗ 4.5 ਘੰਟਿਆਂ ਦੇ ਅੰਦਰ ਇਲਾਜ ਸਭ ਤੋਂ ਪ੍ਰਭਾਵਸ਼ਾਲੀ ਹੁੰਦਾ ਹੈ।",
+        driveHeading: "ਖੁਦ ਗੱਡੀ ਨਾ ਚਲਾਓ",
+        driveText: "ਜੇ ਸਟ੍ਰੋਕ ਦਾ ਸ਼ੱਕ ਹੋਵੇ ਤਾਂ ਹਮੇਸ਼ਾਂ ਐਮਰਜੈਂਸੀ ਮੈਡੀਕਲ ਸੇਵਾਵਾਂ ਨੂੰ ਕਾਲ ਕਰੋ।",
+        retake: "ਮੁੜ ਟੈਸਟ ਕਰੋ",
+        returnHome: "ਮੁੱਖ ਪੰਨੇ ਤੇ ਵਾਪਸ ਜਾਓ",
+        notCompleted: "ਪੂਰਾ ਨਹੀਂ ਹੋਇਆ",
+        notProvided: "ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤਾ ਗਿਆ",
+        assessmentIncomplete: "⚪ ਮੁਲਾਂਕਣ ਅਧੂਰਾ",
+        completeOneAssessment: "ਘੱਟੋ-ਘੱਟ ਇੱਕ ਨਿਊਰੋਲੋਜੀਕਲ ਟੈਸਟ ਪੂਰਾ ਕਰੋ।",
+        finishAssessment: "ਸਿੱਖਿਆਤਮਕ ਸਕ੍ਰੀਨਿੰਗ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਟੈਸਟ ਪੂਰਾ ਕਰੋ।"
     }
+};
 
-    // ===========================
-    // Title
-    // ===========================
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(20);
-    pdf.text("NeuroGuard Neurological Screening Report", 20, 20);
+function updateResultsLanguage(langCode) {
+    const t = resultTranslations[langCode] || resultTranslations["en"];
 
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(11);
-    pdf.text(
-        "Generated on: " + new Date().toLocaleString(),
-        20,
-        30
-    );
+    document.title = t.pageTitle;
 
-    // ===========================
-    // Patient Information
-    // ===========================
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(15);
-    pdf.text("Patient Information", 20, 45);
+    const elHome = document.getElementById("resultHomeBtn");
+    const elBadge = document.getElementById("resultBadge");
+    const elHeading = document.getElementById("resultHeading");
+    const elIntro = document.getElementById("resultIntro");
 
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(12);
+    if (elHome) elHome.textContent = t.home;
+    if (elBadge) elBadge.textContent = t.badge;
+    if (elHeading) elHeading.textContent = t.heading;
+    if (elIntro) elIntro.innerHTML = t.intro;
 
-    pdf.text(
-        "Name: " +
-        document.getElementById("patientName").textContent,
-        20,
-        55
-    );
+    const elPatientInfo = document.getElementById("resultPatientInfoHeading");
+    const elName = document.getElementById("resultNameLabel");
+    const elAge = document.getElementById("resultAgeLabel");
+    const elGender = document.getElementById("resultGenderLabel");
 
-    pdf.text(
-        "Age: " +
-        document.getElementById("patientAge").textContent,
-        20,
-        65
-    );
+    if (elPatientInfo) elPatientInfo.textContent = t.patientInfo;
+    if (elName) elName.textContent = t.name;
+    if (elAge) elAge.textContent = t.age;
+    if (elGender) elGender.textContent = t.gender;
 
-    pdf.text(
-        "Gender: " +
-        document.getElementById("patientGender").textContent,
-        20,
-        75
-    );
+    const elAssessment = document.getElementById("resultAssessmentTitle");
+    const elConditions = document.getElementById("resultConditionsHeading");
+    const elDisclaimer = document.getElementById("resultConditionsDisclaimer");
 
-    pdf.text(
-        "Blood Group: " +
-        (healthData.bloodGroup || "Not Set"),
-        20,
-        85
-    );
-    pdf.text(
-        "Emergency Contact: " +
-        (healthData.emergencyContact || "Not Set"),
-        20,
-        95
-    );
+    if (elAssessment) elAssessment.textContent = t.assessment;
+    if (elConditions) elConditions.textContent = t.conditions;
+    if (elDisclaimer) elDisclaimer.textContent = t.disclaimer;
 
-    pdf.text(
-        "Symptom Started: " +
-        (localStorage.getItem("symptomTime") || t.notProvided),
-        20,
-        105
-    );
+    const elFastSummary = document.getElementById("resultFastSummaryHeading");
+    const elFace = document.getElementById("resultFaceLabel");
+    const elArm = document.getElementById("resultArmLabel");
+    const elSpeech = document.getElementById("resultSpeechLabel");
+    const elTime = document.getElementById("resultTimeLabel");
 
-    // ===========================
-    // FAST Results
-    // ===========================
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(15);
-    pdf.text("Neurological Assessment Results", 20, 125);
+    if (elFastSummary) elFastSummary.textContent = t.fastSummary;
+    if (elFace) elFace.textContent = t.face;
+    if (elArm) elArm.textContent = t.arm;
+    if (elSpeech) elSpeech.textContent = t.speech;
+    if (elTime) elTime.textContent = t.time;
 
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(12);
+    const elOverallScore = document.getElementById("resultOverallScoreHeading");
+    const elFastScore = document.getElementById("resultFastScoreLabel");
+    const elPersonalizedScore = document.getElementById("resultPersonalizedScoreLabel");
+    const elScoreExp = document.getElementById("resultScoreExplanation");
 
-    pdf.text(
-        "Face Score: " +
-        (localStorage.getItem("faceScore") || "-"),
-        20,
-        135
-    );
+    if (elOverallScore) elOverallScore.textContent = t.overallScore;
+    if (elFastScore) elFastScore.textContent = t.fastScore;
+    if (elPersonalizedScore) elPersonalizedScore.textContent = t.personalizedScore;
+    if (elScoreExp) elScoreExp.textContent = t.scoreExplanation;
 
-    pdf.text(
-        "Face Risk: " +
-        ((localStorage.getItem("faceRisk") || "")
-            .replace("🔴 ", "")
-            .replace("🟠 ", "")
-            .replace("🟡 ", "")
-            .replace("🟢 ", "") || "-"),
-        110,
-        135
-    );
+    const elRecHeading = document.getElementById("resultRecommendationHeading");
+    const elRec = document.getElementById("recommendation");
 
-    pdf.text(
-        "Arm Score: " +
-        (localStorage.getItem("armScore") || "-"),
-        20,
-        145
-    );
+    if (elRecHeading) elRecHeading.textContent = t.recommendationHeading;
+    if (elRec) elRec.textContent = t.recommendation;
 
-    pdf.text(
-        "Arm Risk: " +
-        ((localStorage.getItem("armRisk") || "")
-            .replace("🔴 ", "")
-            .replace("🟠 ", "")
-            .replace("🟡 ", "")
-            .replace("🟢 ", "") || "-"),
-        110,
-        145
-    );
-    pdf.text(
-        "Speech Score: " +
-        (localStorage.getItem("speechScore") || "-"),
-        20,
-        155
-    );
+    const btnDownload = document.getElementById("downloadReport");
+    const btnEmergency = document.getElementById("emergencyButton");
+    const btnNotify = document.getElementById("notifyBtn");
 
-    pdf.text(
-        "Speech Risk: " +
-        ((localStorage.getItem("speechRisk") || "")
-            .replace("🔴 ", "")
-            .replace("🟠 ", "")
-            .replace("🟡 ", "")
-            .replace("🟢 ", "") || "-"),
-        110,
-        155
-    );
+    if (btnDownload) btnDownload.textContent = t.download;
+    if (btnEmergency) btnEmergency.textContent = t.emergency;
+    if (btnNotify) btnNotify.textContent = t.notify;
 
-    // ===========================
-    // Overall Assessment
-    // ===========================
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(15);
-    pdf.text("Overall Assessment", 20, 175);
+    const elWhy = document.getElementById("resultWhyHeading");
+    const elBrainH = document.getElementById("resultBrainHeading");
+    const elBrainT = document.getElementById("resultBrainText");
+    const elGoldenH = document.getElementById("resultGoldenHeading");
+    const elGoldenT = document.getElementById("resultGoldenText");
+    const elDriveH = document.getElementById("resultDriveHeading");
+    const elDriveT = document.getElementById("resultDriveText");
 
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(12);
+    if (elWhy) elWhy.textContent = t.why;
+    if (elBrainH) elBrainH.textContent = t.brainHeading;
+    if (elBrainT) elBrainT.textContent = t.brainText;
+    if (elGoldenH) elGoldenH.textContent = t.goldenHeading;
+    if (elGoldenT) elGoldenT.textContent = t.goldenText;
+    if (elDriveH) elDriveH.textContent = t.driveHeading;
+    if (elDriveT) elDriveT.textContent = t.driveText;
 
-    pdf.text(
-        "Overall Score: " +
-        document.getElementById("overallScore").textContent,
-        20,
-        195
-    );
+    const btnRetake = document.getElementById("resultRetakeBtn");
+    const btnReturnHome = document.getElementById("resultReturnHomeBtn");
 
-    // ===========================
-    // AI Interpretation
-    // ===========================
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(15);
-    pdf.text("AI Interpretation", 20, 215);
+    if (btnRetake) btnRetake.textContent = t.retake;
+    if (btnReturnHome) btnReturnHome.textContent = t.returnHome;
+}
 
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(11);
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Get user's saved language preference or default to English
+    const savedLanguage = localStorage.getItem("language") || "en";
 
-    const message =
-        document.getElementById("overallMessage").textContent;
+    // 2. Apply translations to the results page content
+    updateResultsLanguage(savedLanguage);
 
-    const recommendation =
-        document.getElementById("recommendation").textContent;
+    // 3. Render the interactive language pills into the container
+    initLanguageToggle("languageMenuContainer", (newLang) => {
+        updateResultsLanguage(newLang);
+    });
 
-    const messageLines =
-        pdf.splitTextToSize(message, 170);
+    // Listen for custom language change events dispatched elsewhere
+    window.addEventListener("languageChanged", (e) => {
+        const langCode = e.detail || localStorage.getItem("language") || "en";
+        updateResultsLanguage(langCode);
+    });
 
-    pdf.text(messageLines, 20, 225);
-
-    const y =
-        225 + (messageLines.length * 7) + 5;
-
-    pdf.setFont("helvetica", "bold");
-    pdf.text("Recommendation", 20, y);
-
-    pdf.setFont("helvetica", "normal");
-
-    const recommendationLines =
-        pdf.splitTextToSize(recommendation, 170);
-
-    pdf.text(
-        recommendationLines,
-        20,
-        y + 10
-    );
-
-    // ===========================
-    // Footer
-    // ===========================
-    pdf.setDrawColor(180);
-    pdf.line(20, 280, 190, 280);
-
-    pdf.setFontSize(9);
-
-    pdf.text(
-        "Generated by NeuroGuard",
-        20,
-        286
-    );
-
-    pdf.text(
-        "This AI-assisted neurological screening is educational only and cannot diagnose any medical condition.",
-        20,
-        292
-    );
-
-    pdf.save("NeuroGuard_Report.pdf");
+    // Fallback watcher for storage changes across tabs
+    window.addEventListener("storage", (e) => {
+        if (e.key === "language") {
+            updateResultsLanguage(e.newValue || "en");
+        }
+    });
 });
