@@ -960,31 +960,19 @@ if (
 // ==============================
 // Initialize
 // ==============================
-document.addEventListener("DOMContentLoaded", () => {
+import { initLanguageToggle } from "./languageToggle.js";
 
+// ==============================
+// Initialize
+// ==============================
+document.addEventListener("DOMContentLoaded", () => {
     const savedLanguage = localStorage.getItem("language") || "en";
 
-    if (languageSelect)
-        languageSelect.value = savedLanguage;
-
-    if (languageSelectMobile)
-        languageSelectMobile.value = savedLanguage;
-
+    // Apply the saved language immediately
     setLanguage(savedLanguage);
 
-    [languageSelect, languageSelectMobile].forEach(select => {
-        if (!select) return;
-
-        select.addEventListener("change", e => {
-
-            setLanguage(e.target.value);
-
-            if (languageSelect)
-                languageSelect.value = e.target.value;
-
-            if (languageSelectMobile)
-                languageSelectMobile.value = e.target.value;
-        });
+    // Initialize the new pill toggle UI
+    initLanguageToggle("languageMenuContainer", (newLang) => {
+        setLanguage(newLang);
     });
-
 });
