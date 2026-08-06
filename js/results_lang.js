@@ -247,17 +247,17 @@ function updateResultsLanguage() {
 
 }
 
+import { initLanguageToggle } from "./languageToggle.js";
+
 document.addEventListener("DOMContentLoaded", () => {
-    const languageSelect = document.getElementById("languageSelect");
+    // 1. Get user's saved language preference or default to English
+    const savedLanguage = localStorage.getItem("language") || "en";
 
-    if (languageSelect) {
-        languageSelect.value = localStorage.getItem("language") || "en";
+    // 2. Apply translations to the current page content
+    setLanguage(savedLanguage);
 
-        languageSelect.addEventListener("change", () => {
-            localStorage.setItem("language", languageSelect.value);
-            updateResultsLanguage();
-        });
-    }
-
-    updateResultsLanguage();
+    // 3. Render the interactive language pills into the container
+    initLanguageToggle("languageMenuContainer", (newLang) => {
+        setLanguage(newLang);
+    });
 });
