@@ -426,6 +426,8 @@
 
 
 <script>
+import { initLanguageToggle } from "./languageToggle.js";
+
 const translations = {
     en: {
         title: "🧠 Face Assessment",
@@ -481,25 +483,32 @@ const translations = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Initial sync based on stored or default language
-    const currentLang = localStorage.getItem("language") || "en";
-    updateTextContent(currentLang);
+    // 1. Get user's saved language preference or default to English
+    const savedLanguage = localStorage.getItem("language") || "en";
 
-    // Listen for custom language change events dispatched by language.js
-    window.addEventListener("languageChanged", (e) => {
-        const langCode = e.detail || localStorage.getItem("language") || "en";
-        updateTextContent(langCode);
+    // 2. Apply translations to the current page content
+    setLanguage(savedLanguage);
+
+    // 3. Render the interactive language pills into the container
+    initLanguageToggle("languageMenuContainer", (newLang) => {
+        setLanguage(newLang);
     });
 
-    // Fallback watcher for storage changes across tabs or custom manual updates
+    // Listen for custom language change events dispatched elsewhere if applicable
+    window.addEventListener("languageChanged", (e) => {
+        const langCode = e.detail || localStorage.getItem("language") || "en";
+        setLanguage(langCode);
+    });
+
+    // Fallback watcher for storage changes across tabs
     window.addEventListener("storage", (e) => {
         if (e.key === "language") {
-            updateTextContent(e.newValue || "en");
+            setLanguage(e.newValue || "en");
         }
     });
 });
 
-function updateTextContent(langCode) {
+function setLanguage(langCode) {
     const t = translations[langCode] || translations["en"];
 
     const titleEl = document.getElementById("title");
