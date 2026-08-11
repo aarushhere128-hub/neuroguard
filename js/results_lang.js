@@ -253,11 +253,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Get user's saved language preference or default to English
     const savedLanguage = localStorage.getItem("language") || "en";
 
-    // 2. Apply translations to the current page content
-    setLanguage(savedLanguage);
+    // 2. Apply translations to the current page content (fixed function name)
+    updateResultsLanguage();
 
     // 3. Render the interactive language pills into the container
     initLanguageToggle("languageMenuContainer", (newLang) => {
-        setLanguage(newLang);
+        updateResultsLanguage();
     });
 });
