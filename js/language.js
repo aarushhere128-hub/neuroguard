@@ -113,7 +113,7 @@ navassessment: "Assessment",
 navemergency: "Emergency",
 
 badgeText: "FAST Stroke Assessment",
-heroTitle: "Complete the FAST Test",
+
 heroDesc: "Follow each guided assessment. NeuroGuard will help identify possible stroke symptoms using educational AI-assisted screening.",
 
 backButton: "Back",
@@ -417,7 +417,7 @@ navassessment: "परीक्षण",
 navemergency: "आपातकाल",
 
 badgeText: "FAST स्ट्रोक परीक्षण",
-heroTitle: "FAST परीक्षण पूरा करें",
+
 heroDesc: "प्रत्येक चरण का पालन करें। NeuroGuard एआई-सहायित शैक्षिक स्क्रीनिंग के माध्यम से संभावित स्ट्रोक लक्षणों की पहचान में आपकी सहायता करेगा।",
 
 backButton: "वापस",
@@ -632,7 +632,7 @@ navassessment: "ਮੁਲਾਂਕਣ",
 navemergency: "ਐਮਰਜੈਂਸੀ",
 
 badgeText: "FAST ਸਟ੍ਰੋਕ ਮੁਲਾਂਕਣ",
-heroTitle: "FAST ਟੈਸਟ ਪੂਰਾ ਕਰੋ",
+
 heroDesc: "ਹਰ ਪੜਾਅ ਨੂੰ ਪੂਰਾ ਕਰੋ। NeuroGuard ਏਆਈ-ਸਹਾਇਤ ਸਿੱਖਿਆਤਮਕ ਸਕ੍ਰੀਨਿੰਗ ਰਾਹੀਂ ਸੰਭਾਵਿਤ ਸਟ੍ਰੋਕ ਲੱਛਣਾਂ ਦੀ ਪਛਾਣ ਵਿੱਚ ਮਦਦ ਕਰੇਗਾ।",
 // Contact Page
 logoText: "🛡️ NeuroGuard",
