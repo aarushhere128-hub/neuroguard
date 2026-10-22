@@ -247,11 +247,7 @@
 </div>
 
 <div class="nav-actions">
-    <select id="languageSelect" class="language-select">
-        <option value="en">🇬🇧 English</option>
-        <option value="hi">🇮🇳 हिन्दी</option>
-        <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
-    </select>
+    <div id="languageMenuContainer" class="language-menu-grid"></div>
 
     <div class="demo-toggle" style="display:inline-flex; align-items:center; gap:8px; margin-left: 10px;">
         <label class="switch" style="position:relative; display:inline-block; width:40px; height:22px;">
@@ -306,11 +302,21 @@
 
 <!-- Record Control Center -->
 <div class="record-action-center">
+
+    <div id="recordingIndicator"
+         class="recording-indicator"
+         data-state="idle"
+         role="status"
+         aria-live="polite">
+        <span class="recording-dot" aria-hidden="true"></span>
+        <span id="recordingIndicatorText">Ready to record</span>
+    </div>
+
     <button class="primary" id="startBtn">
         🎤 <span id="startBtnText">Start Recording</span>
     </button>
-</div>
 
+</div>
 <!-- Status Banner -->
 <div class="status-banner">
     <p id="speechstatus">Waiting to begin...</p>
