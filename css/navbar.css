@@ -240,3 +240,57 @@ nav{
     }
 
 }
+
+
+/* ---------- Language Pills ---------- */
+
+.language-menu-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.lang-pill {
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    background: transparent;
+    color: var(--text);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.lang-pill:hover {
+    border-color: var(--primary);
+}
+
+.lang-pill.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.lang-pill:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+    .language-menu-grid {
+        gap: 4px;
+    }
+
+    .lang-pill {
+        padding: 7px 9px;
+        font-size: 11px;
+    }
+
+    .nav-actions {
+        gap: 6px;
+    }
+}
