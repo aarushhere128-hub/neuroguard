@@ -2,6 +2,7 @@
 // NeuroGuard | Speech Assessment
 // =========================================
 import { auth } from "./firebase.js";
+import { translations } from "./language.js";
 import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
