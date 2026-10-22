@@ -3,7 +3,7 @@
 // ==============================
 const languageSelect = document.getElementById("languageSelect");
 const languageSelectMobile = document.getElementById("languageSelectMobile");
-const translations = {
+export const translations = {
     en: {
 
         // Navbar
@@ -956,6 +956,11 @@ if (
 ) {
     speechRiskElement.textContent = translations[lang][speechRiskKey];
 }
+window.dispatchEvent(
+    new CustomEvent("languageChanged", {
+        detail: lang
+    })
+);
 }
 // ==============================
 // Initialize
