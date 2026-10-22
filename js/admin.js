@@ -39,178 +39,156 @@ onAuthStateChanged(auth, async (user) => {
 const tableBody = document.getElementById("tableBody");
 
 async function loadAssessments() {
-    let currentFilter = "all";
-    let total = 0;
-let high = 0;
-let moderate = 0;
-let low = 0;
-    tableBody.innerHTML = "";
+    const totalEl = document.getElementById("totalAssessments");
+    const highEl = document.getElementById("highRisk");
+    const moderateEl = document.getElementById("moderateRisk");
+    const lowEl = document.getElementById("lowRisk");
+
+    let openedRow = null;
+
+    // Expand/collapse assessment details.
+    // Add this listener only once, outside the snapshot loop.
+    tableBody.addEventListener("click", (event) => {
+        const summaryRow = event.target.closest(".summary-row");
+
+        if (!summaryRow) return;
+
+        const detailsRow = summaryRow.nextElementSibling;
+        const arrow = summaryRow.querySelector(".expand-arrow");
+
+        if (openedRow && openedRow !== detailsRow) {
+            openedRow.style.display = "none";
+
+            const previousArrow = openedRow.previousElementSibling
+                ?.querySelector(".expand-arrow");
+
+            if (previousArrow) previousArrow.textContent = "▶";
+        }
+
+        if (detailsRow.style.display === "none") {
+            detailsRow.style.display = "table-row";
+            arrow.textContent = "▼";
+            openedRow = detailsRow;
+        } else {
+            detailsRow.style.display = "none";
+            arrow.textContent = "▶";
+            openedRow = null;
+        }
+    });
+
+    function filterAssessments(risk, activeCard) {
+        document.querySelectorAll(".card").forEach((card) => {
+            card.classList.remove("active");
+        });
+
+        activeCard.classList.add("active");
+
+        // Close any expanded details when changing filters.
+        openedRow = null;
+
+        document.querySelectorAll(".summary-row").forEach((row) => {
+            const detailsRow = row.nextElementSibling;
+            const label = row.dataset.risk || "";
+
+            const show =
+                risk === "all" ||
+                (risk === "low" && label.includes("Low Concern")) ||
+                (risk === "moderate" &&
+                    label.includes("Neurological Signs Detected")) ||
+                (risk === "high" &&
+                    label.includes("Urgent Neurological Signs"));
+
+            row.style.display = show ? "table-row" : "none";
+            detailsRow.style.display = "none";
+
+            const arrow = row.querySelector(".expand-arrow");
+            if (arrow) arrow.textContent = "▶";
+        });
+    }
+
+    // Connect the cards once, not every time Firestore updates.
+    document.getElementById("totalCard").onclick = () =>
+        filterAssessments("all", document.getElementById("totalCard"));
+
+    document.getElementById("lowCard").onclick = () =>
+        filterAssessments("low", document.getElementById("lowCard"));
+
+    document.getElementById("moderateCard").onclick = () =>
+        filterAssessments("moderate", document.getElementById("moderateCard"));
+
+    document.getElementById("highCard").onclick = () =>
+        filterAssessments("high", document.getElementById("highCard"));
 
     const q = query(
         collection(db, "assessments"),
         orderBy("createdAt", "desc")
     );
 
-    onSnapshot(q, (snapshot) => {
-
-    tableBody.innerHTML = "";
-
-    total = 0;
-    high = 0;
-    moderate = 0;
-    low = 0;
-
-    snapshot.forEach((doc) => {
-
-        const data = doc.data();
-        total++;
-
-if (data.risk.includes("High"))
-    high++;
-
-else if (data.risk.includes("Moderate"))
-    moderate++;
-
-else if (data.risk.includes("Low"))
-    low++;
-
-       const row = `
-<tr class="summary-row" data-risk="${data.risk}">
-
-    <td>${data.name}</td>
-    <td>${data.age}</td>
-    <td>${data.gender}</td>
-    <td>${data.faceScore}</td>
-    <td>${data.armScore}</td>
-    <td>${data.speechScore}</td>
-    <td>${data.overallScore}</td>
-    <td>${data.risk}</td>
-    <td>${data.createdAt?.toDate().toLocaleString() || "-"}</td>
-    <td class="expand-arrow">▶</td>
-
-</tr>
-
-<tr class="details-row" data-risk="${data.risk}" style="display:none;">
-
-    <td colspan="9">
-
-        <h3>Patient Details</h3>
-
-        <p><strong>Email:</strong> ${data.email}</p>
-
-        <p><strong>Recommendation:</strong> ${data.recommendation}</p>
-
-        <p><strong>Symptom Time:</strong> ${data.symptomTime}</p>
-
-    </td>
-
-</tr>
-`;
-
-        tableBody.innerHTML += row;
-        const summaryRows = document.querySelectorAll(".summary-row");
-
-let openedRow = null;
-
-summaryRows.forEach((summaryRow) => {
-
-    summaryRow.onclick = () => {
-
-        const detailsRow = summaryRow.nextElementSibling;
-        const arrow = summaryRow.querySelector(".expand-arrow");
-
-        // Close previously opened row
-        if (openedRow && openedRow !== detailsRow) {
-
-            openedRow.style.display = "none";
-
-            openedRow.previousElementSibling
-                .querySelector(".expand-arrow")
-                .textContent = "▶";
-        }
-
-        if (detailsRow.style.display === "none") {
-
-            detailsRow.style.display = "table-row";
-            arrow.textContent = "▼";
-            openedRow = detailsRow;
-
-        } else {
-
-            detailsRow.style.display = "none";
-            arrow.textContent = "▶";
+    onSnapshot(
+        q,
+        (snapshot) => {
+            tableBody.innerHTML = "";
             openedRow = null;
 
+            let total = 0;
+            let high = 0;
+            let moderate = 0;
+            let low = 0;
+
+            snapshot.forEach((assessmentDoc) => {
+                const data = assessmentDoc.data();
+                const risk = data.risk || "";
+
+                total++;
+
+                if (risk.includes("Urgent Neurological Signs")) {
+                    high++;
+                } else if (risk.includes("Neurological Signs Detected")) {
+                    moderate++;
+                } else if (risk.includes("Low Concern")) {
+                    low++;
+                }
+
+                const createdAt = data.createdAt?.toDate
+                    ? data.createdAt.toDate().toLocaleString()
+                    : "-";
+
+                tableBody.innerHTML += `
+                    <tr class="summary-row" data-risk="${risk}">
+                        <td>${data.name ?? "-"}</td>
+                        <td>${data.age ?? "-"}</td>
+                        <td>${data.gender ?? "-"}</td>
+                        <td>${data.faceScore ?? "-"}</td>
+                        <td>${data.armScore ?? "-"}</td>
+                        <td>${data.speechScore ?? "-"}</td>
+                        <td>${data.overallScore ?? "-"}</td>
+                        <td>${risk || "-"}</td>
+                        <td>${createdAt}</td>
+                        <td class="expand-arrow">▶</td>
+                    </tr>
+
+                    <tr class="details-row" style="display:none;">
+                        <td colspan="10">
+                            <h3>Patient Details</h3>
+                            <p><strong>Email:</strong> ${data.email ?? "-"}</p>
+                            <p><strong>Recommendation:</strong>
+                                ${data.recommendation ?? "-"}</p>
+                            <p><strong>Symptom Time:</strong>
+                                ${data.symptomTime ?? "-"}</p>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            totalEl.textContent = total;
+            highEl.textContent = high;
+            moderateEl.textContent = moderate;
+            lowEl.textContent = low;
+        },
+        (error) => {
+            console.error("Error loading assessments:", error);
         }
-
-    };
-
-});
-
-    });
-    document.getElementById("totalAssessments").textContent = total;
-document.getElementById("highRisk").textContent = high;
-    function filterAssessments(risk, activeCard) {
-        currentFilter = risk;
-        document.querySelectorAll(".card").forEach(card=>{
-    card.classList.remove("active");
-});
-        activeCard.classList.add("active");
-
-    const summaryRows = document.querySelectorAll(".summary-row");
-
-    summaryRows.forEach((summaryRow) => {
-
-        const detailsRow = summaryRow.nextElementSibling;
-
-        const rowRisk = summaryRow.dataset.risk;
-
-        const show =
-            risk === "all" || rowRisk === risk;
-
-        summaryRow.style.display = show ? "table-row" : "none";
-        detailsRow.style.display = "none";
-
-        summaryRow.querySelector(".expand-arrow").textContent = "▶";
-
-    });
-
-}
-document.getElementById("moderateRisk").textContent = moderate;
-document.getElementById("lowRisk").textContent = low;
-document.getElementById("totalCard").onclick = () => {
-
-
-
-    filterAssessments("all", document.getElementById("totalCard"));
-
-};
- 
-
-document.getElementById("lowCard").onclick = () => {
-
-
-
-    filterAssessments("🟢 Low Risk", document.getElementById("lowCard"));
-
-};
-
-document.getElementById("moderateCard").onclick = () => {
-
-
-
-    filterAssessments("🟡 Moderate Risk", document.getElementById("moderateCard"));
-
-};
-
-document.getElementById("highCard").onclick = () => {
-
-
-
-    filterAssessments("🔴 High Risk", document.getElementById("highCard"));
-
-};
-        });
+    );
 }
 function loadUsers() {
 
